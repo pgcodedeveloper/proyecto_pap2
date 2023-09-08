@@ -1,0 +1,164 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 8 sept 2023, 15:44:39
+    Author     : PC
+*/
+.contenedor_login{
+    margin: 0 auto;
+    width: 50%;
+    margin-top: 2.5rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+@media(max-width: 448px){
+    .contenedor_login{
+        width: 90%
+    }
+}
+.contenedor_login_icono i{
+    font-size: 4rem;
+    color: rgb(45, 153, 100);
+}
+.contenedor_login_texto h1{
+   font-size: 3.5rem;
+   font-weight: 900;
+}
+
+.contenedor_login_texto h1 span{
+    font-size: 4.5rem;
+    font-style: italic;
+    color: rgb(70, 70, 80);
+}
+@media(max-width: 448px){
+    .contenedor_login_texto h1{
+        font-size: 2.5rem;
+    }
+    
+    .contenedor_login_texto h1 span{
+        font-size: 3.5rem
+    }
+}
+.contenedor_login_texto p{
+    text-align: center;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: rgb(133, 133, 133);
+}
+
+@media(max-width: 448px){
+    .contenedor_login_texto p{
+        font-size: 1.2rem;
+    }
+}
+.header{
+    background: rgb(50, 54, 61) !important;
+    
+    
+}
+
+.header nav{
+    background: transparent !important;
+}
+
+.heading{
+    text-align: center;
+    margin: 1.5rem 0 2rem 0;
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.main{
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 3rem;
+}
+
+.formulario{
+    width: 75%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+@media(max-width: 448px){
+    .formulario{
+        width: 85%;
+    }
+}
+
+.formulario .campo{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.campo i{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255,255,255);
+    padding: .7rem;
+    background-color: rgb(70, 70, 80); 
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+    font-size: 1.5rem;
+    width: 46.38px;
+    height: 46.38px;
+}
+.campo input{
+    width: 100%;
+    border: none;
+    background-color: rgb(225, 225, 225);
+    padding: .7rem;
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}
+
+input:focus-visible{
+    outline: none;
+}
+
+.contenedor_botones{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.contenedor_botones button{
+    width: 15%;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    justify-content: center;
+    font-weight: 800;
+    padding: .5rem 1rem
+}
+
+@media(max-width: 448px){
+    .contenedor_botones {
+        flex-direction: column;
+    }
+    
+    .contenedor_botones button{
+        width: 100%
+    }
+}
+
+.contenedor_acciones{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.contenedor_acciones a{
+    font-style: italic;
+    color: rgb(133, 133, 133);
+    text-decoration: none;
+}
