@@ -10,30 +10,30 @@
 
     <main class="main">
         <h2 class="heading">Obtén una cuenta gratis</h2>
-        <form class="formulario" method="POST" action="RegistroUsuario">
+        <form class="formulario" id="formulario" action="RegistroUsuario" method="post">
             <div class="campo">
                 <i class="fa-solid fa-user"></i>
-                <input type="text" value="" name="nickname" placeholder="Tu nombre de usuario">
+                <input type="text" id="nick" value="" name="nickname" placeholder="Tu nombre de usuario">
             </div> 
             
             <div class="campo">
                 <i class="fa-solid fa-envelope"></i>
-                <input type="text" value="" name="email" placeholder="Tu Email">
+                <input type="text" id="email" value="" name="email" placeholder="Tu Email">
             </div>
             
             <div class="campo">
                 <i class="fa-solid fa-lock"></i>
-                <input type="password" value="" name="password" placeholder="Tu Password">
+                <input type="password" id="password" value="" name="password" placeholder="Tu Password">
             </div> 
             
             <div class="campo">
                 <i class="fa-solid fa-lock"></i>
-                <input type="password" value="" name="passwordR" placeholder="Repetir Password">
+                <input type="password" id="passwordR" value="" name="passwordR" placeholder="Repetir Password">
             </div>
             
             <div class="campo">
                 <i class="fa-solid fa-image"></i>
-                <input class="form-control" name="imagen" type="file" id="formFile">
+                <input class="form-control" id="imagen" name="imagen" type="file" id="formFile">
             </div>
             
             <div class="contenedor_botones">
@@ -49,6 +49,7 @@
         </form>
     </main>
     
+
     <%@include file="footer.jsp" %>
 </body>
 </html>

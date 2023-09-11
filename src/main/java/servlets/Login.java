@@ -10,17 +10,19 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import logica.ManejadorUsuario;
 import logica.Usuario;
 import org.mindrot.jbcrypt.BCrypt;
 
+
 /**
  *
  * @author PC
  */
-public class RegistroUsuario extends HttpServlet {
+public class Login extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +41,10 @@ public class RegistroUsuario extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RegistroUsuario</title>");            
+            out.println("<title>Servlet Login</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet RegistroUsuario at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -73,36 +75,32 @@ public class RegistroUsuario extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        String nickname = request.getParameter("nickname");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String passwrodR = request.getParameter("passwordR");
-        String imagen = request.getParameter("imagen");
         Fabrica f = Fabrica.getInstancia();
         IControlador icon = f.getIControlador();
         ManejadorUsuario mju = ManejadorUsuario.getInstancia();
+        Usuario u = mju.buscarUsuarioEmail(email);
 
-
-        if(password.equals(passwrodR)){
-            Usuario u = mju.buscarUsuario(email, nickname);
-            if(u.getPassword() == null){
-                String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-                icon.setPassword(nickname, email, hashedPassword, imagen);
+        if(u != null){
+            if(BCrypt.checkpw(password, u.getPassword())){
+                HttpSession sesion = request.getSession();
+                sesion.setAttribute("usuario", u);
                 response.setStatus(200);
+                response.sendRedirect("index.jsp");
             }
             else{
                 response.setStatus(505);
-                ServletException e = new ServletException("Error 505, usuario ya registrado");
+                ServletException e = new ServletException("Error 505, password incorrecto");
                 throw e;
             }
 
         }
         else{
             response.setStatus(505);
-            ServletException e = new ServletException("Error 505, todo mal");
+            ServletException e = new ServletException("Error 404, El usuario no existe");
             throw e;
         }
-    
     }
 
     /**

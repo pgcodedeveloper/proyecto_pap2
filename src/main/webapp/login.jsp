@@ -10,7 +10,7 @@
 
     <main class="main">
         <h2 class="heading">Iniciar Sesión</h2>
-        <form class="formulario" method="POST">
+        <form class="formulario" method="POST" action="Login">
             <div class="campo">
                 <i class="fa-solid fa-envelope"></i>
                 <input type="text" value="" name="email" placeholder="Tu Email">
