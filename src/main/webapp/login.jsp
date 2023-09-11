@@ -10,7 +10,7 @@
 
     <main class="main">
         <h2 class="heading">Iniciar Sesión</h2>
-        <form class="formulario">
+        <form class="formulario" method="POST">
             <div class="campo">
                 <i class="fa-solid fa-envelope"></i>
                 <input type="text" value="" name="email" placeholder="Tu Email">
@@ -28,7 +28,7 @@
             </div>
             
             <div class="contenedor_acciones">
-                <a href="url">¿Aún no tienes una cuenta? Crear una</a>
+                <a href="registro.jsp">¿Aún no tienes una cuenta? Crear una</a>
             </div>
         </form>
     </main>

@@ -20,7 +20,7 @@
             String requestURI = request.getRequestURI();   // Obtiene la URI de la solicitud
             String currentPage = requestURI.substring(contextPath.length());
             
-            if(currentPage.equals("/login.jsp")){ %>
+            if(currentPage.equals("/login.jsp") || currentPage.equals("/registro.jsp")){ %>
                 <div class="contenedor_login">
                     <div class="contenedor_login_icono">
                         <i class="fa-solid fa-dumbbell"></i>

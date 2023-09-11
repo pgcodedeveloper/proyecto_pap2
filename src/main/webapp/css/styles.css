@@ -85,6 +85,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    margin-bottom: 2rem;
 }
 
 @media(max-width: 448px){
