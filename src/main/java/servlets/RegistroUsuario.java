@@ -16,6 +16,7 @@ import logica.ManejadorUsuario;
 import logica.Usuario;
 import org.mindrot.jbcrypt.BCrypt;
 
+
 /**
  *
  * @author PC
@@ -72,37 +73,46 @@ public class RegistroUsuario extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nickname = request.getParameter("nickname");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String passwrodR = request.getParameter("passwordR");
+        String passwordR = request.getParameter("passwordR");
         String imagen = request.getParameter("imagen");
         Fabrica f = Fabrica.getInstancia();
         IControlador icon = f.getIControlador();
         ManejadorUsuario mju = ManejadorUsuario.getInstancia();
 
-
-        if(password.equals(passwrodR)){
-            Usuario u = mju.buscarUsuario(email, nickname);
-            if(u.getPassword() == null){
-                String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-                icon.setPassword(nickname, email, hashedPassword, imagen);
-                response.setStatus(200);
-            }
-            else{
-                response.setStatus(505);
-                ServletException e = new ServletException("Error 505, usuario ya registrado");
-                throw e;
-            }
-
+        if(password.isEmpty() && passwordR.isEmpty()){
+            response.setStatus(400);
+            response.setContentType("text/plain");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("Debes ingresar passwords");
         }
         else{
-            response.setStatus(505);
-            ServletException e = new ServletException("Error 505, todo mal");
-            throw e;
+            if (password.equals(passwordR)) {
+                Usuario u = mju.buscarUsuario(email, nickname);
+
+                if (u != null) {
+                    String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+                    icon.setPassword(nickname, email, hashedPassword, imagen);
+                    response.setStatus(200);
+                    response.setContentType("text/plain");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write("Usuario creado correctamente");
+                } else {
+                    response.setStatus(400); 
+                    response.setContentType("text/plain");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write("El usuario ya existe");
+                }
+            } else {
+                response.setStatus(400); 
+                response.setContentType("text/plain");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write("Los passwords son diferentes");
+            }
         }
-    
     }
 
     /**

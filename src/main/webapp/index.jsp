@@ -9,7 +9,8 @@
 </head>
 <body>
     <%@include file="header.jsp" %>
-
+    
+    
     <main class="main">
         <h2 class="heading">Bienvenido <%= ((Usuario) session.getAttribute("usuario")).getNombre() %></h2>
         

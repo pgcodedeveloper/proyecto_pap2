@@ -56,14 +56,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
         font-size: 1.2rem;
     }
 }
-.header{
-    background: rgb(50, 54, 61) !important;
-    
-    
-}
+
 
 .header nav{
-    background: transparent !important;
+    background: rgb(214, 217, 223) !important;
 }
 
 .heading{

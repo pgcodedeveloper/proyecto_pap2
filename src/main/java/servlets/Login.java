@@ -14,6 +14,8 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import logica.ManejadorUsuario;
+import logica.Profesor;
+import logica.Socio;
 import logica.Usuario;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -75,32 +77,51 @@ public class Login extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        Fabrica f = Fabrica.getInstancia();
-        IControlador icon = f.getIControlador();
-        ManejadorUsuario mju = ManejadorUsuario.getInstancia();
-        Usuario u = mju.buscarUsuarioEmail(email);
+        String tipo = request.getParameter("tipo");
 
-        if(u != null){
-            if(BCrypt.checkpw(password, u.getPassword())){
-                HttpSession sesion = request.getSession();
-                sesion.setAttribute("usuario", u);
-                response.setStatus(200);
-                response.sendRedirect("index.jsp");
+        if(tipo.equals("login")){
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            Fabrica f = Fabrica.getInstancia();
+            IControlador icon = f.getIControlador();
+            ManejadorUsuario mju = ManejadorUsuario.getInstancia();
+            Usuario u = mju.buscarUsuarioEmail(email);
+            if(u != null){
+                if(BCrypt.checkpw(password, u.getPassword())){
+                    HttpSession sesion = request.getSession();
+                    sesion.setAttribute("usuario", u);
+                    if(u instanceof Socio){
+                        sesion.setAttribute("tipoUser", "socio");
+                    }
+                    else if(u instanceof Profesor){
+                        sesion.setAttribute("tipoUser", "profesor");
+                    }
+
+                    response.setStatus(200);
+                }
+                else{
+                    response.setStatus(400);
+                    response.setContentType("text/plain");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write("Password incorrecto");
+                }
             }
             else{
-                response.setStatus(505);
-                ServletException e = new ServletException("Error 505, password incorrecto");
-                throw e;
+                response.setStatus(400);
+                response.setContentType("text/plain");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write("El usuario no existe");
             }
-
         }
         else{
-            response.setStatus(505);
-            ServletException e = new ServletException("Error 404, El usuario no existe");
-            throw e;
+            HttpSession sesion = request.getSession(false);
+            if(sesion != null){
+                sesion.invalidate();
+                response.setStatus(200);
+            }
+            
         }
+
     }
 
     /**

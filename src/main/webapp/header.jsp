@@ -4,7 +4,30 @@
     Author     : PC
 --%>
 <!DOCTYPE html>
+<%@page import="logica.Usuario" %>
 <%@ page language="java"%>
+
+<% 
+    Usuario u = ((Usuario) session.getAttribute("usuario"));
+    String tipo = ((String) session.getAttribute("tipoUser"));
+    boolean tipoUS = false;
+    boolean tipoUP = false;
+
+    if(u != null && tipo != null){
+        //out.println(u);
+        //out.println(tipo);
+        if(tipo.equals("profesor")){
+            tipoUP = true;
+        }
+        else if(tipo.equals("socio")){
+            tipoUS = true;
+        }
+    }
+    else{
+        tipoUS = false;
+        tipoUP = false;
+    }
+%>
 
 <html>
     <head>
@@ -35,16 +58,22 @@
                 <header class="header">
                     <nav class="navbar navbar-expand-lg bg-body-tertiary">
                         <div class="container-fluid">
-                            <a class="navbar-brand" href="#">Navbar</a>
+                            <a class="navbar-brand" href="/">Entrenamos<span>Uy</span></a>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                                 <div class="navbar-nav">
-                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                                    <a class="nav-link" href="#">Features</a>
-                                    <a class="nav-link" href="#">Pricing</a>
-                                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                                    <% if(tipoUS){ %>
+                                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                        <button class="nav-link" onclick="cerrarSesion()">Cerrar Sesión</button>
+                                    <% } else if(tipoUP){ %>
+                                        <a class="nav-link" href="#">Features</a>
+                                        <a class="nav-link" href="#">Pricing</a>
+                                        <button class="nav-link" onclick="cerrarSesion()">Cerrar Sesión</button>
+                                    <% } else { %>
+                                        <a class="nav-link" href="login.jsp">Login</a>
+                                    <% }%>
                                 </div>
                             </div>
                         </div>
@@ -52,5 +81,33 @@
                 </header>
         <%  }%>
         
+        
+        <script type="text/javascript">
+            async function cerrarSesion(){
+                Swal.fire({
+                    title: "Atención !",
+                    text: "¿Desea cerrar la sesión?",
+                    showConfirmButton: true,
+                    confirmButtonText: 'Si, cerrar',
+                    showCancelButton: true,
+                    cancelButtonText: "No",
+                    icon: "question"
+                }).then(async (response) => {
+                    if(response.isConfirmed){
+                        const formData = new URLSearchParams();
+                        formData.append("tipo","cerrar");
+                        
+                        await fetch("Login", {
+                            method: 'POST',
+                            body: formData.toString(), // Convierte FormData a cadena de consulta
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded' // Establece el tipo de contenido
+                            }
+                        });
+                        window.location.href = window.location.origin + "/entrenamosuy/login.jsp";
+                    }
+                });
+            }
+        </script>
     </body>
 </html>
