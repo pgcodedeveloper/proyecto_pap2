@@ -87,23 +87,31 @@ public class Login extends HttpServlet {
             ManejadorUsuario mju = ManejadorUsuario.getInstancia();
             Usuario u = mju.buscarUsuarioEmail(email);
             if(u != null){
-                if(BCrypt.checkpw(password, u.getPassword())){
-                    HttpSession sesion = request.getSession();
-                    sesion.setAttribute("usuario", u);
-                    if(u instanceof Socio){
-                        sesion.setAttribute("tipoUser", "socio");
-                    }
-                    else if(u instanceof Profesor){
-                        sesion.setAttribute("tipoUser", "profesor");
-                    }
+                if(u.getPassword() != null){
+                    if(BCrypt.checkpw(password, u.getPassword())){
+                        HttpSession sesion = request.getSession();
+                        sesion.setAttribute("usuario", u);
+                        if(u instanceof Socio){
+                            sesion.setAttribute("tipoUser", "socio");
+                        }
+                        else if(u instanceof Profesor){
+                            sesion.setAttribute("tipoUser", "profesor");
+                        }
 
-                    response.setStatus(200);
+                        response.setStatus(200);
+                    }
+                    else{
+                        response.setStatus(400);
+                        response.setContentType("text/plain");
+                        response.setCharacterEncoding("UTF-8");
+                        response.getWriter().write("Password incorrecto");
+                    }
                 }
                 else{
                     response.setStatus(400);
                     response.setContentType("text/plain");
                     response.setCharacterEncoding("UTF-8");
-                    response.getWriter().write("Password incorrecto");
+                    response.getWriter().write("El usuario no tiene una cuenta aún, cree una primero");
                 }
             }
             else{

@@ -38,7 +38,7 @@
     <script type="text/javascript">
         document.getElementById("formulario").addEventListener('submit',async function(e){
             e.preventDefault();
-            
+            const cargando = false;
             const email = document.querySelector("#email").value;
             const password = document.querySelector("#password").value;
             
@@ -53,6 +53,7 @@
             formData.append("password", password);
             try{
                 // Realiza la solicitud AJAX al Servlet usando async/await
+                ocultarBoton(true);
                 const response = await fetch("Login", {
                     method: 'POST',
                     body: formData.toString(), // Convierte FormData a cadena de consulta
@@ -64,12 +65,13 @@
                     // Maneja la respuesta del servidor aquí (por ejemplo, mostrar un mensaje)
                     //const mensaje = await response.text();
                     //mostrarMensaje(mensaje,"Registro exitoso","success");
-                    
+                    ocultarBoton(false);
                     document.getElementById("formulario").reset();
                     window.location.href = window.location.origin + "/entrenamosuy/";
                 } else {
                     const mensaje = await response.text();
                     mostrarMensaje(mensaje,"Error","error");
+                    ocultarBoton(false);
                     throw new Error('Error en la solicitud AJAX');
                 }
             } catch (error) {
@@ -80,6 +82,17 @@
 
         function mostrarMensaje(mensaje,titulo,tipo) {
             Swal.fire({ title: titulo, text: mensaje, icon: tipo });
+        }
+        
+        function ocultarBoton(flag){
+            const btn = document.getElementById("btn");
+            
+            if(flag){
+                btn.style.visibility = 'hidden';
+            }
+            else{
+                btn.style.visibility = 'visible';
+            }
         }
     </script>
 </body>

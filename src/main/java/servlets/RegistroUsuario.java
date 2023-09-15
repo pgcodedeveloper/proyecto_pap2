@@ -104,7 +104,7 @@ public class RegistroUsuario extends HttpServlet {
                     response.setStatus(400); 
                     response.setContentType("text/plain");
                     response.setCharacterEncoding("UTF-8");
-                    response.getWriter().write("El usuario ya existe");
+                    response.getWriter().write("El usuario no existe en los disponibles para el gym, comuniquese con el administrador");
                 }
             } else {
                 response.setStatus(400); 
