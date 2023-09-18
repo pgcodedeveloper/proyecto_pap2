@@ -14,7 +14,7 @@
     <main class="main">
         <h2 class="heading">Registro a Clase</h2>
         
-        <form action="RegistroClase" method="post">
+        <form action="RegistroClase?opcion=algo" method="post">
             <fieldset>
                 <legend>Institución Deportiva</legend>
                 <div class="input-group mb-3">
@@ -42,7 +42,7 @@
             </fieldset>
             
             <div class="contenedor_botones">
-                <button type="submit" id="btn" class="btn btn-primary">
+                <button type="submit" id="btn" class="btn btn-primary" disabled>
                     Siguiente
                     <i class="fa-solid fa-circle-right"></i>
                 </button>
@@ -55,7 +55,7 @@
             const select = document.querySelector("#instituciones");
             const selectA = document.querySelector("#actividades");
             const selectC = document.querySelector("#clases");
-            if(select != null){
+            if(select !== null){
                 await fetch("RegistroClase?consultar=instituciones")
                     .then(response => response.json())
                     .then(data =>{
@@ -150,6 +150,11 @@
                             .catch(error =>{
                                 console.error(error);
                             });
+                        });
+                        
+                        const btnSig = document.querySelector("#btn");
+                        selectC.addEventListener("change", async function() {
+                           btnSig.disabled = false;
                         });
                     }
                 }

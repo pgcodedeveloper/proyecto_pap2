@@ -130,7 +130,7 @@ input:focus-visible{
 }
 
 .contenedor_botones button{
-    width: 15%;
+    width: auto;
     display: flex;
     align-items: center;
     gap: .5rem;

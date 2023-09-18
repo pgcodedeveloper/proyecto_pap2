@@ -5,6 +5,7 @@
 package servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import exceptions.SocioYaInscriptoException;
 import interfaces.Fabrica;
 import interfaces.IControlador;
 import jakarta.servlet.RequestDispatcher;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import logica.ActividadDeportiva;
 import logica.Clase;
@@ -151,19 +153,41 @@ public class RegistroClase extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        String opcion = request.getParameter("opcion");
         String clase = request.getParameter("clase");
         String act = request.getParameter("actividad");
+        String socio = request.getParameter("socio");
         Fabrica fb = Fabrica.getInstancia();
         IControlador icon = fb.getIControlador();
         ActividadDeportiva ac = icon.obtenerActividad(act);
         Clase c = icon.obtenerInfoClase(clase);
-        
-        if( c != null && ac != null){
-            request.setAttribute("clase", c);
-            request.setAttribute("actividad", ac);
-            RequestDispatcher disp = request.getRequestDispatcher("registroClaseFinal.jsp");
-            disp.forward(request, response);
+
+        if(opcion.equals("registro")){
+            
+            try {
+                Date f = new Date();
+                System.out.println(f);
+                icon.altaSocioClase(socio, clase, f);
+                response.setStatus(200);
+                response.setContentType("text/plain");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write("Socio incripto correctamente");
+            } catch (SocioYaInscriptoException e) {
+                response.setStatus(400);
+                response.setContentType("text/plain");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write("Socio ya esta inscipto en esa clase");
+            }
         }
+        else{
+            if( c != null && ac != null){
+                request.setAttribute("clase", c);
+                request.setAttribute("actividad", ac);
+                RequestDispatcher disp = request.getRequestDispatcher("registroClaseFinal.jsp");
+                disp.forward(request, response);
+            }
+        }
+        
     }
 
     /**
