@@ -27,6 +27,9 @@
                 </button>
             </div>
             
+            <div class="contenedor_spinner">
+            </div> 
+            
             <div class="contenedor_acciones">
                 <a href="registro.jsp">¿Aún no tienes una cuenta? Crear una</a>
             </div>
@@ -93,6 +96,25 @@
             else{
                 btn.style.visibility = 'visible';
             }
+            const spinnerElement = document.getElementById("spinner");
+            if (spinnerElement) {
+              spinnerElement.parentNode.removeChild(spinnerElement);
+            }
+            else{
+                const spinner = `
+                    <div class="contenedor_texto_spinner" id="spinner">
+                        <div class="lds-ring">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <p>Verificando Datos...</p>
+                    </div>
+                `;
+                document.querySelector('.contenedor_spinner').innerHTML += spinner;
+            }
+            
         }
     </script>
 </body>

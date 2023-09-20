@@ -10,7 +10,7 @@
 <body>
     <%@include file="header.jsp" %>
 
-    <main class="main">
+    <main class="main main_registro">
         <h2 class="heading">Resumen del Registro</h2>
         
         <table class="table table-sm">
@@ -43,7 +43,6 @@
                   <th scope="col">Actividad</th>
                   <th scope="col">Hora inicio</th>
                   <th scope="col">Institución</th>
-                  <th scope="col">Url</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -52,7 +51,6 @@
                     <td><p>${actividad.getNombre()}</p></td>
                     <td><p>${clase.getHoraInicio()}</p></td>
                     <td><p>${actividad.getInst().getNombre()}</p></td>
-                    <td><p>${clase.getUrl()}</p></td>
                 </tr>
             </tbody>
         </table>

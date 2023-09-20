@@ -14,7 +14,7 @@
     <main class="main">
         <h2 class="heading">Registro a Clase</h2>
         
-        <form action="RegistroClase?opcion=algo" method="post">
+        <form action="RegistroClase?opcion=consultar" method="post" class="formulario">
             <fieldset>
                 <legend>Institución Deportiva</legend>
                 <div class="input-group mb-3">

@@ -5,6 +5,7 @@
 package servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import datatypes.DtProfesor;
 import exceptions.SocioYaInscriptoException;
 import interfaces.Fabrica;
 import interfaces.IControlador;
@@ -24,6 +25,7 @@ import logica.Clase;
 import logica.Controlador;
 import logica.ManejadorClase;
 import logica.ManejadorInstitucion;
+import logica.Profesor;
 
 /**
  *
@@ -161,12 +163,11 @@ public class RegistroClase extends HttpServlet {
         IControlador icon = fb.getIControlador();
         ActividadDeportiva ac = icon.obtenerActividad(act);
         Clase c = icon.obtenerInfoClase(clase);
-
+        
         if(opcion.equals("registro")){
             
             try {
                 Date f = new Date();
-                System.out.println(f);
                 icon.altaSocioClase(socio, clase, f);
                 response.setStatus(200);
                 response.setContentType("text/plain");
@@ -180,6 +181,7 @@ public class RegistroClase extends HttpServlet {
             }
         }
         else{
+           
             if( c != null && ac != null){
                 request.setAttribute("clase", c);
                 request.setAttribute("actividad", ac);
