@@ -67,7 +67,7 @@
                                 <div class="navbar-nav">
                                     <% if(tipoUS){ %>
                                         <a class="nav-link" aria-current="page" href="registroClase.jsp">Registro a Clase</a>
-                                        <a class="nav-link" aria-current="page" href="#">Eliminar Registro</a>
+                                        <a class="nav-link" aria-current="page" href="eliminarRegistro.jsp">Eliminar Registro</a>
                                         <a class="nav-link" aria-current="page" href="#">Modificar Perfil</a>
                                         <a class="nav-link" href="#">Consultas</a>
                                         <button class="nav-link" onclick="cerrarSesion()">Cerrar Sesión</button>

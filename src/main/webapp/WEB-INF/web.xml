@@ -12,6 +12,14 @@
         <servlet-name>RegistroClase</servlet-name>
         <servlet-class>servlets.RegistroClase</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Inicio</servlet-name>
+        <servlet-class>servlets.Inicio</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EliminarRegistro</servlet-name>
+        <servlet-class>servlets.EliminarRegistro</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegistroUsuario</servlet-name>
         <url-pattern>/RegistroUsuario</url-pattern>
@@ -23,5 +31,14 @@
     <servlet-mapping>
         <servlet-name>RegistroClase</servlet-name>
         <url-pattern>/RegistroClase</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Inicio</servlet-name>
+        <url-pattern>/Inicio</url-pattern>
+        <url-pattern>/image/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EliminarRegistro</servlet-name>
+        <url-pattern>/EliminarRegistro</url-pattern>
     </servlet-mapping>
 </web-app>
