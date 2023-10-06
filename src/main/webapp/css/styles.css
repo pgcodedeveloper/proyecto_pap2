@@ -62,11 +62,52 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     background: rgb(214, 217, 223) !important;
 }
 
+.btn-consultas{
+    
+}
+.btn-consultas button{
+    font-size: 1rem;
+    text-align: left;
+    padding: 0.5rem;
+    font-weight: 400;
+    color: rgb(75, 76, 78) !important;
+    border: none !important;
+}
+
+.btn-consultas button:focus-visible{
+    outline: none;
+}
+
+@media(max-width: 448px){
+    .btn-consultas ul{
+        position: absolute !important;
+    }
+}
+
+.heading-logo{
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.heading-logo span{
+    font-style: italic;
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: rgb(70, 70, 80); 
+}
+
 .heading{
     text-align: center;
     margin: 1.5rem 0 2rem 0;
     font-weight: 700;
     font-size: 2rem;
+}
+
+.heading span{
+    font-style: italic;
+    font-weight: 900;
+    font-size: 2.5rem;
+    color: rgb(70, 70, 80); 
 }
 
 .main{
@@ -166,6 +207,10 @@ input:focus-visible{
     text-decoration: none;
 }
 
+.contenedor_acciones a span{
+    font-weight: 700;
+}
+
 .contenedor_spinner{
     width: 100%;
     margin: 0 auto;
@@ -245,4 +290,114 @@ thead tr th:nth-child(4){
 }
 .btn_elim i{
     color: rgb(220, 80, 63);
+}
+
+.contenedor-alerta{
+    margin-top: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.titulo-alerta{
+    font-size: 4rem;
+    font-weight: 900;
+}
+.titulo-alerta span{
+    color: rgb(120, 12, 5);
+}
+.texto-alerta{
+    color: rgb(75, 76, 78);
+    font-style: italic;
+}
+
+.contenedor-datos{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    width: 85%;
+    margin: 0 auto;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}
+
+@media(max-width: 448px){
+    .contenedor-datos{
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        flex-direction: column;
+    }
+}
+
+.contenedor-imagen{
+    flex: 1;
+    padding: 2rem;
+    background-color: rgb(214, 217, 223);
+    border-radius: 1rem;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media(max-width: 448px){
+    .contenedor-imagen{
+        padding: 1.5rem;
+        width: 65%;
+    }
+}
+
+.contenedor-imagen img{
+    width: 100%
+}
+
+.contenedor-info{
+    flex: 3;
+    padding: 1rem;
+}
+
+@media(max-width: 448px){
+    .contenedor-info{
+        width: 100%;
+    }
+}
+
+.contenedor-info-texto, .contenedor-info-textoextra{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 1rem;
+}
+.datos{
+    width: 100%;
+    margin: 0;
+    display: flex;
+    align-items: stretch;
+    justify-content: end;
+}
+
+.datos-p{
+    margin: 0;
+    padding: .5rem;
+    width: 100%;
+    text-align: left;
+    background-color: rgb(214, 217, 223);
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+}
+
+.datos i{
+    display: flex;
+    align-items: center;
+    padding: .5rem 1rem;
+    background-color: rgb(227, 227, 227);
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}
+.contenedor-info-textoextra{
+    width: 100%;
 }

@@ -7,6 +7,7 @@ package servlets;
 import interfaces.Fabrica;
 import interfaces.IControlador;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,11 +19,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.URL;
+import logica.Usuario;
 
-/**
- *
- * @author PC
- */
+@WebServlet("/mostrarImagen")
 public class Inicio extends HttpServlet {
 
     /**
@@ -63,38 +63,31 @@ public class Inicio extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         // Obtiene la parte de la URL que contiene el nombre de la imagen
-        String imagePath = (String) request.getAttribute("img");
-        String uploadDirectory = getServletContext().getRealPath("/imagenes");
-        File uploadDir = new File(uploadDirectory);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdirs();
-        }
-
-        // Obtener la ruta local del archivo desde la base de datos (reemplaza esta línea con tu lógica)
+        // Obtén la ruta de la imagen
+        HttpSession session = request.getSession(false);
+        Usuario u = ((Usuario ) session.getAttribute("usuario"));
+        String imagePath = u.getImagen();
         
-
-        // Obtener el nombre del archivo a partir de la ruta local
+        // Verifica si la ruta de la imagen existe
         File archivo = new File(imagePath);
-        String nombreArchivo = archivo.getName();
-
-        // Construir la ruta completa del archivo en el servidor
-        String filePath = uploadDirectory + File.separator + nombreArchivo;
-
-        try (InputStream inputStream = new FileInputStream(imagePath);
-             FileOutputStream outputStream = new FileOutputStream(filePath)) {
-            byte[] buffer = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Maneja errores, si es necesario
+        if (!archivo.exists()) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
         }
-    
-    }
 
-    /**
+        // Configura el tipo de contenido de la respuesta como imagen
+        response.setContentType("image/png"); // Cambia el tipo de contenido según el formato de la imagen
+
+        // Lee la imagen y escribe su contenido en la respuesta
+        try (FileInputStream fis = new FileInputStream(archivo)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = fis.read(buffer)) != -1) {
+                response.getOutputStream().write(buffer, 0, bytesRead);
+            }
+        }
+    }
+/**
      * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
@@ -103,8 +96,7 @@ public class Inicio extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
