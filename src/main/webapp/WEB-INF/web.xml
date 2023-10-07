@@ -20,6 +20,10 @@
         <servlet-name>EliminarRegistro</servlet-name>
         <servlet-class>servlets.EliminarRegistro</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Consultas</servlet-name>
+        <servlet-class>servlets.Consultas</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegistroUsuario</servlet-name>
         <url-pattern>/RegistroUsuario</url-pattern>
@@ -40,5 +44,9 @@
     <servlet-mapping>
         <servlet-name>EliminarRegistro</servlet-name>
         <url-pattern>/EliminarRegistro</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Consultas</servlet-name>
+        <url-pattern>/Consultas</url-pattern>
     </servlet-mapping>
 </web-app>

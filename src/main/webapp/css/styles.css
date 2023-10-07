@@ -401,3 +401,25 @@ thead tr th:nth-child(4){
 .contenedor-info-textoextra{
     width: 100%;
 }
+
+.contenedor-registros{
+    width: 85%;
+    margin:  0 auto;
+    display: flex;
+    align-items: stretch;
+    gap: 1rem;
+    justify-content: space-evenly;
+}
+
+.registros{
+    flex: 2;
+}
+.info-registros{
+    flex: 2;
+}
+
+.registros .list-group .list-group-item span{
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
