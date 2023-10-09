@@ -115,15 +115,58 @@
                        const c = document.querySelector("#clase");
                        if(c.textContent !== e.target.getAttribute('data-clase')){
                            c.textContent = e.target.getAttribute('data-clase');
+                           obtenerDatos(e.target.getAttribute('data-clase'));
                        }
                    });
                 });
             }
         });
         
-        async function obtenerDatos(){
-            //Consultar al servlet para traer los datos de la actividad
+        async function obtenerDatos(clase){
+            const url = "Consultas?consultar=registros&clase=" + clase;
+             await fetch(url)
+                    .then(response => response.json())
+                        .then(data =>{
+                            const acti = document.querySelector("#actividad");
+                            const costo = document.querySelector("#costo");
+                            const duracion = document.querySelector("#duracion");
+                            const horaInicio = document.querySelector("#hora");
+                            const fecha = document.querySelector("#fecha");
+                            acti.textContent = data[0][0];
+                            costo.textContent = data[0][1];
+                            duracion.textContent = data[0][2];
+                            <% for(Registro r: list){ %>
+                               if ("<%=r.getClaseId().getNombre()%>"===clase){
+                                   horaInicio.textContent = "<%=r.getClaseId().getHoraInicio()%>"
+                                   fecha.textContent = formatearFecha(Date.parse("<%=r.getFechaReg()%>"));
+                                }       
+                        <% }%>
+                        })
+                        .catch(error =>{
+                            console.error(error);
+                    });
         }
+        function formatearFecha(fecha){
+                    // Obtén la fecha en formato de texto
+            var fechaTexto = fecha;
+
+            // Crea un objeto de fecha a partir del texto
+            var fechaObjeto = new Date(fechaTexto);
+
+            // Obtiene los componentes de la fecha
+            var dia = fechaObjeto.getDate();
+            var mes = fechaObjeto.getMonth() + 1; // Los meses comienzan desde 0, por lo que sumamos 1
+            var anio = fechaObjeto.getFullYear();
+
+            // Formatea el mes, día, hora, minutos y segundos para que tengan dos dígitos
+            mes = (mes < 10) ? '0' + mes : mes;
+            dia = (dia < 10) ? '0' + dia : dia;
+
+            // Construye la cadena de texto formateada
+            var fechaFormateada = dia + '/' + mes + '/' + anio;
+            return fechaFormateada;
+        }
+
     </script>
 </body>
 </html>

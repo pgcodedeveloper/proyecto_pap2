@@ -4,6 +4,7 @@
  */
 package servlets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import interfaces.Fabrica;
 import interfaces.IControlador;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+
 
 /**
  *
@@ -63,6 +66,24 @@ public class Consultas extends HttpServlet {
         if(consultar.equals("registros")){
             String clase = request.getParameter("clase");
             
+            List<String[]> act = icon.obtenerActividadClase(clase);
+            response.setStatus(200);
+
+            // Convertir el ArrayList a JSON
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = objectMapper.writeValueAsString(act);
+
+            // Configurar el tipo de contenido de la respuesta a application/json
+            response.setContentType("application/json");
+
+            // Obtener el flujo de salida de la respuesta
+            PrintWriter out = response.getWriter();
+
+            // Escribir el JSON en la respuesta
+            out.println(json);
+
+            // Cerrar el flujo de salida
+            out.close();
         }
     }
 

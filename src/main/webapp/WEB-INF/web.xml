@@ -24,6 +24,10 @@
         <servlet-name>Consultas</servlet-name>
         <servlet-class>servlets.Consultas</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AltaDictadoClase</servlet-name>
+        <servlet-class>servlets.AltaDictadoClase</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegistroUsuario</servlet-name>
         <url-pattern>/RegistroUsuario</url-pattern>
@@ -48,5 +52,9 @@
     <servlet-mapping>
         <servlet-name>Consultas</servlet-name>
         <url-pattern>/Consultas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AltaDictadoClase</servlet-name>
+        <url-pattern>/AltaDictadoClase</url-pattern>
     </servlet-mapping>
 </web-app>
