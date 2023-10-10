@@ -14,7 +14,7 @@
         <main class="main">
             <h2 class="heading">Registro a Clase</h2>
 
-            <form class="formulario">
+            <form class="formulario" enctype="multipart/form-data">
                 <fieldset>
                     <legend>Institución Deportiva</legend>
                     <div class="input-group mb-3">
@@ -70,16 +70,9 @@
     <%@include file="footer.jsp" %>
     
     <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', async ()=>{
-            
-        });
-    </script>
-</body>
-</html> <script type="text/javascript">
         document.addEventListener("DOMContentLoaded",async function(){
             const select = document.querySelector("#instituciones");
             const selectA = document.querySelector("#actividades");
-            const selectC = document.querySelector("#clases");
             if(select !== null){
                 await fetch("RegistroClase?consultar=instituciones")
                     .then(response => response.json())
@@ -149,9 +142,10 @@
                 const actividades = document.querySelector("#actividades").value;
                 const clase = document.querySelector("#clase").value;
                 const url = document.querySelector("#url").value;
-                console.log(document.querySelector("#fecha"))
                 const fecha = document.querySelector("#fecha").value;
-
+                const img = document.querySelector("#imagen");
+                
+                
                 if(!instituciones || !actividades || !clase || !url || !fecha){
                     alert("Todos los campos son obligatorios");
                     return;
@@ -163,29 +157,43 @@
                 formData.append("clase", clase);
                 formData.append("url", url);
                 formData.append("fecha", fecha);
+                formData.append("imagen",new FormData().append("img",img));
                 try{
                     // Realiza la solicitud AJAX al Servlet usando async/await
                     const response = await fetch("AltaDictadoClase", {
                         method: 'POST',
                         body: formData.toString(), // Convierte FormData a cadena de consulta
                         headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded' // Establece el tipo de contenido
+                            'Content-Type': 'multipart/form-data' // Establece el tipo de contenido
                         }
                     });
                     if (response.ok) {
                         // Maneja la respuesta del servidor aquí (por ejemplo, mostrar un mensaje)
                         const mensaje = await response.text();
-                        alert("Registro exitoso");
-                        e.reset();
+                        Swal.fire({
+                            title: "Exito",
+                            text: mensaje,
+                            icon: "success"
+                        }).then(() =>{
+                            e.reset();
+                            window.location.href = window.location.origin + "/entrenamosuy";
+                        });
+                        
                     } else {
                         const mensaje = await response.text();
-                        alert("error");
+                        Swal.fire({
+                            title: "Error",
+                            text: mensaje,
+                            icon: "error"
+                        });
                         throw new Error('Error en la solicitud AJAX');
                     }
                 } catch (error) {
                     // Maneja cualquier error que ocurra durante la solicitud
                     console.error('Error:', error);
                 }
-            })
+            });
         });  
-        </script>
+    </script>
+</body>
+</html> 

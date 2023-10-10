@@ -8,12 +8,19 @@ import exceptions.ClaseException;
 import interfaces.Fabrica;
 import interfaces.IControlador;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import logica.Usuario;
 
@@ -21,6 +28,7 @@ import logica.Usuario;
  *
  * @author marti
  */
+@MultipartConfig
 public class AltaDictadoClase extends HttpServlet {
 
     /**
@@ -78,15 +86,29 @@ public class AltaDictadoClase extends HttpServlet {
         String act = request.getParameter("actividad");
         String clase = request.getParameter("clase");
         String url = request.getParameter("url");
-        System.out.println(request.getParameter("fecha"));
-        Date fecha = new Date(request.getParameter("fecha"));
+        Part img = request.getPart("imagen");
+        String arch = img.getSubmittedFileName();
+        String ruta = "/WEB-INF/" + arch;
+        
+        img.write(ruta);
+        
+        String fechaString = request.getParameter("fecha");
+        Date fecha = new Date();
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            fecha = dateFormat.parse(fechaString);
+        } catch (ParseException e) {
+            // Manejar la excepción si la cadena de fecha no es válida
+            e.printStackTrace();
+        }
+        
         Date fechaActual = new Date();
         HttpSession session = request.getSession(false);
         Usuario u = ((Usuario) session.getAttribute("usuario"));
         Fabrica fb = Fabrica.getInstancia();
         IControlador icon = fb.getIControlador();
         try {
-            icon.altaClaseActividad(inst, act, clase, u.getNickName(), url, fecha, fechaActual);
+            icon.altaClaseActividad(inst, act, clase, u.getNickName(), url, fecha, fechaActual,ruta);
             response.setStatus(200);
             response.setContentType("text/plain");
             response.setCharacterEncoding("UTF-8");
@@ -95,7 +117,7 @@ public class AltaDictadoClase extends HttpServlet {
             response.setStatus(400);
             response.setContentType("text/plain");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write("Clase ya existentes");
+            response.getWriter().write("Clase ya existente");
         }
     }
 

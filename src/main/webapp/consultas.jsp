@@ -63,7 +63,7 @@
                             <% for(Registro r: list){ %>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <%= r.getClaseId().getNombre() %>
-                                    <span class="badge bg-primary rounded-pill info-extra" data-clase="<%= r.getClaseId().getNombre() %>">Info <i class="fa-solid fa-circle-info"></i></span>
+                                    <span class="badge bg-primary rounded-pill info-extra" data-clase="<%= r.getClaseId().getNombre() %>">Info <i class="fa-solid fa-circle-info" data-clase="<%= r.getClaseId().getNombre() %>"></i></span>
                                 </li>
                             <% }%>
                         </ul>
@@ -72,29 +72,42 @@
                     <div class="info-registros">
                         <h5>Información de <span id="clase"></span></h5>
                         
-                        <p class="datos-registro">Hora de inicio: <span id="hora"></span></p>
-                        <p class="datos-registro">Fecha de registro: <span id="fecha"></span></p>
-                        <p class="datos-registro">Actividad deportiva: <span id="actividad"></span></p>
+                        <div>
+                            <p class="datos-registro">Hora de inicio: <span id="hora"></span></p> 
+                            <i class="fa-solid fa-clock"></i>
+                        </div>
+                        <div> 
+                            <p class="datos-registro">Fecha de registro: <span id="fecha"></span></p> 
+                            <i class="fa-solid fa-calendar-days"></i> 
+                        </div>
+                        <div>
+                            <p class="datos-registro">Actividad deportiva: <span id="actividad"></span></p>
+                            <i class="fa-solid fa-futbol"></i>
+                        </div>
                         <div class="datos-extra">
-                            <p class="datos-registro">Costo: <span id="costo"></span></p>
-                            <p class="datos-registro">Duración: <span id="duracion"></span></p>
+                            <div>
+                                <p class="datos-registro">Costo: <span id="costo"></span></p>
+                                <i class="fa-solid fa-sack-dollar"></i>
+                            </div>
+                            <div>
+                                <p class="datos-registro">Duración: <span id="duracion"></span></p>
+                                <i class="fa-solid fa-hourglass-start"></i>
+                            </div>
                         </div>
                     </div>
                 </section>
             <% } else { %>
                 <p class="no-registros">No tiene registros aún</p>
             <% } %>
-            
-        
-            
-            
-            
-            
-            
+   
         <% } else if(user != null && tipoR.equals("act") && (tipoUsuario.equals("profesor") || tipoUsuario.equals("socio"))){ %>
             <h2 class="heading">Consultar <span>Actividades</span></h2>
+            <%@include file="consultarActividades.jsp" %>
+            
         <% } else if( user != null && tipoR.equals("clases") && tipoUsuario.equals("profesor")){ %>
             <h2 class="heading">Consultar <span>Clases</span></h2>
+            
+            
         <% } else { %>
             <%@include file="errorPagina.jsp" %>
         <% } %>
@@ -106,16 +119,28 @@
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', async ()=>{
             const btnInfo = document.querySelectorAll(".info-extra");
-            
-            if(btnInfo !== null){
+            const btnInfoIcono = document.querySelectorAll(".info-extra i");
+            if(btnInfo !== null && btnInfoIcono !== null){
                 btnInfo.forEach(btn => {
                    const clase = btn.getAttribute('data-clase');
                    
-                   btn.addEventListener('click', (e) =>{
+                   btn.addEventListener('click', async (e) =>{
                        const c = document.querySelector("#clase");
                        if(c.textContent !== e.target.getAttribute('data-clase')){
                            c.textContent = e.target.getAttribute('data-clase');
-                           obtenerDatos(e.target.getAttribute('data-clase'));
+                           await obtenerDatos(e.target.getAttribute('data-clase'));
+                       }
+                   });
+                });
+                
+                btnInfoIcono.forEach(btn => {
+                   const clase = btn.getAttribute('data-clase');
+                   
+                   btn.addEventListener('click', async (e) =>{
+                       const c = document.querySelector("#clase");
+                       if(c.textContent !== e.target.getAttribute('data-clase')){
+                           c.textContent = e.target.getAttribute('data-clase');
+                           await obtenerDatos(e.target.getAttribute('data-clase'));
                        }
                    });
                 });
@@ -166,7 +191,8 @@
             var fechaFormateada = dia + '/' + mes + '/' + anio;
             return fechaFormateada;
         }
-
+        
+        
     </script>
 </body>
 </html>

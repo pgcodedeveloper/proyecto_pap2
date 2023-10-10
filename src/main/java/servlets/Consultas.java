@@ -13,7 +13,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
+import logica.ActividadDeportiva;
+import logica.Clase;
 
 
 /**
@@ -72,6 +75,46 @@ public class Consultas extends HttpServlet {
             // Convertir el ArrayList a JSON
             ObjectMapper objectMapper = new ObjectMapper();
             String json = objectMapper.writeValueAsString(act);
+
+            // Configurar el tipo de contenido de la respuesta a application/json
+            response.setContentType("application/json");
+
+            // Obtener el flujo de salida de la respuesta
+            PrintWriter out = response.getWriter();
+
+            // Escribir el JSON en la respuesta
+            out.println(json);
+            
+
+            // Cerrar el flujo de salida
+            out.close();
+        }
+        else if(consultar.equals("actividades")){
+            String actividad = request.getParameter("act");
+            ActividadDeportiva a = icon.obtenerActividad(actividad);
+            
+            List<String[]> datos = new ArrayList<>();
+            String[] act = new String[5];
+            act[0] = a.getDescripcion();
+            act[1] = a.getFechaReg().toString();
+            act[2] = a.getInst().getNombre();
+            act[3] = "" + a.getCosto();
+            act[4] = "" + a.getDuracion();
+            datos.add(act);
+            
+            String[] clases = new String[a.getClases().size()];
+            int cont = 0;
+            for(Clase c: a.getClases()){
+                clases[cont] = c.getNombre();
+                cont ++;
+            }
+            datos.add(clases);
+            
+            response.setStatus(200);
+
+            // Convertir el ArrayList a JSON
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = objectMapper.writeValueAsString(datos);
 
             // Configurar el tipo de contenido de la respuesta a application/json
             response.setContentType("application/json");

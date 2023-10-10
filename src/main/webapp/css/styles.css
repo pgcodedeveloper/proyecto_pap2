@@ -402,24 +402,112 @@ thead tr th:nth-child(4){
     width: 100%;
 }
 
-.contenedor-registros{
+.contenedor-registros, .contenedor-actividades{
     width: 85%;
     margin:  0 auto;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
     display: flex;
     align-items: stretch;
     gap: 1rem;
     justify-content: space-evenly;
 }
 
-.registros{
+@media(max-width: 448px){
+    .contenedor-registros, .contenedor-actividades{
+        flex-direction: column;
+        gap: .5rem;
+    }
+}
+
+.registros, .info-actividades{
     flex: 2;
 }
-.info-registros{
+.info-extra{
+    cursor: pointer;
+}
+.info-registros, .actividades{
     flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    gap: 1rem;
 }
 
 .registros .list-group .list-group-item span{
     display: flex;
     gap: .5rem;
     align-items: center;
+}
+.info-actividades .list-group .list-group-item span{
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+
+.info-registros div, .actividades div{
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+}
+
+.info-registros h5{
+    margin: 0;
+}
+
+.info-registros div i, .actividades div i{
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: rgb(227, 227, 227);
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.datos-registro{
+    margin: 0;
+    width: 100%;
+    text-align: left;
+    padding: .5rem;
+    background-color: rgb(214, 217, 223);
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    
+}
+
+.datos-registro span{
+    font-weight: 700;
+    color: rgb(70, 70, 80); 
+}
+
+.datos-extra{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+}
+
+@media(max-width: 448px){
+    .datos-extra{
+        gap: 1rem;
+    }
+}
+
+.contenedor-registros-socio{
+    width: 50%;
+    margin: 0 auto;
+}
+
+@media(max-width: 448px){
+    .contenedor-registros-socio{
+        width: 85%;
+        margin-bottom: 3rem;
+    }
+}
+
+.no-registros{
+    text-align: center;
+    margin: 0;
+    font-weight: 700;
 }

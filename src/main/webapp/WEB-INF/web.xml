@@ -28,6 +28,10 @@
         <servlet-name>AltaDictadoClase</servlet-name>
         <servlet-class>servlets.AltaDictadoClase</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VerClase</servlet-name>
+        <servlet-class>servlets.VerClase</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegistroUsuario</servlet-name>
         <url-pattern>/RegistroUsuario</url-pattern>
@@ -56,5 +60,9 @@
     <servlet-mapping>
         <servlet-name>AltaDictadoClase</servlet-name>
         <url-pattern>/AltaDictadoClase</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VerClase</servlet-name>
+        <url-pattern>/VerClase</url-pattern>
     </servlet-mapping>
 </web-app>
