@@ -28,7 +28,7 @@
             
             <div class="contenedor-datos">
                 <div class="contenedor-imagen">
-                    <img src="mostrarImagen" class="img-fluid rounded-start" alt="Imagen de perfil">
+                    <img src="mostrarImagen?tipo=usuarios" class="img-fluid rounded-start" alt="Imagen de perfil">
                 </div>
                 
                 <div class="contenedor-info">

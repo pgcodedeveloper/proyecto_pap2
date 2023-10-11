@@ -14,12 +14,12 @@
         <main class="main">
             <h2 class="heading">Registro a Clase</h2>
 
-            <form class="formulario" enctype="multipart/form-data">
+            <form class="formulario" action="AltaDictadoClase" method="POST" enctype="multipart/form-data">
                 <fieldset>
                     <legend>Institución Deportiva</legend>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa-solid fa-dumbbell"></i></span>
-                        <select class="form-select" id="instituciones" aria-label="Default select example">
+                        <select class="form-select" id="instituciones" name="institucion" aria-label="Default select example">
                             <option selected disabled>Seleccione una opción</option>
                         </select>
                     </div>
@@ -37,7 +37,7 @@
                     <legend>Datos de la clase</legend>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa-solid fa-graduation-cap"></i></span>
-                        <input type="text" class="form-control" id="clase" placeholder="Ingrese el nombre de la clase">
+                        <input type="text" class="form-control" name="clase" id="clase" placeholder="Ingrese el nombre de la clase">
                     </div>
                      <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
@@ -135,65 +135,31 @@
                     });                        
                 }    
             }
+            
             const form = document.querySelector(".formulario");
-            form.addEventListener("submit", async(e) => {
+            form.addEventListener('submit',async (e) =>{
                 e.preventDefault();
-                const instituciones = document.querySelector("#instituciones").value;
-                const actividades = document.querySelector("#actividades").value;
-                const clase = document.querySelector("#clase").value;
-                const url = document.querySelector("#url").value;
-                const fecha = document.querySelector("#fecha").value;
-                const img = document.querySelector("#imagen");
                 
-                
-                if(!instituciones || !actividades || !clase || !url || !fecha){
-                    alert("Todos los campos son obligatorios");
-                    return;
-                }
-                // Construye una cadena de consulta con los datos
-                const formData = new URLSearchParams();
-                formData.append("institucion", instituciones);
-                formData.append("actividad", actividades);
-                formData.append("clase", clase);
-                formData.append("url", url);
-                formData.append("fecha", fecha);
-                formData.append("imagen",new FormData().append("img",img));
-                try{
-                    // Realiza la solicitud AJAX al Servlet usando async/await
-                    const response = await fetch("AltaDictadoClase", {
-                        method: 'POST',
-                        body: formData.toString(), // Convierte FormData a cadena de consulta
-                        headers: {
-                            'Content-Type': 'multipart/form-data' // Establece el tipo de contenido
-                        }
-                    });
-                    if (response.ok) {
-                        // Maneja la respuesta del servidor aquí (por ejemplo, mostrar un mensaje)
-                        const mensaje = await response.text();
-                        Swal.fire({
-                            title: "Exito",
-                            text: mensaje,
-                            icon: "success"
-                        }).then(() =>{
-                            e.reset();
-                            window.location.href = window.location.origin + "/entrenamosuy";
-                        });
-                        
-                    } else {
-                        const mensaje = await response.text();
-                        Swal.fire({
-                            title: "Error",
-                            text: mensaje,
-                            icon: "error"
-                        });
-                        throw new Error('Error en la solicitud AJAX');
-                    }
-                } catch (error) {
-                    // Maneja cualquier error que ocurra durante la solicitud
-                    console.error('Error:', error);
+                const response = await fetch("AltaDictadoClase", {
+                    method: "POST",
+                    body: new FormData(form), // Envía los datos del formulario
+                })
+                if (response.ok) {
+                    // Maneja la respuesta del servidor aquí (por ejemplo, mostrar un mensaje)
+                    const mensaje = await response.text();
+                    mostrarMensaje(mensaje,"Registro exitoso","success");
+                    e.reset();
+                } else {
+                    const mensaje = await response.text();
+                    mostrarMensaje(mensaje,"Error","error");
+                    throw new Error('Error en la solicitud AJAX');
                 }
             });
         });  
+        function mostrarMensaje(mensaje,titulo,tipo) {
+            // Aquí puedes usar SweetAlert2 o cualquier otra biblioteca para mostrar un mensaje
+            Swal.fire({ title: titulo, text: mensaje, icon: tipo });
+        }
     </script>
 </body>
 </html> 

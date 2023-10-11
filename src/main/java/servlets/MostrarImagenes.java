@@ -20,10 +20,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URL;
+import logica.Clase;
 import logica.Usuario;
 
 @WebServlet("/mostrarImagen")
-public class Inicio extends HttpServlet {
+public class MostrarImagenes extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -64,28 +65,63 @@ public class Inicio extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         // Obtiene la parte de la URL que contiene el nombre de la imagen
         // Obtén la ruta de la imagen
-        HttpSession session = request.getSession(false);
-        Usuario u = ((Usuario ) session.getAttribute("usuario"));
-        String imagePath = u.getImagen();
+        String tipo = request.getParameter("tipo");
         
-        // Verifica si la ruta de la imagen existe
-        File archivo = new File(imagePath);
-        if (!archivo.exists()) {
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            return;
-        }
+        if(tipo.equals("usuarios")){
+            HttpSession session = request.getSession(false);
+            Usuario u = ((Usuario ) session.getAttribute("usuario"));
+            String imagePath = u.getImagen();
 
-        // Configura el tipo de contenido de la respuesta como imagen
-        response.setContentType("image/png"); // Cambia el tipo de contenido según el formato de la imagen
+            // Verifica si la ruta de la imagen existe
+            File archivo = new File(imagePath);
+            if (!archivo.exists()) {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
 
-        // Lee la imagen y escribe su contenido en la respuesta
-        try (FileInputStream fis = new FileInputStream(archivo)) {
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = fis.read(buffer)) != -1) {
-                response.getOutputStream().write(buffer, 0, bytesRead);
+            // Configura el tipo de contenido de la respuesta como imagen
+            response.setContentType("image/png"); // Cambia el tipo de contenido según el formato de la imagen
+
+            // Lee la imagen y escribe su contenido en la respuesta
+            try (FileInputStream fis = new FileInputStream(archivo)) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = fis.read(buffer)) != -1) {
+                    response.getOutputStream().write(buffer, 0, bytesRead);
+                }
             }
         }
+        else if(tipo.equals("clases")){
+            String clase = request.getParameter("clase");
+            Fabrica f = Fabrica.getInstancia();
+            IControlador icon = f.getIControlador();
+            Clase c = icon.obtenerInfoClase(clase);
+            
+            if(clase != null){
+                // Verifica si la ruta de la imagen existe
+                File archivo = new File(c.getImagen());
+                if (!archivo.exists()) {
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    return;
+                }
+
+                // Configura el tipo de contenido de la respuesta como imagen
+                response.setContentType("image/png"); // Cambia el tipo de contenido según el formato de la imagen
+
+                // Lee la imagen y escribe su contenido en la respuesta
+                try (FileInputStream fis = new FileInputStream(archivo)) {
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+                    while ((bytesRead = fis.read(buffer)) != -1) {
+                        response.getOutputStream().write(buffer, 0, bytesRead);
+                    }
+                }
+            }
+        }
+        else{
+            
+        }
+        
     }
 /**
      * Handles the HTTP <code>POST</code> method.

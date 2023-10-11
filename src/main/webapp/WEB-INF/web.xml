@@ -13,10 +13,6 @@
         <servlet-class>servlets.RegistroClase</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Inicio</servlet-name>
-        <servlet-class>servlets.Inicio</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>EliminarRegistro</servlet-name>
         <servlet-class>servlets.EliminarRegistro</servlet-class>
     </servlet>
@@ -32,6 +28,10 @@
         <servlet-name>VerClase</servlet-name>
         <servlet-class>servlets.VerClase</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MostrarImagenes</servlet-name>
+        <servlet-class>servlets.MostrarImagenes</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegistroUsuario</servlet-name>
         <url-pattern>/RegistroUsuario</url-pattern>
@@ -43,11 +43,6 @@
     <servlet-mapping>
         <servlet-name>RegistroClase</servlet-name>
         <url-pattern>/RegistroClase</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Inicio</servlet-name>
-        <url-pattern>/Inicio</url-pattern>
-        <url-pattern>/image/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EliminarRegistro</servlet-name>
@@ -64,5 +59,9 @@
     <servlet-mapping>
         <servlet-name>VerClase</servlet-name>
         <url-pattern>/VerClase</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MostrarImagenes</servlet-name>
+        <url-pattern>/MostrarImagenes</url-pattern>
     </servlet-mapping>
 </web-app>

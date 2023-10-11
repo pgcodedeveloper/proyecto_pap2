@@ -3,8 +3,9 @@
 <%@page import="logica.ActividadDeportiva" %>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import= "interfaces.Fabrica"%>
-<%@page import= "interfaces.IControlador"%>
+<%@page import="interfaces.Fabrica"%>
+<%@page import="interfaces.IControlador"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -16,7 +17,7 @@
 
     <%@include file="header.jsp" %>
     
-        <main class="main">
+        <main class="main main-rankings">
             <%
             Fabrica fb = Fabrica.getInstancia();
             IControlador icon = fb.getIControlador();
@@ -25,7 +26,7 @@
             ArrayList <Object[]> listaAct = icon.rankingActividades();
   
             %>
-            <h1> Ranking de Clases </h1>
+            <h2 class="heading"> Ranking de <span>Clases</span></h2>
             <table class="table table-striped" style="margin-bottom: 40px;">
                 <thead>
                   <tr>
@@ -56,7 +57,8 @@
                     %>
                 </tbody>
             </table>
-                <h1 style="margin-top: 40px;"> Ranking de Actividades </h1>
+            
+            <h2 class="heading"> Ranking de <span>Actividades</span></h2>
             <table class="table table-striped">
                 <thead>
                   <tr>

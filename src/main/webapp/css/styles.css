@@ -114,6 +114,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     width: 95%;
     margin: 0 auto;
     margin-top: 3rem;
+    margin-bottom: 5rem;
+}
+
+.main-rankings{
+    width: 85%;
 }
 
 .formulario, .main_registro,.contenedor_registros{

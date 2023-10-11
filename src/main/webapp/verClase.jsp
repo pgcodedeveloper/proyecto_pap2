@@ -47,7 +47,7 @@
             </div>
                             
             <div class="contenedor-imagen">
-                <img src="mostrarImagen" class="img-fluid rounded-start" alt="Imagen de Clase" />
+                <img src="mostrarImagen?tipo=clases&clase=<%= cl.getNombre() %>" class="img-fluid rounded-start" alt="Imagen de Clase" />
             </div>
         </div>
         

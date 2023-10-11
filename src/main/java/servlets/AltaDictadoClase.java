@@ -7,6 +7,7 @@ package servlets;
 import exceptions.ClaseException;
 import interfaces.Fabrica;
 import interfaces.IControlador;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
@@ -14,14 +15,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import logica.Usuario;
 
 /**
@@ -82,15 +82,23 @@ public class AltaDictadoClase extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        System.out.println(request.getParameterNames());
+        
+        
         String inst = request.getParameter("institucion");
         String act = request.getParameter("actividad");
         String clase = request.getParameter("clase");
         String url = request.getParameter("url");
+        String imagen = request.getParameter("imagen");
+        System.out.println(imagen);
+        ServletContext context = getServletContext();
+        String pathToWebInf = context.getRealPath("/WEB-INF");
         Part img = request.getPart("imagen");
-        String arch = img.getSubmittedFileName();
-        String ruta = "/WEB-INF/" + arch;
         
-        img.write(ruta);
+        String arch = img.getSubmittedFileName();
+        String rutaCompleta = pathToWebInf + File.separator + arch;
+        File uploadedFile = new File(rutaCompleta);
+        img.write(uploadedFile.getPath());
         
         String fechaString = request.getParameter("fecha");
         Date fecha = new Date();
@@ -108,7 +116,7 @@ public class AltaDictadoClase extends HttpServlet {
         Fabrica fb = Fabrica.getInstancia();
         IControlador icon = fb.getIControlador();
         try {
-            icon.altaClaseActividad(inst, act, clase, u.getNickName(), url, fecha, fechaActual,ruta);
+            icon.altaClaseActividad(inst, act, clase, u.getNickName(), url, fecha, fechaActual,rutaCompleta);
             response.setStatus(200);
             response.setContentType("text/plain");
             response.setCharacterEncoding("UTF-8");
