@@ -87,7 +87,7 @@
                                             <button class="nav-link" onclick="cerrarSesion()">Cerrar Sesión</button>
                                         <% } else if(tipoUP){ %>
                                         <a class="nav-link" href="altaDictadoClase.jsp">Registro Dictado</a>
-                                            <a class="nav-link" href="#">Ranking Dictados y Actividades</a>
+                                            <a class="nav-link" href="rankings.jsp">Ranking Dictados y Actividades</a>
                                             <a class="nav-link" href="consultas.jsp">Consultas</a>
                                             <button class="nav-link" onclick="cerrarSesion()">Cerrar Sesión</button>
                                         <% } else { %>
