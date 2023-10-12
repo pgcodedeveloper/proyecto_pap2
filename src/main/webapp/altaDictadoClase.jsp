@@ -137,8 +137,10 @@
             }
             
             const form = document.querySelector(".formulario");
+            
             form.addEventListener('submit',async (e) =>{
                 e.preventDefault();
+                form.fecha.value = form.fecha.value + "T" + form.hora.value;
                 
                 const response = await fetch("AltaDictadoClase", {
                     method: "POST",

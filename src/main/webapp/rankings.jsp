@@ -89,5 +89,5 @@
                 </tbody>
             </table>
         </main>
-
+        <%@include file="footer.jsp" %>
 </html>

@@ -17,7 +17,10 @@
         String tipoR = request.getParameter("tipo") != null ? request.getParameter("tipo") : "error";
         String tipoUsuario = ((String) session.getAttribute("tipoUser")) != null ? ((String) session.getAttribute("tipoUser")) : null;
         Usuario user = ((Usuario) session.getAttribute("usuario")) != null ? ((Usuario) session.getAttribute("usuario")) : null;
-        List<Registro> list = ((Socio)user).getRegistros() != null ? ((Socio)user).getRegistros() : null;
+        List<Registro> list = null;
+        if (user instanceof Socio){
+           list = ((Socio)user).getRegistros() != null ? ((Socio)user).getRegistros() : null;
+        }
     %>
     <%@include file="header.jsp" %>
     

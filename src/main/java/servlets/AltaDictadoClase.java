@@ -90,6 +90,7 @@ public class AltaDictadoClase extends HttpServlet {
         String clase = request.getParameter("clase");
         String url = request.getParameter("url");
         String imagen = request.getParameter("imagen");
+        
         System.out.println(imagen);
         ServletContext context = getServletContext();
         String pathToWebInf = context.getRealPath("/WEB-INF");
@@ -101,10 +102,12 @@ public class AltaDictadoClase extends HttpServlet {
         img.write(uploadedFile.getPath());
         
         String fechaString = request.getParameter("fecha");
+        
         Date fecha = new Date();
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             fecha = dateFormat.parse(fechaString);
+            fecha.setTime(0);
         } catch (ParseException e) {
             // Manejar la excepción si la cadena de fecha no es válida
             e.printStackTrace();

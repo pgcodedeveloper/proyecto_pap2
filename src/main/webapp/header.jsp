@@ -88,7 +88,18 @@
                                         <% } else if(tipoUP){ %>
                                         <a class="nav-link" href="altaDictadoClase.jsp">Registro Dictado</a>
                                             <a class="nav-link" href="rankings.jsp">Ranking Dictados y Actividades</a>
-                                            <a class="nav-link" href="consultas.jsp">Consultas</a>
+                                               <div class="btn-group btn-consultas">
+                                                <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Consultar
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="consultas.jsp?tipo=usuario">Perfil</a></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item" href="consultas.jsp?tipo=act">Actividades Deportivas</a></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item" href="consultas.jsp?tipo=clases">Clases</a></li>
+                                                </ul>
+                                            </div>
                                             <button class="nav-link" onclick="cerrarSesion()">Cerrar Sesión</button>
                                         <% } else { %>
                                             <a class="nav-link" href="login.jsp">Login</a>
