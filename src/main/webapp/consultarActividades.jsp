@@ -155,7 +155,6 @@
                     const duracionA = document.querySelector("#duracionA");
                     
                     desc.textContent = data[0][0];
-                    console.log(data[0][1]);
                     fechaR.textContent = data[0][1];
                     inst.textContent = data[0][2];
                     costoA.textContent = data[0][3];

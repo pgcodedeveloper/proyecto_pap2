@@ -163,11 +163,12 @@
                             acti.textContent = data[0][0];
                             costo.textContent = data[0][1];
                             duracion.textContent = data[0][2];
-                            <% for(Registro r: list){ %>
-                               if ("<%=r.getClaseId().getNombre()%>"===clase){
-                                   horaInicio.textContent = "<%=r.getClaseId().getHoraInicio()%>"
-                                   fecha.textContent = formatearFecha(Date.parse("<%=r.getFechaReg()%>"));
-                                }       
+                            <%if (list != null)
+                                for(Registro r: list){ %>
+                                    if ("<%=r.getClaseId().getNombre()%>"===clase){
+                                        horaInicio.textContent = "<%=r.getClaseId().getHoraInicio()%>"
+                                        fecha.textContent = formatearFecha(Date.parse("<%=r.getFechaReg()%>"));
+                                     }
                         <% }%>
                         })
                         .catch(error =>{
