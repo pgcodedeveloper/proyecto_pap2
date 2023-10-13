@@ -127,6 +127,36 @@ public class Consultas extends HttpServlet {
 
             // Cerrar el flujo de salida
             out.close();
+        } else if(consultar.equals("clases")){
+            String actividad = request.getParameter("act");
+            ActividadDeportiva a = icon.obtenerActividad(actividad);
+            
+            List<String[]> datos = new ArrayList<>();
+            String[] clases = new String[a.getClases().size()];
+            int cont = 0;
+            for(Clase c: a.getClases()){
+                clases[cont] = c.getNombre();
+                cont ++;
+            }
+            datos.add(clases);
+            
+            response.setStatus(200);
+
+            // Convertir el ArrayList a JSON
+            ObjectMapper objectMapper = new ObjectMapper();
+            String json = objectMapper.writeValueAsString(datos);
+
+            // Configurar el tipo de contenido de la respuesta a application/json
+            response.setContentType("application/json");
+
+            // Obtener el flujo de salida de la respuesta
+            PrintWriter out = response.getWriter();
+
+            // Escribir el JSON en la respuesta
+            out.println(json);
+
+            // Cerrar el flujo de salida
+            out.close();
         }
     }
 

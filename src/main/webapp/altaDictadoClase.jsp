@@ -12,7 +12,7 @@
     <%@include file="header.jsp" %>
     
         <main class="main">
-            <h2 class="heading">Registro a Clase</h2>
+            <h2 class="heading">Registro de una <span>Clase</span> </h2>
 
             <form class="formulario" action="AltaDictadoClase" method="POST" enctype="multipart/form-data">
                 <fieldset>

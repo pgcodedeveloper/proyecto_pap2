@@ -1,5 +1,6 @@
 <%@page import="logica.Usuario" %>
 <%@page import="logica.Socio" %>
+<%@page import="logica.Profesor" %>
 <%@page import="logica.Clase" %>
 <%@page import="logica.Registro" %>
 <%@page import="java.util.List"%>
@@ -18,8 +19,15 @@
         String tipoUsuario = ((String) session.getAttribute("tipoUser")) != null ? ((String) session.getAttribute("tipoUser")) : null;
         Usuario user = ((Usuario) session.getAttribute("usuario")) != null ? ((Usuario) session.getAttribute("usuario")) : null;
         List<Registro> list = null;
+        List<Clase> listC = null;
+        boolean profe = false;
+        boolean socio = false;
         if (user instanceof Socio){
+            socio = true;
            list = ((Socio)user).getRegistros() != null ? ((Socio)user).getRegistros() : null;
+        }
+        else if(user instanceof Profesor){
+            listC = ((Profesor)user).getClases() != null ? ((Profesor)user).getClases() : null;
         }
     %>
     <%@include file="header.jsp" %>
@@ -51,57 +59,126 @@
                                 <p class="datos-p"><%= user.getFecha() %></p>
                                 <i class="fa-solid fa-calendar-days"></i>
                             </div>
+                            <% if(user instanceof Profesor) {%>
+                                <div class="datos">
+                                    <p class="datos-p"><%= ((Profesor)user).getBiografia() %></p>
+                                    <i class="fa-brands fa-blogger"></i>
+                                </div>
+                                <div class="datos">
+                                    <p class="datos-p"><%= ((Profesor)user).getDescripcion() %></p>
+                                    <i class="fa-solid fa-comment"></i>
+                                </div>
+                                <div class="datos">
+                                    <p class="datos-p"><%= ((Profesor)user).getSitioWeb() %></p>
+                                    <i class="fa-solid fa-globe"></i>
+                                </div>
+                                <div class="datos">
+                                    <p class="datos-p"><%= ((Profesor)user).getInstitucionDeportiva().getNombre() %></p>
+                                    <i class="fa-solid fa-school"></i>
+                                </div>
+                            <% } %>  
                         </div>
                     </div>
                 </div>
             </div>
             
-                                
-            <h2 class="heading">Registros a <span>Clases</span></h2>
-            <% if(list != null && !list.isEmpty()){ %>
-                <section class="contenedor-registros">
-                    <div class="registros">
-                        <h5>Total Registros <span><%= list.size() %></span></h5>
-                        <ul class="list-group">
-                            <% for(Registro r: list){ %>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <%= r.getClaseId().getNombre() %>
-                                    <span class="badge bg-primary rounded-pill info-extra" data-clase="<%= r.getClaseId().getNombre() %>">Info <i class="fa-solid fa-circle-info" data-clase="<%= r.getClaseId().getNombre() %>"></i></span>
-                                </li>
-                            <% }%>
-                        </ul>
-                    </div>
+            <% if(user instanceof Socio) {%>                
+                <h2 class="heading">Registros a <span>Clases</span></h2>
+                <% if(list != null && !list.isEmpty()){ %>
+                    <section class="contenedor-registros">
+                        <div class="registros">
+                            <h5>Total Registros <span><%= list.size() %></span></h5>
+                            <ul class="list-group">
+                                <% for(Registro r: list){ %>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <%= r.getClaseId().getNombre() %>
+                                        <span class="badge bg-primary rounded-pill info-extra" data-clase="<%= r.getClaseId().getNombre() %>">Info <i class="fa-solid fa-circle-info" data-clase="<%= r.getClaseId().getNombre() %>"></i></span>
+                                    </li>
+                                <% }%>
+                            </ul>
+                        </div>
 
-                    <div class="info-registros">
-                        <h5>Información de <span id="clase"></span></h5>
-                        
-                        <div>
-                            <p class="datos-registro">Hora de inicio: <span id="hora"></span></p> 
-                            <i class="fa-solid fa-clock"></i>
-                        </div>
-                        <div> 
-                            <p class="datos-registro">Fecha de registro: <span id="fecha"></span></p> 
-                            <i class="fa-solid fa-calendar-days"></i> 
-                        </div>
-                        <div>
-                            <p class="datos-registro">Actividad deportiva: <span id="actividad"></span></p>
-                            <i class="fa-solid fa-futbol"></i>
-                        </div>
-                        <div class="datos-extra">
+                        <div class="info-registros">
+                            <h5>Información de <span id="clase"></span></h5>
+
                             <div>
-                                <p class="datos-registro">Costo: <span id="costo"></span></p>
-                                <i class="fa-solid fa-sack-dollar"></i>
+                                <p class="datos-registro">Hora de inicio: <span id="hora"></span></p> 
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div> 
+                                <p class="datos-registro">Fecha de registro: <span id="fecha"></span></p> 
+                                <i class="fa-solid fa-calendar-days"></i> 
                             </div>
                             <div>
-                                <p class="datos-registro">Duración: <span id="duracion"></span></p>
-                                <i class="fa-solid fa-hourglass-start"></i>
+                                <p class="datos-registro">Actividad deportiva: <span id="actividad"></span></p>
+                                <i class="fa-solid fa-futbol"></i>
+                            </div>
+                            <div class="datos-extra">
+                                <div>
+                                    <p class="datos-registro">Costo: <span id="costo"></span></p>
+                                    <i class="fa-solid fa-sack-dollar"></i>
+                                </div>
+                                <div>
+                                    <p class="datos-registro">Duración: <span id="duracion"></span></p>
+                                    <i class="fa-solid fa-hourglass-start"></i>
+                                </div>
                             </div>
                         </div>
+                    </section>
+                <% } else { %>
+                    <div class="alert alert-info" role="alert">
+                        <p class="no-registros">No tiene registros aún</p>
                     </div>
-                </section>
-            <% } else { %>
-                <p class="no-registros">No tiene registros aún</p>
-            <% } %>
+                <% } 
+            } else { %>
+                <h2 class="heading">Clases que <span>Dicta</span></h2>
+                <% if(listC != null && !listC.isEmpty()){ %>
+                    <section class="contenedor-registros">
+                        <div class="registros">
+                            <h5>Total Clases <span><%= listC.size() %></span></h5>
+                            <ul class="list-group">
+                                <% for(Clase c: listC){ %>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <%= c.getNombre() %>
+                                        <span class="badge bg-primary rounded-pill info-extra" data-clase="<%= c.getNombre() %>">Info <i class="fa-solid fa-circle-info" data-clase="<%= c.getNombre() %>"></i></span>
+                                    </li>
+                                <% }%>
+                            </ul>
+                        </div>
+
+                        <div class="info-registros">
+                            <h5>Información de <span id="clase"></span></h5>
+
+                            <div>
+                                <p class="datos-registro">Hora de inicio: <span id="hora"></span></p> 
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div> 
+                                <p class="datos-registro">Fecha de registro: <span id="fecha"></span></p> 
+                                <i class="fa-solid fa-calendar-days"></i> 
+                            </div>
+                            <div>
+                                <p class="datos-registro">Actividad deportiva: <span id="actividad"></span></p>
+                                <i class="fa-solid fa-futbol"></i>
+                            </div>
+                            <div class="datos-extra">
+                                <div>
+                                    <p class="datos-registro">Costo: <span id="costo"></span></p>
+                                    <i class="fa-solid fa-sack-dollar"></i>
+                                </div>
+                                <div>
+                                    <p class="datos-registro">Duración: <span id="duracion"></span></p>
+                                    <i class="fa-solid fa-hourglass-start"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                <% } else { %>
+                    <div class="alert alert-info" role="alert">
+                        <p class="no-registros">No tiene registros aún</p>
+                    </div>
+                <% } 
+            } %>
    
         <% } else if(user != null && tipoR.equals("act") && (tipoUsuario.equals("profesor") || tipoUsuario.equals("socio"))){ %>
             <h2 class="heading">Consultar <span>Actividades</span></h2>
@@ -111,6 +188,8 @@
             <h2 class="heading">Consultar <span>Clases</span></h2>
             
             
+            
+            <!-- <%@ include  file="consultarClases.jsp" %> -->
         <% } else { %>
             <%@include file="errorPagina.jsp" %>
         <% } %>
@@ -163,13 +242,22 @@
                             acti.textContent = data[0][0];
                             costo.textContent = data[0][1];
                             duracion.textContent = data[0][2];
-                            <%if (list != null)
+                            <%if (list != null) {
                                 for(Registro r: list){ %>
                                     if ("<%=r.getClaseId().getNombre()%>"===clase){
                                         horaInicio.textContent = "<%=r.getClaseId().getHoraInicio()%>"
                                         fecha.textContent = formatearFecha(Date.parse("<%=r.getFechaReg()%>"));
                                      }
-                        <% }%>
+                                <% }
+                            } else if(listC !=null) {%>
+                                <% for(Clase c: listC) { %>
+                                    if ("<%=c.getNombre()%>"===clase){
+                                        horaInicio.textContent = "<%=c.getHoraInicio()%>"
+                                        fecha.textContent = formatearFecha(Date.parse("<%=c.getFechaReg()%>"));
+                                     }
+                                 
+                                <% }
+                            } %>
                         })
                         .catch(error =>{
                             console.error(error);

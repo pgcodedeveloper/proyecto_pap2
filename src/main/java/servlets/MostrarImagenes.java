@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URL;
+import logica.ActividadDeportiva;
 import logica.Clase;
 import logica.Usuario;
 
@@ -80,7 +81,7 @@ public class MostrarImagenes extends HttpServlet {
             }
 
             // Configura el tipo de contenido de la respuesta como imagen
-            response.setContentType("image/png"); // Cambia el tipo de contenido según el formato de la imagen
+            response.setContentType("image/*"); // Cambia el tipo de contenido según el formato de la imagen
 
             // Lee la imagen y escribe su contenido en la respuesta
             try (FileInputStream fis = new FileInputStream(archivo)) {
@@ -106,7 +107,7 @@ public class MostrarImagenes extends HttpServlet {
                 }
 
                 // Configura el tipo de contenido de la respuesta como imagen
-                response.setContentType("image/png"); // Cambia el tipo de contenido según el formato de la imagen
+                response.setContentType("image/*"); // Cambia el tipo de contenido según el formato de la imagen
 
                 // Lee la imagen y escribe su contenido en la respuesta
                 try (FileInputStream fis = new FileInputStream(archivo)) {
@@ -118,8 +119,32 @@ public class MostrarImagenes extends HttpServlet {
                 }
             }
         }
-        else{
+        else if(tipo.equals("actividad")){
+            String act = request.getParameter("act");
+            Fabrica f = Fabrica.getInstancia();
+            IControlador icon = f.getIControlador();
+            ActividadDeportiva a = icon.obtenerActividad(act);
             
+            if(a != null){
+                // Verifica si la ruta de la imagen existe
+                File archivo = new File(a.getImagen());
+                if (!archivo.exists()) {
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    return;
+                }
+
+                // Configura el tipo de contenido de la respuesta como imagen
+                response.setContentType("image/*"); // Cambia el tipo de contenido según el formato de la imagen
+
+                // Lee la imagen y escribe su contenido en la respuesta
+                try (FileInputStream fis = new FileInputStream(archivo)) {
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+                    while ((bytesRead = fis.read(buffer)) != -1) {
+                        response.getOutputStream().write(buffer, 0, bytesRead);
+                    }
+                }
+            }
         }
         
     }

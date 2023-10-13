@@ -10,50 +10,53 @@
     
     <%@include file="header.jsp" %>
     
-    
-    <main class="main">
-        <h2 class="heading">Elimine sus registros</h2>
-        
-        <form action="" class="formulario">
-            <fieldset>
-                <legend>Institución Deportiva</legend>
-                <div class="input-group mb-3">
-                    <span class="input-group-text"><i class="fa-solid fa-dumbbell"></i></span>
-                    <select class="form-select" id="instituciones" aria-label="Default select example">
-                        <option selected disabled>Seleccione una opción</option>
-                    </select>
-                </div>
-            </fieldset>
+    <% if(!error){ %>
+        <main class="main">
+            <h2 class="heading">Elimine sus <span>Registros</span></h2>
 
-            <fieldset>
-                <legend>Actividades Deportivas</legend>
-                <div class="input-group mb-3">
-                    <span class="input-group-text"><i class="fa-solid fa-dumbbell"></i></span>
-                    <select class="form-select" id="actividades" name="actividad" aria-label="Default select example" disabled></select>
-                </div>
-            </fieldset>
+            <form action="" class="formulario">
+                <fieldset>
+                    <legend>Institución Deportiva</legend>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fa-solid fa-dumbbell"></i></span>
+                        <select class="form-select" id="instituciones" aria-label="Default select example">
+                            <option selected disabled>Seleccione una opción</option>
+                        </select>
+                    </div>
+                </fieldset>
 
-            
-        </form>
-        
-        <div class="contenedor_registros">
-            <h2 class="heading">Registros del Socio</h2>
-            <table class="table table-hover">
-                <thead class="bg-dark">
-                    <tr>
-                        <th scope="col">Clase</th>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Socio</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla_body">
+                <fieldset>
+                    <legend>Actividades Deportivas</legend>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text"><i class="fa-solid fa-dumbbell"></i></span>
+                        <select class="form-select" id="actividades" name="actividad" aria-label="Default select example" disabled></select>
+                    </div>
+                </fieldset>
 
-                </tbody>
-            </table>
-        </div>
-        
-    </main>
+
+            </form>
+
+            <div class="contenedor_registros">
+                <h2 class="heading">Registros del <span>Socio</span> </h2>
+                <table class="table table-hover">
+                    <thead class="bg-dark">
+                        <tr>
+                            <th scope="col">Clase</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Socio</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla_body">
+
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
+    <% } else {%>
+        <%@include file="errorPagina.jsp" %>
+    <% } %>
     
     <%@include file="footer.jsp" %>
     
