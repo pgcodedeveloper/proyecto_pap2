@@ -10,7 +10,7 @@
 <body>
     
     <%@include file="header.jsp" %>
-    
+    <% if(!error) { %>
         <main class="main">
             <h2 class="heading">Registro de una <span>Clase</span> </h2>
 
@@ -41,7 +41,8 @@
                     </div>
                      <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
-                        <input type="date" class="form-control" name="fecha" id="fecha"/>   
+                        <input type="date" class="form-control" name="fecha" id="fecha"/>  
+                        <input type="hidden" id="fechaR" name="fechaR"/>
                     </div>
                      <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa-solid fa-clock"></i></span>
@@ -49,7 +50,7 @@
                     </div>
                      <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa-solid fa-globe"></i></span>
-                        <input type="url" class="form-control" name="url" id="url" placeholder="Ingrese la url de la clase"/>   
+                        <input type="text" class="form-control" name="url" id="url" placeholder="Ingrese la url de la clase"/>   
                     </div>
                      <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa-solid fa-camera"></i></span>
@@ -140,17 +141,27 @@
             
             form.addEventListener('submit',async (e) =>{
                 e.preventDefault();
-                form.fecha.value = form.fecha.value + "T" + form.hora.value;
+                if(!form.fecha.value !== "" || !form.clase.value !== "" || !form.hora.value !== "" || !form.url.value !== "" || !form.imagen.value !== ""){
+                    mostrarMensaje("Debes ingresar datos en todos los campos","Error","error");
+                }
+                const f = form.fecha.value + "T" + form.hora.value;
+                form.fechaR.value = f;
+                console.log(f);
+                
                 
                 const response = await fetch("AltaDictadoClase", {
                     method: "POST",
-                    body: new FormData(form), // Envía los datos del formulario
-                })
+                    body: new FormData(form) // Envía los datos del formulario
+                });
                 if (response.ok) {
                     // Maneja la respuesta del servidor aquí (por ejemplo, mostrar un mensaje)
                     const mensaje = await response.text();
-                    mostrarMensaje(mensaje,"Registro exitoso","success");
-                    e.reset();
+                    mostrarMensaje(mensaje,"Registro exitoso","success")
+                    form.reset();
+                    
+                    //window.location.href = window.location.origin + "/entrenamosuy/";
+                    
+                    
                 } else {
                     const mensaje = await response.text();
                     mostrarMensaje(mensaje,"Error","error");
@@ -163,5 +174,9 @@
             Swal.fire({ title: titulo, text: mensaje, icon: tipo });
         }
     </script>
+    
+    <% } else { %>
+        <%@include file="errorPagina.jsp" %>
+    <% } %>
 </body>
 </html> 

@@ -179,7 +179,6 @@
                     contImg.innerHTML = "";
                     let img = "<img src='mostrarImagen?tipo=actividad&act=" + actividad + "'";
                     img += " class='img-fluid rounded-start' alt='Imagen de Actividad' />";
-                    console.log(img);
                     contImg.innerHTML += img;
                     
                     

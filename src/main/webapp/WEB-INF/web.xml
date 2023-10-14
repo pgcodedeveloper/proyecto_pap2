@@ -32,6 +32,10 @@
         <servlet-name>MostrarImagenes</servlet-name>
         <servlet-class>servlets.MostrarImagenes</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ModificarUsuario</servlet-name>
+        <servlet-class>servlets.ModificarUsuario</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegistroUsuario</servlet-name>
         <url-pattern>/RegistroUsuario</url-pattern>
@@ -63,5 +67,9 @@
     <servlet-mapping>
         <servlet-name>MostrarImagenes</servlet-name>
         <url-pattern>/MostrarImagenes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModificarUsuario</servlet-name>
+        <url-pattern>/ModificarUsuario</url-pattern>
     </servlet-mapping>
 </web-app>

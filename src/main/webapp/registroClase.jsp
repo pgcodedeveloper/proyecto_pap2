@@ -10,7 +10,7 @@
 <body>
     <%@include file="header.jsp" %>
     
-    
+    <% if(!error) {%>
     <main class="main">
         <h2 class="heading">Registro a Clase</h2>
         
@@ -163,6 +163,9 @@
         });    
     </script>
     
+    <% } else {%>
+        <%@include file="errorPagina.jsp" %>
+    <% } %>
     <%@include file="footer.jsp" %>
 </body>
 </html>

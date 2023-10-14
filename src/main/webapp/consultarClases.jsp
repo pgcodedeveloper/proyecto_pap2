@@ -27,43 +27,9 @@
         </div>
     </form>
     
-    <h2 class="heading">Datos de la <span>Actividad</span></h2>
-    <div class="contenedor-actividades">    
-        <div class="actividades">
-            <h5>Actividad: <span></span></h5>
-            
-            <div>
-                <p class="datos-registro">Descripción <span id="descripcion"></span></p> 
-                <i class="fa-solid fa-comment-dots"></i>
-            </div>
-            <div> 
-                <p class="datos-registro">Fecha de registro: <span id="fechaR"></span></p> 
-                <i class="fa-solid fa-calendar-days"></i> 
-            </div>
-            <div>
-                <p class="datos-registro">Institución <span id="institucion"></span></p>
-                <i class="fa-solid fa-graduation-cap"></i>
-            </div>
-            <div class="datos-extra">
-                <div>
-                    <p class="datos-registro">Costo: <span id="costoA"></span></p>
-                    <i class="fa-solid fa-sack-dollar"></i>
-                </div>
-                <div>
-                    <p class="datos-registro">Duración: <span id="duracionA"></span></p>
-                    <i class="fa-solid fa-hourglass-start"></i>
-                </div>
-            </div>
-            <div class="datos-imagen">
-                <div class="contenedor-imagen">
-                    
-                </div>
-                <i class="fa-solid fa-images"></i>
-            </div>
-        </div>
-
-        <div class="info-actividades">
-            <h5>Clases de la Actividad</h5>
+    <h2 class="heading">Clases de la <span>Actividad</span></h2>
+    <div class="contenedor-clase">    
+        <div class="info-actividades ">
             <ul class="list-group" id="lista-clases">
                 
             </ul>
@@ -154,17 +120,6 @@
                 .then(response => response.json())
                 .then(data =>{
                     console.log(data);
-                    const desc = document.querySelector("#descripcion");
-                    const fechaR = document.querySelector("#fechaR");
-                    const inst = document.querySelector("#institucion");
-                    const costoA = document.querySelector("#costoA");
-                    const duracionA = document.querySelector("#duracionA");
-                    
-                    desc.textContent = data[0][0];
-                    fechaR.textContent = data[0][1];
-                    inst.textContent = data[0][2];
-                    costoA.textContent = data[0][3];
-                    duracionA.textContent = data[0][4];
                     
                     const lista = document.querySelector("#lista-clases");
                     lista.innerHTML = "";
@@ -175,14 +130,6 @@
                         dato += "</li>";
                         lista.innerHTML += dato;
                     });
-                    const contImg = document.querySelector(".contenedor-imagen");
-                    contImg.innerHTML = "";
-                    let img = "<img src='mostrarImagen?tipo=actividad&act=" + actividad + "'";
-                    img += " class='img-fluid rounded-start' alt='Imagen de Actividad' />";
-                    console.log(img);
-                    contImg.innerHTML += img;
-                    
-                    
                 })
                 .catch(error =>{
                     console.error(error);

@@ -85,8 +85,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 
-.btn-consultas{
-    
+.btn-consultas ul{
+    position: absolute !important;
 }
 .btn-consultas button{
     font-size: 1rem;
@@ -119,6 +119,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color: rgb(70, 70, 80); 
 }
 
+.heading-texto{
+    text-align: center;
+    color: rgb(70, 70, 80);
+    
+}
 .heading{
     text-align: center;
     margin: 1.5rem 0 2rem 0;
@@ -133,6 +138,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color: rgb(70, 70, 80); 
 }
 
+.carusel-index{
+    width: 85%;
+}
+
 .main{
     width: 95%;
     margin: 0 auto;
@@ -141,7 +150,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 }
 
 .main-rankings{
-    width: 85%;
+    width: 90%;
+}
+
+@media(max-width: 448px){
+    .seccion-ranking{
+        overflow-x: scroll;
+    }
+    table{
+        width: 100%;
+    }
 }
 
 .formulario, .main_registro,.contenedor_registros{
@@ -370,11 +388,21 @@ thead tr th:nth-child(4){
     align-items: center;
     justify-content: center;
 }
+.modificar-perfil{
+    width: 40%;
+}
 
+.modificar-perfil p{
+    font-weight: 700;
+}
 @media(max-width: 448px){
     .contenedor-imagen{
         padding: 1.5rem;
         width: 65%;
+    }
+    .modificar-perfil{
+        margin: 0 auto;
+        width: 100%;
     }
 }
 
