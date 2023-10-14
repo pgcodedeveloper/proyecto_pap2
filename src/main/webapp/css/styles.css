@@ -62,6 +62,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     background: rgb(214, 217, 223) !important;
 }
 
+/* styles.css */
+
+/* Cambiar el color del texto cuando el mouse está sobre las opciones de la barra */
+.nav-link:hover {
+    color: #ff6600; /* Cambia a tu color deseado */
+}
+
+/* O cambiar el fondo cuando el mouse está sobre las opciones de la barra */
+.nav-link:hover {
+    background-color: #CF66F5; /* Cambia a tu color deseado */
+    color: #ffffff; /* Cambia el color del texto para asegurar que sea legible */
+}
+
+/* Otra opción: marcar todo el botón cuando el mouse está sobre las opciones de la barra */
+.nav-item:hover {
+    background-color: #CF66F5; /* Cambia a tu color deseado */
+    color: #ffffff; /* Cambia el color del texto para asegurar que sea legible */
+}
+
+
 .btn-consultas{
     
 }

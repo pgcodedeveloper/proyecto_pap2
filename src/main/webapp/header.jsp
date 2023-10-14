@@ -62,22 +62,20 @@
             <%  }
                 else{ %>
                     <header class="header">
-                        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                        <nav class="navbar navbar-expand-lg navbar-light bg-light">
                             <div class="container-fluid">
                                 <a class="navbar-brand heading-logo" href="/entrenamosuy/">Entrenamos<span>Uy</span></a>
                                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                                     <span class="navbar-toggler-icon"></span>
                                 </button>
                                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                                    <div class="navbar-nav">
+                                    <div class="navbar-nav ms-auto">
                                         <% if(tipoUS){ %>
-                                        <a class="nav-link" aria-current="page" href="registroClase.jsp"><strong>Registro a Clase</strong></a>
-                                            
-                                            
-                                        <a class="nav-link" aria-current="page" href="eliminarRegistro.jsp"><strong> Eliminar Registro</strong></a>
-                                        <a class="nav-link" aria-current="page" href="modificarPerfil.jsp"><strong>Modificar Perfil</strong></a>
+                                            <a class="nav-link" aria-current="page" href="registroClase.jsp"><strong>Registro a Clase</strong></a>
+                                            <a class="nav-link" aria-current="page" href="eliminarRegistro.jsp"><strong>Eliminar Registro</strong></a>
+                                            <a class="nav-link" aria-current="page" href="modificarPerfil.jsp"><strong>Modificar Perfil</strong></a>
                                             <div class="btn-group btn-consultas">
-                                                <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <button class="btn btn-sm dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <strong>Consultar</strong>
                                                 </button>
                                                 <ul class="dropdown-menu">
@@ -86,14 +84,14 @@
                                                     <li><a class="dropdown-item" href="consultas.jsp?tipo=act">Actividades Deportivas</a></li>
                                                 </ul>
                                             </div>
-                                        <button class="nav-link" onclick="cerrarSesion()"><strong>Cerrar Sesión</strong></button>
+                                            <button class="nav-link btn" onclick="cerrarSesion()"><strong>Cerrar Sesión</strong></button>
                                         <% } else if(tipoUP){ %>
-                                        <a class="nav-link" href="altaDictadoClase.jsp">Registro Dictado</a>
-                                            <a class="nav-link" href="rankings.jsp">Ranking Dictados y Actividades</a>
-                                            <a class="nav-link" aria-current="page" href="modificarPerfil.jsp">Modificar Perfil</a>
+                                            <a class="nav-link" href="altaDictadoClase.jsp"><strong>Registro Dictado</strong></a>
+                                            <a class="nav-link" href="rankings.jsp"><strong>Ranking Dictados y Actividades</strong></a>
+                                            <a class="nav-link" aria-current="page" href="modificarPerfil.jsp"><strong>Modificar Perfil</strong></a>
                                             <div class="btn-group btn-consultas">
-                                                <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Consultar
+                                                <button class="btn btn-sm dropdown-toggle nav-link" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <strong>Consultar</strong>
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li><a class="dropdown-item" href="consultas.jsp?tipo=usuario">Perfil</a></li>
@@ -101,17 +99,19 @@
                                                     <li><a class="dropdown-item" href="consultas.jsp?tipo=act">Actividades Deportivas</a></li>
                                                     <li><hr class="dropdown-divider"></li>
                                                     <li><a class="dropdown-item" href="consultas.jsp?tipo=clases">Clases</a></li>
-                                                 </ul>
-                                             </div>
-                                            <button class="nav-link" onclick="cerrarSesion()">Cerrar Sesión</button>
+                                                </ul>
+                                            </div>
+                                            <button class="nav-link btn" onclick="cerrarSesion()"><strong>Cerrar Sesión</strong></button>
                                         <% } else { %>
-                                            <a class="nav-link" href="login.jsp">Login</a>
-                                        <% }%>
+                                            <a class="nav-link" href="login.jsp"><strong>Login</strong></a>
+                                        <% } %>
                                     </div>
                                 </div>
                             </div>
                         </nav>
                     </header>
+
+
             <%  }%>
 
 
