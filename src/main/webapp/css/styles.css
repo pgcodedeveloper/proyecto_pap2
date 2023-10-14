@@ -65,7 +65,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     color: rgb(61, 68, 76) !important; /* Cambia a tu color deseado */
 }
 
-/* styles.css */
+.nav-link.btn:hover{
+    background-color: #92B7ED; /* Cambiar boton de consultar y cerrar sesion */
+    color: #ffffff;    
+}
 
 /* Cambiar el color del texto cuando el mouse está sobre las opciones de la barra */
 .nav-link:hover {
@@ -82,6 +85,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .nav-item:hover {
     background-color: #92B7ED; /* Cambia a tu color deseado */
     color: #ffffff; /* Cambia el color del texto para asegurar que sea legible */
+}
+
+.dropdown-item:hover{
+    background-color: #92B7ED; /* Cambia a tu color deseado */
+    color: #ffffff; /* Cambia el color del texto para asegurar que sea legible */    
 }
 
 
