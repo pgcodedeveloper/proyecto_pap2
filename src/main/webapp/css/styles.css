@@ -71,13 +71,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 
 /* O cambiar el fondo cuando el mouse está sobre las opciones de la barra */
 .nav-link:hover {
-    background-color: #CF66F5; /* Cambia a tu color deseado */
+    background-color: #92B7ED; /* Cambia a tu color deseado */
     color: #ffffff; /* Cambia el color del texto para asegurar que sea legible */
 }
 
 /* Otra opción: marcar todo el botón cuando el mouse está sobre las opciones de la barra */
 .nav-item:hover {
-    background-color: #CF66F5; /* Cambia a tu color deseado */
+    background-color: #92B7ED; /* Cambia a tu color deseado */
     color: #ffffff; /* Cambia el color del texto para asegurar que sea legible */
 }
 
