@@ -61,6 +61,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
 .header nav{
     background: rgb(214, 217, 223) !important;
 }
+.nav-link {
+    color: rgb(61, 68, 76) !important; /* Cambia a tu color deseado */
+}
 
 /* styles.css */
 
@@ -90,7 +93,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     text-align: left;
     padding: 0.5rem;
     font-weight: 400;
-    color: rgb(75, 76, 78) !important;
+    color: rgb(61, 68, 76) !important;
     border: none !important;
 }
 
