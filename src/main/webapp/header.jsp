@@ -71,12 +71,14 @@
                                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                                     <div class="navbar-nav">
                                         <% if(tipoUS){ %>
-                                            <a class="nav-link" aria-current="page" href="registroClase.jsp">Registro a Clase</a>
-                                            <a class="nav-link" aria-current="page" href="eliminarRegistro.jsp">Eliminar Registro</a>
-                                            <a class="nav-link" aria-current="page" href="modificarPerfil.jsp">Modificar Perfil</a>
+                                        <a class="nav-link" aria-current="page" href="registroClase.jsp"><strong>Registro a Clase</strong></a>
+                                            
+                                            
+                                        <a class="nav-link" aria-current="page" href="eliminarRegistro.jsp"><strong> Eliminar Registro</strong></a>
+                                        <a class="nav-link" aria-current="page" href="modificarPerfil.jsp"><strong>Modificar Perfil</strong></a>
                                             <div class="btn-group btn-consultas">
                                                 <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Consultar
+                                                    <strong>Consultar</strong>
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     <li><a class="dropdown-item" href="consultas.jsp?tipo=usuario">Perfil</a></li>
@@ -84,7 +86,7 @@
                                                     <li><a class="dropdown-item" href="consultas.jsp?tipo=act">Actividades Deportivas</a></li>
                                                 </ul>
                                             </div>
-                                            <button class="nav-link" onclick="cerrarSesion()">Cerrar Sesión</button>
+                                        <button class="nav-link" onclick="cerrarSesion()"><strong>Cerrar Sesión</strong></button>
                                         <% } else if(tipoUP){ %>
                                         <a class="nav-link" href="altaDictadoClase.jsp">Registro Dictado</a>
                                             <a class="nav-link" href="rankings.jsp">Ranking Dictados y Actividades</a>
