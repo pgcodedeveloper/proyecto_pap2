@@ -83,21 +83,23 @@
             document.addEventListener("DOMContentLoaded",async function(){
                 const fecha = document.querySelector("#fecha");
                 if(fecha !== null){
-                    fecha.value = formatearFecha("<%= user.getFecha() %>");
+                    fecha.value = "<%= user.getFecha() %>".includes("-") ? "<%= user.getFecha() %>" : formatearFecha("<%= user.getFecha() %>");
                 }
                 const form = document.querySelector(".formulario");
 
                 form.addEventListener('submit',async (e) =>{
                     e.preventDefault();
 
-                    if(!form.nombre || !form.apellido || !form.fecha || !form.biografia || !form.descripcion || !form.web){
+                    if(!form.nombre.value || !form.apellido.value || !form.fecha.value || !form.biografia.value || !form.descripcion.value || !form.web.value){
                         mostrarMensaje("Error","Debes ingresar datos en todos los campos","error");
+                        return;
                     }
 
                     const response = await fetch("ModificarUsuario", {
                         method: "POST",
                         body: new FormData(form), // Envía los datos del formulario
-                    })
+                    });
+                    
                     if (response.ok) {
                         // Maneja la respuesta del servidor aquí (por ejemplo, mostrar un mensaje)
                         const mensaje = await response.text();

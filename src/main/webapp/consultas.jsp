@@ -200,7 +200,7 @@
         document.addEventListener('DOMContentLoaded', async ()=>{
             const fecha = document.querySelector("#fechaN");
             if(fecha !== null){
-                fecha.textContent = formatearFechaA("<%= user.getFecha() %>");
+                fecha.textContent = "<%= user.getFecha() %>".includes("-") ? "<%= user.getFecha() %>" : formatearFechaA("<%= user.getFecha() %>");
             }
             const btnInfo = document.querySelectorAll(".info-extra");
             const btnInfoIcono = document.querySelectorAll(".info-extra i");
@@ -247,15 +247,15 @@
                             <%if (list != null) {
                                 for(Registro r: list){ %>
                                     if ("<%=r.getClaseId().getNombre()%>"===clase){
-                                        horaInicio.textContent = "<%=r.getClaseId().getHoraInicio()%>"
-                                        fecha.textContent = formatearFecha(Date.parse("<%=r.getFechaReg()%>"));
+                                        horaInicio.textContent = "<%=r.getClaseId().getHoraInicio()%>";
+                                        fecha.textContent = "<%=r.getFechaReg()%>".includes("-") ? formatearFecha(Date.parse("<%=r.getFechaReg()%>")) : formatearFechaA("<%=r.getFechaReg()%>");
                                      }
                                 <% }
                             } else if(listC !=null) {%>
                                 <% for(Clase c: listC) { %>
                                     if ("<%=c.getNombre()%>"===clase){
-                                        horaInicio.textContent = "<%=c.getHoraInicio()%>"
-                                        fecha.textContent = formatearFecha(Date.parse("<%=c.getFechaReg()%>"));
+                                        horaInicio.textContent = "<%=c.getHoraInicio()%>";
+                                        fecha.textContent = "<%=c.getFechaReg()%>".includes("-") ? formatearFecha(Date.parse("<%=c.getFechaReg()%>")) : formatearFechaA("<%=c.getFechaReg()%>");
                                      }
                                  
                                 <% }

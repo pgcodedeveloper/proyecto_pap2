@@ -79,7 +79,6 @@ public class ModificarUsuario extends HttpServlet {
             // Manejar la excepción si la cadena de fecha no es válida
             e.printStackTrace();
         }
-        
         ServletContext context = getServletContext();
         String pathToWebInf = context.getRealPath("/WEB-INF");
         Part img = request.getPart("imagen");
@@ -94,9 +93,16 @@ public class ModificarUsuario extends HttpServlet {
                 String descripcion = request.getParameter("descripcion");
                 String url = request.getParameter("web");
                 icon.actualizarProfe(user.getEmail(), user.getNickName(), nombre, apellido, fecha, rutaCompleta, biografia, descripcion, url);
+                response.setStatus(200);
+            response.setContentType("text/plain");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("Usuario modificado correctamente");
             }
-            
             icon.actualizarUsuario(user.getEmail(), user.getNickName(), nombre, apellido, fecha, rutaCompleta);
+            response.setStatus(200);
+            response.setContentType("text/plain");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("Usuario modificado correctamente");
         }
         else{
             if(request.getParameter("biografia") != null){
@@ -104,13 +110,18 @@ public class ModificarUsuario extends HttpServlet {
                 String descripcion = request.getParameter("descripcion");
                 String url = request.getParameter("web");
                 icon.actualizarProfe(user.getEmail(), user.getNickName(), nombre, apellido, fecha, user.getImagen(), biografia, descripcion, url);
+                response.setStatus(200);
+                response.setContentType("text/plain");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write("Usuario modificado correctamente");
             }
             icon.actualizarUsuario(user.getEmail(), user.getNickName(), nombre, apellido, fecha, user.getImagen());
+            response.setStatus(200);
+            response.setContentType("text/plain");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("Usuario modificado correctamente");
         }
-        response.setStatus(200);
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write("Usuario modificado correctamente");
+        
     }
     
 }

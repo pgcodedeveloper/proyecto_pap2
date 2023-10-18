@@ -78,7 +78,6 @@
                 await fetch("RegistroClase?consultar=instituciones")
                     .then(response => response.json())
                     .then(data =>{
-                        console.log(data);
                         if(data === "No hay instituciones"){
                             const option = document.createElement("option");
                             option.selected = true;
@@ -141,8 +140,9 @@
             
             form.addEventListener('submit',async (e) =>{
                 e.preventDefault();
-                if(!form.fecha.value !== "" || !form.clase.value !== "" || !form.hora.value !== "" || !form.url.value !== "" || !form.imagen.value !== ""){
-                    mostrarMensaje("Debes ingresar datos en todos los campos","Error","error");
+                if(!form.fecha.value || !form.clase.value || !form.hora.value || !form.url.value || !form.imagen.value){
+                    mostrarMensaje("Todos los campos son obligatorios","Error","error");
+                    return;
                 }
                 const f = form.fecha.value + "T" + form.hora.value;
                 form.fechaR.value = f;
@@ -156,7 +156,7 @@
                 if (response.ok) {
                     // Maneja la respuesta del servidor aquí (por ejemplo, mostrar un mensaje)
                     const mensaje = await response.text();
-                    mostrarMensaje(mensaje,"Registro exitoso","success")
+                    mostrarMensaje(mensaje,"Registro exitoso","success");
                     form.reset();
                     
                     //window.location.href = window.location.origin + "/entrenamosuy/";
