@@ -89,11 +89,18 @@
 
                 form.addEventListener('submit',async (e) =>{
                     e.preventDefault();
-
-                    if(!form.nombre.value || !form.apellido.value || !form.fecha.value || !form.biografia.value || !form.descripcion.value || !form.web.value){
-                        mostrarMensaje("Error","Debes ingresar datos en todos los campos","error");
-                        return;
-                    }
+                    
+                    <% if(user instanceof Profesor) {%>
+                        if(!form.nombre.value || !form.apellido.value || !form.fecha.value || !form.biografia.value || !form.descripcion.value || !form.web.value){
+                            mostrarMensaje("Error","Debes ingresar datos en todos los campos","error");
+                            return;
+                        }
+                    <% } else { %>
+                        if(!form.nombre.value || !form.apellido.value || !form.fecha.value){
+                            mostrarMensaje("Error","Debes ingresar datos en todos los campos","error");
+                            return;
+                        }
+                    <% } %>
 
                     const response = await fetch("ModificarUsuario", {
                         method: "POST",
