@@ -4,8 +4,6 @@
  */
 package servlets;
 
-import interfaces.Fabrica;
-import interfaces.IControlador;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,12 +11,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import logica.ManejadorUsuario;
-import logica.Profesor;
-import logica.Socio;
-import logica.Usuario;
+import publicadores.Profesor;
+import publicadores.Socio;
+import publicadores.Usuario;
 import org.mindrot.jbcrypt.BCrypt;
-
+import publicadores.ControladorPublish;
+import publicadores.ControladorPublishService;
 
 /**
  *
@@ -82,10 +80,7 @@ public class Login extends HttpServlet {
         if(tipo.equals("login")){
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            Fabrica f = Fabrica.getInstancia();
-            IControlador icon = f.getIControlador();
-            ManejadorUsuario mju = ManejadorUsuario.getInstancia();
-            Usuario u = mju.buscarUsuarioEmail(email);
+            Usuario u = login(email);
             if(u != null){
                 if(u.getPassword() != null){
                     if(BCrypt.checkpw(password, u.getPassword())){
@@ -129,17 +124,11 @@ public class Login extends HttpServlet {
             }
             
         }
-
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+    
+    public publicadores.Usuario login(String email){
+        ControladorPublishService cps = new ControladorPublishService();
+        ControladorPublish port = cps.getControladorPublishPort();
+        return port.loginUsuario(email);
+    }
 }

@@ -217,31 +217,111 @@
       <artifactId>tomcat-websocket-client-api</artifactId>
       <version>10.1.13</version>
     </dependency>
-    
-    <dependency>
-        <groupId>com.sun.xml.ws</groupId>
-        <artifactId>jaxws-tools</artifactId>
-        <version>4.0.2</version>
-    </dependency>
-
-    <dependency>
-        <groupId>com.sun.xml.ws</groupId>
-        <artifactId>wscompile</artifactId>
-        <version>4.0.2</version>
-        <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-        <groupId>com.liferay</groupId>
-        <artifactId>org.apache.axis</artifactId>
-        <version>1.4.LIFERAY-PATCHED-7</version>
-    </dependency>
-
     <dependency>
       <groupId>org.glassfish.metro</groupId>
       <artifactId>webservices-rt</artifactId>
       <version>2.3</version>
     </dependency>
+    
+    <dependency>
+        <groupId>jakarta.xml.bind</groupId>
+        <artifactId>jakarta.xml.bind-api</artifactId>
+        <version>4.0.0</version>
+    </dependency>
+    
+    <dependency>
+        <groupId>jakarta.xml.ws</groupId>
+        <artifactId>jakarta.xml.ws-api</artifactId>
+        <version>4.0.0</version>
+    </dependency>
+        
+    <dependency>
+        <groupId>javax.xml.ws</groupId>
+        <artifactId>jaxws-api</artifactId>
+        <version>2.3.1</version>
+    </dependency>
+
+
+    <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>10.0.0</version>
+            <type>jar</type>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.xml.ws/jakarta.xml.ws-api -->
+        <dependency>
+            <groupId>jakarta.xml.ws</groupId>
+            <artifactId>jakarta.xml.ws-api</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>jakarta.xml.soap</groupId>
+            <artifactId>jakarta.xml.soap-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>jakarta.activation</groupId>
+            <artifactId>jakarta.activation-api</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>rt</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>rt-fi</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>httpspi-servlet</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>servlet</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.sun.xml.fastinfoset</groupId>
+            <artifactId>FastInfoset</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.xml.stream.buffer</groupId>
+            <artifactId>streambuffer</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.mail</groupId>
+            <artifactId>jakarta.mail-api</artifactId>
+            <version>2.1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>policy</artifactId>
+            <version>4.0.2</version>
+        </dependency>
+
   </dependencies>
   <build>
     <plugins>
@@ -279,10 +359,10 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.jvnet.jax-ws-commons</groupId>
+        <groupId>com.sun.xml.ws</groupId>
         <artifactId>jaxws-maven-plugin</artifactId>
-        <version>2.3</version>
-        <executions>
+        <version>4.0.2</version>
+      <executions>
           <execution>
             <goals>
               <goal>wsimport</goal>
@@ -299,6 +379,24 @@
               <staleFile>${project.build.directory}/jaxws/stale/controlador.stale</staleFile>
             </configuration>
             <id>wsimport-generate-controlador</id>
+            <phase>generate-sources</phase>
+          </execution>
+          <execution>
+            <goals>
+              <goal>wsimport</goal>
+            </goals>
+            <configuration>
+              <wsdlFiles>
+                <wsdlFile>localhost_3001/controlador.wsdl</wsdlFile>
+              </wsdlFiles>
+              <packageName>publicadores</packageName>
+              <vmArgs>
+                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+              </vmArgs>
+              <wsdlLocation>http://localhost:3001/controlador?wsdl</wsdlLocation>
+              <staleFile>${project.build.directory}/jaxws/stale/controlador_1.stale</staleFile>
+            </configuration>
+            <id>wsimport-generate-controlador_1</id>
             <phase>generate-sources</phase>
           </execution>
         </executions>
