@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by XML-WS Runtime (https://github.com/eclipse-ee4j/metro-jax-ws). Runtime's version is XML-WS Runtime 4.0.1 git-revision#298606e. --><xs:schema xmlns:tns="http://publicadores/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://publicadores/">
+
+<xs:element name="ActividadDException" type="tns:ActividadDException"/>
+
+<xs:element name="ClaseException" type="tns:ClaseException"/>
+
+<xs:element name="InstitucionRepetidaException" type="tns:InstitucionRepetidaException"/>
+
+<xs:element name="SocioYaInscriptoException" type="tns:SocioYaInscriptoException"/>
+
+<xs:element name="UsuarioRepetidoException" type="tns:UsuarioRepetidoException"/>
+
+<xs:complexType name="InstitucionRepetidaException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="clase">
+<xs:sequence>
+<xs:element name="fecha" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="fechaReg" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="horaInicio" type="tns:localTime" minOccurs="0"/>
+<xs:element name="imagen" type="xs:string" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="registros" type="tns:registro" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="url" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="localTime" final="extension restriction">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="registro">
+<xs:sequence>
+<xs:element name="claseId" type="tns:clase" minOccurs="0"/>
+<xs:element name="fechaReg" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="socioId" type="tns:socio" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="socio">
+<xs:complexContent>
+<xs:extension base="tns:usuario">
+<xs:sequence>
+<xs:element name="registros" type="tns:registro" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="usuario">
+<xs:sequence>
+<xs:element name="apellido" type="xs:string" minOccurs="0"/>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="imagen" type="xs:string" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dtProfesor">
+<xs:complexContent>
+<xs:extension base="tns:dtUsuario">
+<xs:sequence>
+<xs:element name="biografia" type="xs:string" minOccurs="0"/>
+<xs:element name="clases" type="tns:clase" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="institucionDeportiva" type="tns:institucionDeportiva" minOccurs="0"/>
+<xs:element name="sitioWeb" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="dtUsuario">
+<xs:sequence>
+<xs:element name="apellido" type="xs:string" minOccurs="0"/>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="fechaNac" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="id" type="xs:int"/>
+<xs:element name="imagen" type="xs:string" minOccurs="0"/>
+<xs:element name="nickname" type="xs:string" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="institucionDeportiva">
+<xs:sequence>
+<xs:element name="actividadesDeportiva" type="tns:actividadDeportiva" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="profesores" type="tns:profesor" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="url" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="actividadDeportiva">
+<xs:sequence>
+<xs:element name="clases" type="tns:clase" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="costo" type="xs:float"/>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="fechaReg" type="xs:dateTime" minOccurs="0"/>
+<xs:element name="imagen" type="xs:string" minOccurs="0"/>
+<xs:element name="inst" type="tns:institucionDeportiva" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="profesor">
+<xs:complexContent>
+<xs:extension base="tns:usuario">
+<xs:sequence>
+<xs:element name="biografia" type="xs:string" minOccurs="0"/>
+<xs:element name="clases" type="tns:clase" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="institucionDeportiva" type="tns:institucionDeportiva" minOccurs="0"/>
+<xs:element name="sitioWeb" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="ActividadDException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ClaseException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dtSocio">
+<xs:complexContent>
+<xs:extension base="tns:dtUsuario">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+
+<xs:complexType name="SocioYaInscriptoException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UsuarioRepetidoException">
+<xs:sequence>
+<xs:element name="message" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dtProfesorArray" final="#all">
+<xs:sequence>
+<xs:element name="item" type="tns:dtProfesor" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="registroArray" final="#all">
+<xs:sequence>
+<xs:element name="item" type="tns:registro" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="dtSocioArray" final="#all">
+<xs:sequence>
+<xs:element name="item" type="tns:dtSocio" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="actividadDeportivaArray" final="#all">
+<xs:sequence>
+<xs:element name="item" type="tns:actividadDeportiva" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="claseArray" final="#all">
+<xs:sequence>
+<xs:element name="item" type="tns:clase" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

@@ -217,19 +217,105 @@
       <artifactId>tomcat-websocket-client-api</artifactId>
       <version>10.1.13</version>
     </dependency>
+    
+    <dependency>
+        <groupId>com.sun.xml.ws</groupId>
+        <artifactId>jaxws-tools</artifactId>
+        <version>4.0.2</version>
+    </dependency>
+
+    <dependency>
+        <groupId>com.sun.xml.ws</groupId>
+        <artifactId>wscompile</artifactId>
+        <version>4.0.2</version>
+        <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>com.liferay</groupId>
+        <artifactId>org.apache.axis</artifactId>
+        <version>1.4.LIFERAY-PATCHED-7</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.glassfish.metro</groupId>
+      <artifactId>webservices-rt</artifactId>
+      <version>2.3</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
-        <configuration>
-          <release>20</release>
-        </configuration>
-      </plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.0</version>
+            <configuration>
+                    <source>20</source>
+                    <target>20</target>
+            </configuration>
+        </plugin>
       <plugin>
         <artifactId>maven-war-plugin</artifactId>
         <version>3.2.3</version>
+        <configuration>
+          <webResources>
+            <resource>
+              <directory>src</directory>
+              <targetPath>WEB-INF</targetPath>
+              <includes>
+                <include>jax-ws-catalog.xml</include>
+                <include>wsdl/**</include>
+              </includes>
+            </resource>
+            <resource>
+              <directory>src</directory>
+              <targetPath>WEB-INF/classes/META-INF</targetPath>
+              <includes>
+                <include>jax-ws-catalog.xml</include>
+                <include>wsdl/**</include>
+              </includes>
+            </resource>
+          </webResources>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jvnet.jax-ws-commons</groupId>
+        <artifactId>jaxws-maven-plugin</artifactId>
+        <version>2.3</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>wsimport</goal>
+            </goals>
+            <configuration>
+              <wsdlFiles>
+                <wsdlFile>localhost_3001/controlador.wsdl</wsdlFile>
+              </wsdlFiles>
+              <packageName>publicadores</packageName>
+              <vmArgs>
+                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+              </vmArgs>
+              <wsdlLocation>http://localhost:3001/controlador?wsdl</wsdlLocation>
+              <staleFile>${project.build.directory}/jaxws/stale/controlador.stale</staleFile>
+            </configuration>
+            <id>wsimport-generate-controlador</id>
+            <phase>generate-sources</phase>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>javax.xml</groupId>
+            <artifactId>webservices-api</artifactId>
+            <version>2.0</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <sourceDestDir>${project.build.directory}/generated-sources/jaxws-wsimport</sourceDestDir>
+          <xnocompile>true</xnocompile>
+          <verbose>true</verbose>
+          <extension>true</extension>
+          <catalog>${basedir}/src/jax-ws-catalog.xml</catalog>
+        </configuration>
       </plugin>
     </plugins>
   </build>
