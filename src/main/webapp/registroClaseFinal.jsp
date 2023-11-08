@@ -1,4 +1,4 @@
-<%@page import="logica.Usuario" %>
+<%@page import="publicadores.Usuario" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -61,7 +61,7 @@
                 <i class="fa-solid fa-file-circle-xmark"></i>
             </button>
             <form id="formulario">
-                <input type="hidden" id="nick" value="<%= ((Usuario) session.getAttribute("usuario")).getNickName() %>"/>
+                <input type="hidden" id="nick" value="<%= ((Usuario) session.getAttribute("usuario")).getNickname()%>"/>
                 <input type="hidden" id="clase" value="${clase.getNombre().toString()}"/>
                 <input type="hidden" id="actividad" value="${actividad.getNombre().toString()}"/>
 

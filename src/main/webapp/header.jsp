@@ -4,7 +4,7 @@
     Author     : PC
 --%>
 <!DOCTYPE html>
-<%@page import="logica.Usuario" %>
+<%@page import="publicadores.Usuario" %>
 <%@ page language="java"%>
 
 <%  

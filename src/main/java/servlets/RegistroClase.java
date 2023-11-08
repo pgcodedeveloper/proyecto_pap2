@@ -5,10 +5,6 @@
 package servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import datatypes.DtProfesor;
-import exceptions.SocioYaInscriptoException;
-import interfaces.Fabrica;
-import interfaces.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -16,16 +12,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.AbstractList;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import logica.ActividadDeportiva;
-import logica.Clase;
-import logica.Controlador;
-import logica.ManejadorClase;
-import logica.ManejadorInstitucion;
-import logica.Profesor;
+import javax.xml.datatype.XMLGregorianCalendar;
+import publicadores.ActividadDeportiva;
+import publicadores.Clase;
+import publicadores.ControladorPublish;
+import publicadores.ControladorPublishService;
+import publicadores.SocioYaInscriptoException_Exception;
 
 /**
  *
@@ -33,15 +27,6 @@ import logica.Profesor;
  */
 public class RegistroClase extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -59,24 +44,18 @@ public class RegistroClase extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String consulta = request.getParameter("consultar");
-        Fabrica fb = Fabrica.getInstancia();
-        IControlador icon = fb.getIControlador();
-        String[] list;
-        
+                
         if(consulta.equals("instituciones")){
-            list = icon.obtenerInstituciones();
+            List<String> inst = obtenerDatos(consulta, "", "");
+            String[] list = new String[inst.size()];
+            int i = 0;
+            for(String s: inst){
+                list[i] = s;
+                i++;
+            }
             
             response.setStatus(200);
 
@@ -99,7 +78,13 @@ public class RegistroClase extends HttpServlet {
         }
         else if(consulta.equals("actividades")){
             String institucion = request.getParameter("inst");
-            list = icon.obtenerActividades(institucion);
+            List<String> inst = obtenerDatos(consulta, institucion, "");
+            String[] list = new String[inst.size()];
+            int i = 0;
+            for(String s: inst){
+                list[i] = s;
+                i++;
+            }
             
             response.setStatus(200);
 
@@ -122,7 +107,13 @@ public class RegistroClase extends HttpServlet {
         }
         else{
             String actividad = request.getParameter("act");
-            list = icon.obtenerClases(actividad);
+            List<String> inst = obtenerDatos(consulta, "", actividad);
+            String[] list = new String[inst.size()];
+            int i = 0;
+            for(String s: inst){
+                list[i] = s;
+                i++;
+            }
             
             response.setStatus(200);
 
@@ -145,35 +136,46 @@ public class RegistroClase extends HttpServlet {
         }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    public List<String> obtenerDatos(String dato, String inst, String act){
+        ControladorPublishService cps = new ControladorPublishService();
+        ControladorPublish cp = cps.getControladorPublishPort();
+        List<String> list;
+        
+        if(dato.equals("instituciones")){
+            list = cp.obtenerInstituciones().getItem();
+        }
+        else if(dato.equals("actividades")){
+            list = cp.obtenerActividades(inst).getItem();
+        }
+        else{
+            list = cp.obtenerClases(act).getItem();
+        }
+        return list;
+    }
+   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         String opcion = request.getParameter("opcion");
         String clase = request.getParameter("clase");
         String act = request.getParameter("actividad");
         String socio = request.getParameter("socio");
-        Fabrica fb = Fabrica.getInstancia();
-        IControlador icon = fb.getIControlador();
-        ActividadDeportiva ac = icon.obtenerActividad(act);
-        Clase c = icon.obtenerInfoClase(clase);
+        ActividadDeportiva ac = null;
+        ac = obtenerActividad(act);
+        Clase c = null;
+        c = obtenerInfoClase(clase);
+        System.out.println(ac.getNombre());
+        System.out.println(c.getNombre());
         
         if(opcion.equals("registro")){
             
             try {
                 Date f = new Date();
-                icon.altaSocioClase(socio, clase, f);
+                altaSocioClase(socio, clase, f);
                 response.setStatus(200);
                 response.setContentType("text/plain");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write("Socio incripto correctamente");
-            } catch (SocioYaInscriptoException e) {
+            } catch (SocioYaInscriptoException_Exception e) {
                 response.setStatus(400);
                 response.setContentType("text/plain");
                 response.setCharacterEncoding("UTF-8");
@@ -188,18 +190,28 @@ public class RegistroClase extends HttpServlet {
                 RequestDispatcher disp = request.getRequestDispatcher("registroClaseFinal.jsp");
                 disp.forward(request, response);
             }
-        }
-        
+        } 
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+    
+    public Clase obtenerInfoClase(String clase){
+        ControladorPublishService cps = new ControladorPublishService();
+        ControladorPublish cp = cps.getControladorPublishPort();
+        return cp.obtenerInfoClase(clase);
+    }
+    
+    public ActividadDeportiva obtenerActividad(String act){
+        ControladorPublishService cps = new ControladorPublishService();
+        ControladorPublish cp = cps.getControladorPublishPort();
+        return cp.obtenerActividad(act);
+    }
+    
+    public void altaSocioClase(String socio,String clase, Date fecha) throws SocioYaInscriptoException_Exception{
+        ControladorPublishService cps = new ControladorPublishService();
+        ControladorPublish cp = cps.getControladorPublishPort();
+        XMLGregorianCalendar f = null;
+        f.setDay(fecha.getDay());
+        f.setMonth(fecha.getMonth());
+        f.setYear(fecha.getYear());
+        cp.altaSocioClase(socio, clase, f);
+    }
 }

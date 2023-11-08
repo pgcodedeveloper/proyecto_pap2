@@ -58,6 +58,7 @@
 <xs:element name="imagen" type="xs:string" minOccurs="0"/>
 <xs:element name="nombre" type="xs:string" minOccurs="0"/>
 <xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="nickname" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
