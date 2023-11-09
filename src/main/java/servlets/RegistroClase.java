@@ -159,14 +159,12 @@ public class RegistroClase extends HttpServlet {
         String clase = request.getParameter("clase");
         String act = request.getParameter("actividad");
         String socio = request.getParameter("socio");
-        ActividadDeportiva ac = null;
-        ac = obtenerActividad(act);
-        Clase c = null;
-        c = obtenerInfoClase(clase);
+        ActividadDeportiva ac = obtenerActividad(act);
+        Clase c = obtenerInfoClase(clase);
         System.out.println(ac.getNombre());
-        System.out.println(c.getNombre());
+        //System.out.println(c.getNombre());
         
-        if(opcion.equals("registro")){
+        if(opcion.equals("consultar")){
             
             try {
                 Date f = new Date();
@@ -190,19 +188,20 @@ public class RegistroClase extends HttpServlet {
                 RequestDispatcher disp = request.getRequestDispatcher("registroClaseFinal.jsp");
                 disp.forward(request, response);
             }
+            
         } 
     }
+  
     
     public Clase obtenerInfoClase(String clase){
-        ControladorPublishService cps = new ControladorPublishService();
-        ControladorPublish cp = cps.getControladorPublishPort();
+        ControladorPublish cp = new ControladorPublishService().getControladorPublishPort();
         return cp.obtenerInfoClase(clase);
     }
     
-    public ActividadDeportiva obtenerActividad(String act){
-        ControladorPublishService cps = new ControladorPublishService();
-        ControladorPublish cp = cps.getControladorPublishPort();
-        return cp.obtenerActividad(act);
+    public publicadores.ActividadDeportiva obtenerActividad(String arg0){
+        ControladorPublish cp = new ControladorPublishService().getControladorPublishPort();
+        ActividadDeportiva a = cp.obtenerActividad(arg0);
+        return a;
     }
     
     public void altaSocioClase(String socio,String clase, Date fecha) throws SocioYaInscriptoException_Exception{
@@ -214,4 +213,5 @@ public class RegistroClase extends HttpServlet {
         f.setYear(fecha.getYear());
         cp.altaSocioClase(socio, clase, f);
     }
+    
 }

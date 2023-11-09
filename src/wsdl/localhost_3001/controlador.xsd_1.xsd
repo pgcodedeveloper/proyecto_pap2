@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?><!-- Published by XML-WS Runtime (https://github.com/eclipse-ee4j/metro-jax-ws). Runtime's version is XML-WS Runtime 4.0.1 git-revision#298606e. --><xs:schema xmlns:tns="http://publicadores/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://publicadores/">
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 2.3.6 git-revision#d201abe. --><xs:schema xmlns:tns="http://publicadores/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://publicadores/">
 
 <xs:element name="ActividadDException" type="tns:ActividadDException"/>
 
@@ -58,7 +58,6 @@
 <xs:element name="imagen" type="xs:string" minOccurs="0"/>
 <xs:element name="nombre" type="xs:string" minOccurs="0"/>
 <xs:element name="password" type="xs:string" minOccurs="0"/>
-<xs:element name="nickname" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

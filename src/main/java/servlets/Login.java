@@ -81,6 +81,7 @@ public class Login extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             Usuario u = login(email);
+            
             if(u != null){
                 if(u.getPassword() != null){
                     if(BCrypt.checkpw(password, u.getPassword())){
@@ -124,7 +125,9 @@ public class Login extends HttpServlet {
             }
             
         }
+        
     }
+    
     
     public publicadores.Usuario login(String email){
         ControladorPublishService cps = new ControladorPublishService();
@@ -132,3 +135,7 @@ public class Login extends HttpServlet {
         return port.loginUsuario(email);
     }
 }
+    
+    
+    
+    
