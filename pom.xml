@@ -244,24 +244,6 @@
     </dependency>
 
     <dependency>
-        <groupId>com.sun.xml.ws</groupId>
-        <artifactId>jaxws-rt</artifactId>
-        <version>2.3.6</version>
-    </dependency>
-
-    <dependency>
-        <groupId>com.sun.xml.bind</groupId>
-        <artifactId>jaxb-core</artifactId>
-        <version>4.0.4</version>
-    </dependency>
-
-    <dependency>
-        <groupId>com.sun.xml.messaging.saaj</groupId>
-        <artifactId>saaj-impl</artifactId>
-        <version>1.5.1</version>
-    </dependency>
-    
-    <dependency>
         <groupId>javax.servlet</groupId>
         <artifactId>javax.servlet-api</artifactId>
         <version>3.1.0</version>
@@ -280,86 +262,23 @@
     </dependency>
     
     <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-        <version>4.0.3</version>
+        <groupId>org.apache.axis</groupId>
+        <artifactId>axis</artifactId>
+        <version>1.4</version>
     </dependency>
 
   </dependencies>
   <build>
-    <plugins>
-      <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.8.0</version>
-            <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-            </configuration>
-        </plugin>
-      <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>3.2.3</version>
-        <configuration>
-          <webResources>
-            <resource>
-              <directory>src</directory>
-              <targetPath>WEB-INF</targetPath>
-              <includes>
-                <include>jax-ws-catalog.xml</include>
-                <include>wsdl/**</include>
-              </includes>
-            </resource>
-            <resource>
-              <directory>src</directory>
-              <targetPath>WEB-INF/classes/META-INF</targetPath>
-              <includes>
-                <include>jax-ws-catalog.xml</include>
-                <include>wsdl/**</include>
-              </includes>
-            </resource>
-          </webResources>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>jaxws-maven-plugin</artifactId>
-        <version>2.6</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>wsimport</goal>
-            </goals>
-            <configuration>
-              <wsdlFiles>
-                <wsdlFile>localhost_3001/controlador.wsdl</wsdlFile>
-              </wsdlFiles>
-              <packageName>publicadores</packageName>
-              <vmArgs>
-                <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
-              </vmArgs>
-              <wsdlLocation>http://localhost:3001/controlador?wsdl</wsdlLocation>
-              <staleFile>${project.build.directory}/jaxws/stale/controlador.stale</staleFile>
-            </configuration>
-            <id>wsimport-generate-controlador</id>
-            <phase>generate-sources</phase>
-          </execution>
-        </executions>
-        <dependencies>
-          <dependency>
-            <groupId>javax.xml</groupId>
-            <artifactId>webservices-api</artifactId>
-            <version>2.0</version>
-          </dependency>
-        </dependencies>
-        <configuration>
-          <sourceDestDir>${project.build.directory}/generated-sources/jaxws-wsimport</sourceDestDir>
-          <xnocompile>true</xnocompile>
-          <verbose>true</verbose>
-          <extension>true</extension>
-          <catalog>${basedir}/src/jax-ws-catalog.xml</catalog>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                        <source>20</source>
+                        <target>20</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

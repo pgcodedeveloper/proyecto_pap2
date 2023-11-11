@@ -11,12 +11,17 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.rpc.ServiceException;
 import publicadores.Profesor;
 import publicadores.Socio;
 import publicadores.Usuario;
 import org.mindrot.jbcrypt.BCrypt;
 import publicadores.ControladorPublish;
 import publicadores.ControladorPublishService;
+import publicadores.ControladorPublishServiceLocator;
 
 /**
  *
@@ -74,13 +79,18 @@ public class Login extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, RemoteException {
         String tipo = request.getParameter("tipo");
 
         if(tipo.equals("login")){
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            Usuario u = login(email);
+            Usuario u = null;
+            try {
+                u = login(email);
+            } catch (ServiceException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
             if(u != null){
                 if(u.getPassword() != null){
@@ -129,8 +139,8 @@ public class Login extends HttpServlet {
     }
     
     
-    public publicadores.Usuario login(String email){
-        ControladorPublishService cps = new ControladorPublishService();
+    public publicadores.Usuario login(String email) throws ServiceException, RemoteException{
+        ControladorPublishService cps = new ControladorPublishServiceLocator();
         ControladorPublish port = cps.getControladorPublishPort();
         return port.loginUsuario(email);
     }

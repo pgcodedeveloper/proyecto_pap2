@@ -13,28 +13,11 @@
 <message name="obtenerActividadesInstitucionResponse">
 <part name="return" type="tns:actividadDeportivaArray"/>
 </message>
-<message name="obtenerRegistrosSocio">
-<part name="arg0" type="xsd:int"/>
-</message>
-<message name="obtenerRegistrosSocioResponse">
-<part name="return" type="tns:registroArray"/>
-</message>
 <message name="obtenerClasesDeActividad">
 <part name="arg0" type="xsd:string"/>
 </message>
 <message name="obtenerClasesDeActividadResponse">
 <part name="return" type="tns:claseArray"/>
-</message>
-<message name="obtenerInstituciones"/>
-<message name="obtenerInstitucionesResponse">
-<part xmlns:ns1="http://jaxb.dev.java.net/array" name="return" type="ns1:stringArray"/>
-</message>
-<message name="obtenerProfesorClase">
-<part name="arg0" type="xsd:string"/>
-<part name="arg1" type="xsd:string"/>
-</message>
-<message name="obtenerProfesorClaseResponse">
-<part name="return" type="xsd:string"/>
 </message>
 <message name="modificarActividadDeportiva">
 <part name="arg0" type="xsd:string"/>
@@ -44,6 +27,24 @@
 <part name="arg4" type="xsd:string"/>
 </message>
 <message name="modificarActividadDeportivaResponse"/>
+<message name="obtenerActivDeporProfe">
+<part name="arg0" type="xsd:int"/>
+</message>
+<message name="obtenerActivDeporProfeResponse">
+<part xmlns:ns1="http://jaxb.dev.java.net/array" name="return" type="ns1:stringArray"/>
+</message>
+<message name="obtenerRegistrosSocio">
+<part name="arg0" type="xsd:int"/>
+</message>
+<message name="obtenerRegistrosSocioResponse">
+<part name="return" type="tns:registroArray"/>
+</message>
+<message name="obtenerInstitucion">
+<part name="arg0" type="xsd:string"/>
+</message>
+<message name="obtenerInstitucionResponse">
+<part name="return" type="tns:institucionDeportiva"/>
+</message>
 <message name="altaActividadDeportiva">
 <part name="arg0" type="xsd:string"/>
 <part name="arg1" type="xsd:string"/>
@@ -57,25 +58,42 @@
 <message name="ActividadDException">
 <part name="fault" element="tns:ActividadDException"/>
 </message>
-<message name="obtenerActivDeporProfe">
-<part name="arg0" type="xsd:int"/>
+<message name="obtenerProfesorClase">
+<part name="arg0" type="xsd:string"/>
+<part name="arg1" type="xsd:string"/>
 </message>
-<message name="obtenerActivDeporProfeResponse">
+<message name="obtenerProfesorClaseResponse">
+<part name="return" type="xsd:string"/>
+</message>
+<message name="obtenerInstituciones"/>
+<message name="obtenerInstitucionesResponse">
 <part xmlns:ns2="http://jaxb.dev.java.net/array" name="return" type="ns2:stringArray"/>
+</message>
+<message name="modificarInstitucion">
+<part name="arg0" type="xsd:string"/>
+<part name="arg1" type="xsd:string"/>
+<part name="arg2" type="xsd:string"/>
+</message>
+<message name="modificarInstitucionResponse"/>
+<message name="obtenerActividad">
+<part name="arg0" type="xsd:string"/>
+</message>
+<message name="obtenerActividadResponse">
+<part name="return" type="tns:actividadDeportiva"/>
+</message>
+<message name="obtenerProfes"/>
+<message name="obtenerProfesResponse">
+<part name="return" type="tns:dtProfesorArray"/>
+</message>
+<message name="obtenerSocios"/>
+<message name="obtenerSociosResponse">
+<part name="return" type="tns:dtSocioArray"/>
 </message>
 <message name="obtenerClasesProfe">
 <part name="arg0" type="xsd:int"/>
 </message>
 <message name="obtenerClasesProfeResponse">
 <part xmlns:ns3="http://jaxb.dev.java.net/array" name="return" type="ns3:stringArray"/>
-</message>
-<message name="obtenerSocios"/>
-<message name="obtenerSociosResponse">
-<part name="return" type="tns:dtSocioArray"/>
-</message>
-<message name="obtenerProfes"/>
-<message name="obtenerProfesResponse">
-<part name="return" type="tns:dtProfesorArray"/>
 </message>
 <message name="obtenerClasesAct">
 <part name="arg0" type="xsd:string"/>
@@ -87,24 +105,15 @@
 <message name="obtenerUsuariosResponse">
 <part xmlns:ns5="http://jaxb.dev.java.net/array" name="return" type="ns5:stringArray"/>
 </message>
-<message name="actualizarUsuario">
-<part name="arg0" type="xsd:string"/>
-<part name="arg1" type="xsd:string"/>
-<part name="arg2" type="xsd:string"/>
-<part name="arg3" type="xsd:string"/>
-<part name="arg4" type="xsd:dateTime"/>
-<part name="arg5" type="xsd:string"/>
-</message>
-<message name="actualizarUsuarioResponse"/>
-<message name="rankingClases"/>
-<message name="rankingClasesResponse">
-<part xmlns:ns6="http://jaxb.dev.java.net/array" name="return" type="ns6:anyTypeArray"/>
-</message>
 <message name="obtenerProfesor">
 <part name="arg0" type="xsd:string"/>
 </message>
 <message name="obtenerProfesorResponse">
 <part name="return" type="tns:dtProfesor"/>
+</message>
+<message name="rankingClases"/>
+<message name="rankingClasesResponse">
+<part xmlns:ns6="http://jaxb.dev.java.net/array" name="return" type="ns6:anyTypeArray"/>
 </message>
 <message name="obtenerUsuario">
 <part name="arg0" type="xsd:string"/>
@@ -124,34 +133,25 @@
 <part name="arg8" type="xsd:string"/>
 </message>
 <message name="actualizarProfeResponse"/>
+<message name="actualizarUsuario">
+<part name="arg0" type="xsd:string"/>
+<part name="arg1" type="xsd:string"/>
+<part name="arg2" type="xsd:string"/>
+<part name="arg3" type="xsd:string"/>
+<part name="arg4" type="xsd:dateTime"/>
+<part name="arg5" type="xsd:string"/>
+</message>
+<message name="actualizarUsuarioResponse"/>
 <message name="rankingActividades"/>
 <message name="rankingActividadesResponse">
 <part xmlns:ns7="http://jaxb.dev.java.net/array" name="return" type="ns7:anyTypeArray"/>
 </message>
-<message name="modificarInstitucion">
-<part name="arg0" type="xsd:string"/>
-<part name="arg1" type="xsd:string"/>
-<part name="arg2" type="xsd:string"/>
-</message>
-<message name="modificarInstitucionResponse"/>
 <message name="altaUsuario">
 <part name="arg0" type="tns:dtUsuario"/>
 </message>
 <message name="altaUsuarioResponse"/>
 <message name="UsuarioRepetidoException">
 <part name="fault" element="tns:UsuarioRepetidoException"/>
-</message>
-<message name="obtenerActividad">
-<part name="arg0" type="xsd:string"/>
-</message>
-<message name="obtenerActividadResponse">
-<part name="return" type="tns:actividadDeportiva"/>
-</message>
-<message name="obtenerInstitucion">
-<part name="arg0" type="xsd:string"/>
-</message>
-<message name="obtenerInstitucionResponse">
-<part name="return" type="tns:institucionDeportiva"/>
 </message>
 <message name="obtenerActividades">
 <part name="arg0" type="xsd:string"/>
@@ -179,12 +179,6 @@
 <message name="ClaseException">
 <part name="fault" element="tns:ClaseException"/>
 </message>
-<message name="obtenerInfoClase">
-<part name="arg0" type="xsd:string"/>
-</message>
-<message name="obtenerInfoClaseResponse">
-<part name="return" type="tns:clase"/>
-</message>
 <message name="altaSocioClase">
 <part name="arg0" type="xsd:string"/>
 <part name="arg1" type="xsd:string"/>
@@ -194,15 +188,9 @@
 <message name="SocioYaInscriptoException">
 <part name="fault" element="tns:SocioYaInscriptoException"/>
 </message>
-<message name="obtenerClases">
-<part name="arg0" type="xsd:string"/>
-</message>
-<message name="obtenerClasesResponse">
-<part xmlns:ns10="http://jaxb.dev.java.net/array" name="return" type="ns10:stringArray"/>
-</message>
 <message name="obtenerListaSocios"/>
 <message name="obtenerListaSociosResponse">
-<part xmlns:ns11="http://jaxb.dev.java.net/array" name="return" type="ns11:stringArray"/>
+<part xmlns:ns10="http://jaxb.dev.java.net/array" name="return" type="ns10:stringArray"/>
 </message>
 <message name="altaInstitucion">
 <part name="arg0" type="xsd:string"/>
@@ -213,11 +201,17 @@
 <message name="InstitucionRepetidaException">
 <part name="fault" element="tns:InstitucionRepetidaException"/>
 </message>
-<message name="obtenerActividadClase">
+<message name="obtenerClases">
 <part name="arg0" type="xsd:string"/>
 </message>
-<message name="obtenerActividadClaseResponse">
-<part xmlns:ns12="http://jaxb.dev.java.net/array" name="return" type="ns12:stringArray"/>
+<message name="obtenerClasesResponse">
+<part xmlns:ns11="http://jaxb.dev.java.net/array" name="return" type="ns11:stringArray"/>
+</message>
+<message name="obtenerInfoClase">
+<part name="arg0" type="xsd:string"/>
+</message>
+<message name="obtenerInfoClaseResponse">
+<part name="return" type="tns:clase"/>
 </message>
 <message name="existeClaseActividad">
 <part name="arg0" type="xsd:string"/>
@@ -225,11 +219,6 @@
 <message name="existeClaseActividadResponse">
 <part name="return" type="xsd:boolean"/>
 </message>
-<message name="eliminarSocioRegistro">
-<part name="arg0" type="xsd:string"/>
-<part name="arg1" type="tns:socio"/>
-</message>
-<message name="eliminarSocioRegistroResponse"/>
 <message name="existeActividadDepo">
 <part name="arg0" type="xsd:string"/>
 <part name="arg1" type="xsd:string"/>
@@ -237,12 +226,22 @@
 <message name="existeActividadDepoResponse">
 <part name="return" type="xsd:boolean"/>
 </message>
-<message name="existeSocioClase">
-<part name="arg0" type="tns:clase"/>
+<message name="eliminarSocioRegistro">
+<part name="arg0" type="xsd:string"/>
 <part name="arg1" type="tns:socio"/>
 </message>
-<message name="existeSocioClaseResponse">
-<part name="return" type="xsd:boolean"/>
+<message name="eliminarSocioRegistroResponse"/>
+<message name="obtenerActividadClase">
+<part name="arg0" type="xsd:string"/>
+</message>
+<message name="obtenerActividadClaseResponse">
+<part xmlns:ns12="http://jaxb.dev.java.net/array" name="return" type="ns12:stringArray"/>
+</message>
+<message name="loginUsuario">
+<part name="arg0" type="xsd:string"/>
+</message>
+<message name="loginUsuarioResponse">
+<part name="return" type="tns:usuario"/>
 </message>
 <message name="setPassword">
 <part name="arg0" type="xsd:string"/>
@@ -251,57 +250,70 @@
 <part name="arg3" type="xsd:string"/>
 </message>
 <message name="setPasswordResponse"/>
-<message name="loginUsuario">
-<part name="arg0" type="xsd:string"/>
+<message name="existeSocioClase">
+<part name="arg0" type="tns:clase"/>
+<part name="arg1" type="tns:socio"/>
 </message>
-<message name="loginUsuarioResponse">
-<part name="return" type="tns:usuario"/>
+<message name="existeSocioClaseResponse">
+<part name="return" type="xsd:boolean"/>
 </message>
 <portType name="ControladorPublish">
 <operation name="obtenerActividadesInstitucion">
 <input wsam:Action="http://publicadores/ControladorPublish/obtenerActividadesInstitucionRequest" message="tns:obtenerActividadesInstitucion"/>
 <output wsam:Action="http://publicadores/ControladorPublish/obtenerActividadesInstitucionResponse" message="tns:obtenerActividadesInstitucionResponse"/>
 </operation>
-<operation name="obtenerRegistrosSocio">
-<input wsam:Action="http://publicadores/ControladorPublish/obtenerRegistrosSocioRequest" message="tns:obtenerRegistrosSocio"/>
-<output wsam:Action="http://publicadores/ControladorPublish/obtenerRegistrosSocioResponse" message="tns:obtenerRegistrosSocioResponse"/>
-</operation>
 <operation name="obtenerClasesDeActividad">
 <input wsam:Action="http://publicadores/ControladorPublish/obtenerClasesDeActividadRequest" message="tns:obtenerClasesDeActividad"/>
 <output wsam:Action="http://publicadores/ControladorPublish/obtenerClasesDeActividadResponse" message="tns:obtenerClasesDeActividadResponse"/>
 </operation>
-<operation name="obtenerInstituciones">
-<input wsam:Action="http://publicadores/ControladorPublish/obtenerInstitucionesRequest" message="tns:obtenerInstituciones"/>
-<output wsam:Action="http://publicadores/ControladorPublish/obtenerInstitucionesResponse" message="tns:obtenerInstitucionesResponse"/>
-</operation>
-<operation name="obtenerProfesorClase" parameterOrder="arg0 arg1">
-<input wsam:Action="http://publicadores/ControladorPublish/obtenerProfesorClaseRequest" message="tns:obtenerProfesorClase"/>
-<output wsam:Action="http://publicadores/ControladorPublish/obtenerProfesorClaseResponse" message="tns:obtenerProfesorClaseResponse"/>
-</operation>
 <operation name="modificarActividadDeportiva" parameterOrder="arg0 arg1 arg2 arg3 arg4">
 <input wsam:Action="http://publicadores/ControladorPublish/modificarActividadDeportivaRequest" message="tns:modificarActividadDeportiva"/>
 <output wsam:Action="http://publicadores/ControladorPublish/modificarActividadDeportivaResponse" message="tns:modificarActividadDeportivaResponse"/>
+</operation>
+<operation name="obtenerActivDeporProfe">
+<input wsam:Action="http://publicadores/ControladorPublish/obtenerActivDeporProfeRequest" message="tns:obtenerActivDeporProfe"/>
+<output wsam:Action="http://publicadores/ControladorPublish/obtenerActivDeporProfeResponse" message="tns:obtenerActivDeporProfeResponse"/>
+</operation>
+<operation name="obtenerRegistrosSocio">
+<input wsam:Action="http://publicadores/ControladorPublish/obtenerRegistrosSocioRequest" message="tns:obtenerRegistrosSocio"/>
+<output wsam:Action="http://publicadores/ControladorPublish/obtenerRegistrosSocioResponse" message="tns:obtenerRegistrosSocioResponse"/>
+</operation>
+<operation name="obtenerInstitucion">
+<input wsam:Action="http://publicadores/ControladorPublish/obtenerInstitucionRequest" message="tns:obtenerInstitucion"/>
+<output wsam:Action="http://publicadores/ControladorPublish/obtenerInstitucionResponse" message="tns:obtenerInstitucionResponse"/>
 </operation>
 <operation name="altaActividadDeportiva" parameterOrder="arg0 arg1 arg2 arg3 arg4 arg5 arg6">
 <input wsam:Action="http://publicadores/ControladorPublish/altaActividadDeportivaRequest" message="tns:altaActividadDeportiva"/>
 <output wsam:Action="http://publicadores/ControladorPublish/altaActividadDeportivaResponse" message="tns:altaActividadDeportivaResponse"/>
 <fault message="tns:ActividadDException" name="ActividadDException" wsam:Action="http://publicadores/ControladorPublish/altaActividadDeportiva/Fault/ActividadDException"/>
 </operation>
-<operation name="obtenerActivDeporProfe">
-<input wsam:Action="http://publicadores/ControladorPublish/obtenerActivDeporProfeRequest" message="tns:obtenerActivDeporProfe"/>
-<output wsam:Action="http://publicadores/ControladorPublish/obtenerActivDeporProfeResponse" message="tns:obtenerActivDeporProfeResponse"/>
+<operation name="obtenerProfesorClase" parameterOrder="arg0 arg1">
+<input wsam:Action="http://publicadores/ControladorPublish/obtenerProfesorClaseRequest" message="tns:obtenerProfesorClase"/>
+<output wsam:Action="http://publicadores/ControladorPublish/obtenerProfesorClaseResponse" message="tns:obtenerProfesorClaseResponse"/>
 </operation>
-<operation name="obtenerClasesProfe">
-<input wsam:Action="http://publicadores/ControladorPublish/obtenerClasesProfeRequest" message="tns:obtenerClasesProfe"/>
-<output wsam:Action="http://publicadores/ControladorPublish/obtenerClasesProfeResponse" message="tns:obtenerClasesProfeResponse"/>
+<operation name="obtenerInstituciones">
+<input wsam:Action="http://publicadores/ControladorPublish/obtenerInstitucionesRequest" message="tns:obtenerInstituciones"/>
+<output wsam:Action="http://publicadores/ControladorPublish/obtenerInstitucionesResponse" message="tns:obtenerInstitucionesResponse"/>
+</operation>
+<operation name="modificarInstitucion" parameterOrder="arg0 arg1 arg2">
+<input wsam:Action="http://publicadores/ControladorPublish/modificarInstitucionRequest" message="tns:modificarInstitucion"/>
+<output wsam:Action="http://publicadores/ControladorPublish/modificarInstitucionResponse" message="tns:modificarInstitucionResponse"/>
+</operation>
+<operation name="obtenerActividad">
+<input wsam:Action="http://publicadores/ControladorPublish/obtenerActividadRequest" message="tns:obtenerActividad"/>
+<output wsam:Action="http://publicadores/ControladorPublish/obtenerActividadResponse" message="tns:obtenerActividadResponse"/>
+</operation>
+<operation name="obtenerProfes">
+<input wsam:Action="http://publicadores/ControladorPublish/obtenerProfesRequest" message="tns:obtenerProfes"/>
+<output wsam:Action="http://publicadores/ControladorPublish/obtenerProfesResponse" message="tns:obtenerProfesResponse"/>
 </operation>
 <operation name="obtenerSocios">
 <input wsam:Action="http://publicadores/ControladorPublish/obtenerSociosRequest" message="tns:obtenerSocios"/>
 <output wsam:Action="http://publicadores/ControladorPublish/obtenerSociosResponse" message="tns:obtenerSociosResponse"/>
 </operation>
-<operation name="obtenerProfes">
-<input wsam:Action="http://publicadores/ControladorPublish/obtenerProfesRequest" message="tns:obtenerProfes"/>
-<output wsam:Action="http://publicadores/ControladorPublish/obtenerProfesResponse" message="tns:obtenerProfesResponse"/>
+<operation name="obtenerClasesProfe">
+<input wsam:Action="http://publicadores/ControladorPublish/obtenerClasesProfeRequest" message="tns:obtenerClasesProfe"/>
+<output wsam:Action="http://publicadores/ControladorPublish/obtenerClasesProfeResponse" message="tns:obtenerClasesProfeResponse"/>
 </operation>
 <operation name="obtenerClasesAct">
 <input wsam:Action="http://publicadores/ControladorPublish/obtenerClasesActRequest" message="tns:obtenerClasesAct"/>
@@ -311,17 +323,13 @@
 <input wsam:Action="http://publicadores/ControladorPublish/obtenerUsuariosRequest" message="tns:obtenerUsuarios"/>
 <output wsam:Action="http://publicadores/ControladorPublish/obtenerUsuariosResponse" message="tns:obtenerUsuariosResponse"/>
 </operation>
-<operation name="actualizarUsuario" parameterOrder="arg0 arg1 arg2 arg3 arg4 arg5">
-<input wsam:Action="http://publicadores/ControladorPublish/actualizarUsuarioRequest" message="tns:actualizarUsuario"/>
-<output wsam:Action="http://publicadores/ControladorPublish/actualizarUsuarioResponse" message="tns:actualizarUsuarioResponse"/>
+<operation name="obtenerProfesor">
+<input wsam:Action="http://publicadores/ControladorPublish/obtenerProfesorRequest" message="tns:obtenerProfesor"/>
+<output wsam:Action="http://publicadores/ControladorPublish/obtenerProfesorResponse" message="tns:obtenerProfesorResponse"/>
 </operation>
 <operation name="rankingClases">
 <input wsam:Action="http://publicadores/ControladorPublish/rankingClasesRequest" message="tns:rankingClases"/>
 <output wsam:Action="http://publicadores/ControladorPublish/rankingClasesResponse" message="tns:rankingClasesResponse"/>
-</operation>
-<operation name="obtenerProfesor">
-<input wsam:Action="http://publicadores/ControladorPublish/obtenerProfesorRequest" message="tns:obtenerProfesor"/>
-<output wsam:Action="http://publicadores/ControladorPublish/obtenerProfesorResponse" message="tns:obtenerProfesorResponse"/>
 </operation>
 <operation name="obtenerUsuario">
 <input wsam:Action="http://publicadores/ControladorPublish/obtenerUsuarioRequest" message="tns:obtenerUsuario"/>
@@ -331,26 +339,18 @@
 <input wsam:Action="http://publicadores/ControladorPublish/actualizarProfeRequest" message="tns:actualizarProfe"/>
 <output wsam:Action="http://publicadores/ControladorPublish/actualizarProfeResponse" message="tns:actualizarProfeResponse"/>
 </operation>
+<operation name="actualizarUsuario" parameterOrder="arg0 arg1 arg2 arg3 arg4 arg5">
+<input wsam:Action="http://publicadores/ControladorPublish/actualizarUsuarioRequest" message="tns:actualizarUsuario"/>
+<output wsam:Action="http://publicadores/ControladorPublish/actualizarUsuarioResponse" message="tns:actualizarUsuarioResponse"/>
+</operation>
 <operation name="rankingActividades">
 <input wsam:Action="http://publicadores/ControladorPublish/rankingActividadesRequest" message="tns:rankingActividades"/>
 <output wsam:Action="http://publicadores/ControladorPublish/rankingActividadesResponse" message="tns:rankingActividadesResponse"/>
-</operation>
-<operation name="modificarInstitucion" parameterOrder="arg0 arg1 arg2">
-<input wsam:Action="http://publicadores/ControladorPublish/modificarInstitucionRequest" message="tns:modificarInstitucion"/>
-<output wsam:Action="http://publicadores/ControladorPublish/modificarInstitucionResponse" message="tns:modificarInstitucionResponse"/>
 </operation>
 <operation name="altaUsuario">
 <input wsam:Action="http://publicadores/ControladorPublish/altaUsuarioRequest" message="tns:altaUsuario"/>
 <output wsam:Action="http://publicadores/ControladorPublish/altaUsuarioResponse" message="tns:altaUsuarioResponse"/>
 <fault message="tns:UsuarioRepetidoException" name="UsuarioRepetidoException" wsam:Action="http://publicadores/ControladorPublish/altaUsuario/Fault/UsuarioRepetidoException"/>
-</operation>
-<operation name="obtenerActividad">
-<input wsam:Action="http://publicadores/ControladorPublish/obtenerActividadRequest" message="tns:obtenerActividad"/>
-<output wsam:Action="http://publicadores/ControladorPublish/obtenerActividadResponse" message="tns:obtenerActividadResponse"/>
-</operation>
-<operation name="obtenerInstitucion">
-<input wsam:Action="http://publicadores/ControladorPublish/obtenerInstitucionRequest" message="tns:obtenerInstitucion"/>
-<output wsam:Action="http://publicadores/ControladorPublish/obtenerInstitucionResponse" message="tns:obtenerInstitucionResponse"/>
 </operation>
 <operation name="obtenerActividades">
 <input wsam:Action="http://publicadores/ControladorPublish/obtenerActividadesRequest" message="tns:obtenerActividades"/>
@@ -365,18 +365,10 @@
 <output wsam:Action="http://publicadores/ControladorPublish/altaClaseActividadResponse" message="tns:altaClaseActividadResponse"/>
 <fault message="tns:ClaseException" name="ClaseException" wsam:Action="http://publicadores/ControladorPublish/altaClaseActividad/Fault/ClaseException"/>
 </operation>
-<operation name="obtenerInfoClase">
-<input wsam:Action="http://publicadores/ControladorPublish/obtenerInfoClaseRequest" message="tns:obtenerInfoClase"/>
-<output wsam:Action="http://publicadores/ControladorPublish/obtenerInfoClaseResponse" message="tns:obtenerInfoClaseResponse"/>
-</operation>
 <operation name="altaSocioClase" parameterOrder="arg0 arg1 arg2">
 <input wsam:Action="http://publicadores/ControladorPublish/altaSocioClaseRequest" message="tns:altaSocioClase"/>
 <output wsam:Action="http://publicadores/ControladorPublish/altaSocioClaseResponse" message="tns:altaSocioClaseResponse"/>
 <fault message="tns:SocioYaInscriptoException" name="SocioYaInscriptoException" wsam:Action="http://publicadores/ControladorPublish/altaSocioClase/Fault/SocioYaInscriptoException"/>
-</operation>
-<operation name="obtenerClases">
-<input wsam:Action="http://publicadores/ControladorPublish/obtenerClasesRequest" message="tns:obtenerClases"/>
-<output wsam:Action="http://publicadores/ControladorPublish/obtenerClasesResponse" message="tns:obtenerClasesResponse"/>
 </operation>
 <operation name="obtenerListaSocios">
 <input wsam:Action="http://publicadores/ControladorPublish/obtenerListaSociosRequest" message="tns:obtenerListaSocios"/>
@@ -387,47 +379,46 @@
 <output wsam:Action="http://publicadores/ControladorPublish/altaInstitucionResponse" message="tns:altaInstitucionResponse"/>
 <fault message="tns:InstitucionRepetidaException" name="InstitucionRepetidaException" wsam:Action="http://publicadores/ControladorPublish/altaInstitucion/Fault/InstitucionRepetidaException"/>
 </operation>
-<operation name="obtenerActividadClase">
-<input wsam:Action="http://publicadores/ControladorPublish/obtenerActividadClaseRequest" message="tns:obtenerActividadClase"/>
-<output wsam:Action="http://publicadores/ControladorPublish/obtenerActividadClaseResponse" message="tns:obtenerActividadClaseResponse"/>
+<operation name="obtenerClases">
+<input wsam:Action="http://publicadores/ControladorPublish/obtenerClasesRequest" message="tns:obtenerClases"/>
+<output wsam:Action="http://publicadores/ControladorPublish/obtenerClasesResponse" message="tns:obtenerClasesResponse"/>
+</operation>
+<operation name="obtenerInfoClase">
+<input wsam:Action="http://publicadores/ControladorPublish/obtenerInfoClaseRequest" message="tns:obtenerInfoClase"/>
+<output wsam:Action="http://publicadores/ControladorPublish/obtenerInfoClaseResponse" message="tns:obtenerInfoClaseResponse"/>
 </operation>
 <operation name="existeClaseActividad">
 <input wsam:Action="http://publicadores/ControladorPublish/existeClaseActividadRequest" message="tns:existeClaseActividad"/>
 <output wsam:Action="http://publicadores/ControladorPublish/existeClaseActividadResponse" message="tns:existeClaseActividadResponse"/>
 </operation>
-<operation name="eliminarSocioRegistro" parameterOrder="arg0 arg1">
-<input wsam:Action="http://publicadores/ControladorPublish/eliminarSocioRegistroRequest" message="tns:eliminarSocioRegistro"/>
-<output wsam:Action="http://publicadores/ControladorPublish/eliminarSocioRegistroResponse" message="tns:eliminarSocioRegistroResponse"/>
-</operation>
 <operation name="existeActividadDepo" parameterOrder="arg0 arg1">
 <input wsam:Action="http://publicadores/ControladorPublish/existeActividadDepoRequest" message="tns:existeActividadDepo"/>
 <output wsam:Action="http://publicadores/ControladorPublish/existeActividadDepoResponse" message="tns:existeActividadDepoResponse"/>
 </operation>
-<operation name="existeSocioClase" parameterOrder="arg0 arg1">
-<input wsam:Action="http://publicadores/ControladorPublish/existeSocioClaseRequest" message="tns:existeSocioClase"/>
-<output wsam:Action="http://publicadores/ControladorPublish/existeSocioClaseResponse" message="tns:existeSocioClaseResponse"/>
+<operation name="eliminarSocioRegistro" parameterOrder="arg0 arg1">
+<input wsam:Action="http://publicadores/ControladorPublish/eliminarSocioRegistroRequest" message="tns:eliminarSocioRegistro"/>
+<output wsam:Action="http://publicadores/ControladorPublish/eliminarSocioRegistroResponse" message="tns:eliminarSocioRegistroResponse"/>
 </operation>
-<operation name="setPassword" parameterOrder="arg0 arg1 arg2 arg3">
-<input wsam:Action="http://publicadores/ControladorPublish/setPasswordRequest" message="tns:setPassword"/>
-<output wsam:Action="http://publicadores/ControladorPublish/setPasswordResponse" message="tns:setPasswordResponse"/>
+<operation name="obtenerActividadClase">
+<input wsam:Action="http://publicadores/ControladorPublish/obtenerActividadClaseRequest" message="tns:obtenerActividadClase"/>
+<output wsam:Action="http://publicadores/ControladorPublish/obtenerActividadClaseResponse" message="tns:obtenerActividadClaseResponse"/>
 </operation>
 <operation name="loginUsuario">
 <input wsam:Action="http://publicadores/ControladorPublish/loginUsuarioRequest" message="tns:loginUsuario"/>
 <output wsam:Action="http://publicadores/ControladorPublish/loginUsuarioResponse" message="tns:loginUsuarioResponse"/>
 </operation>
+<operation name="setPassword" parameterOrder="arg0 arg1 arg2 arg3">
+<input wsam:Action="http://publicadores/ControladorPublish/setPasswordRequest" message="tns:setPassword"/>
+<output wsam:Action="http://publicadores/ControladorPublish/setPasswordResponse" message="tns:setPasswordResponse"/>
+</operation>
+<operation name="existeSocioClase" parameterOrder="arg0 arg1">
+<input wsam:Action="http://publicadores/ControladorPublish/existeSocioClaseRequest" message="tns:existeSocioClase"/>
+<output wsam:Action="http://publicadores/ControladorPublish/existeSocioClaseResponse" message="tns:existeSocioClaseResponse"/>
+</operation>
 </portType>
 <binding name="ControladorPublishPortBinding" type="tns:ControladorPublish">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc"/>
 <operation name="obtenerActividadesInstitucion">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</input>
-<output>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</output>
-</operation>
-<operation name="obtenerRegistrosSocio">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal" namespace="http://publicadores/"/>
@@ -445,25 +436,34 @@
 <soap:body use="literal" namespace="http://publicadores/"/>
 </output>
 </operation>
-<operation name="obtenerInstituciones">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</input>
-<output>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</output>
-</operation>
-<operation name="obtenerProfesorClase">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</input>
-<output>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</output>
-</operation>
 <operation name="modificarActividadDeportiva">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</output>
+</operation>
+<operation name="obtenerActivDeporProfe">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</output>
+</operation>
+<operation name="obtenerRegistrosSocio">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</output>
+</operation>
+<operation name="obtenerInstitucion">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal" namespace="http://publicadores/"/>
@@ -484,7 +484,7 @@
 <soap:fault name="ActividadDException" use="literal"/>
 </fault>
 </operation>
-<operation name="obtenerActivDeporProfe">
+<operation name="obtenerProfesorClase">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal" namespace="http://publicadores/"/>
@@ -493,7 +493,34 @@
 <soap:body use="literal" namespace="http://publicadores/"/>
 </output>
 </operation>
-<operation name="obtenerClasesProfe">
+<operation name="obtenerInstituciones">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</output>
+</operation>
+<operation name="modificarInstitucion">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</output>
+</operation>
+<operation name="obtenerActividad">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</output>
+</operation>
+<operation name="obtenerProfes">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal" namespace="http://publicadores/"/>
@@ -511,7 +538,7 @@
 <soap:body use="literal" namespace="http://publicadores/"/>
 </output>
 </operation>
-<operation name="obtenerProfes">
+<operation name="obtenerClasesProfe">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal" namespace="http://publicadores/"/>
@@ -538,7 +565,7 @@
 <soap:body use="literal" namespace="http://publicadores/"/>
 </output>
 </operation>
-<operation name="actualizarUsuario">
+<operation name="obtenerProfesor">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal" namespace="http://publicadores/"/>
@@ -548,15 +575,6 @@
 </output>
 </operation>
 <operation name="rankingClases">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</input>
-<output>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</output>
-</operation>
-<operation name="obtenerProfesor">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal" namespace="http://publicadores/"/>
@@ -583,7 +601,7 @@
 <soap:body use="literal" namespace="http://publicadores/"/>
 </output>
 </operation>
-<operation name="rankingActividades">
+<operation name="actualizarUsuario">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal" namespace="http://publicadores/"/>
@@ -592,7 +610,7 @@
 <soap:body use="literal" namespace="http://publicadores/"/>
 </output>
 </operation>
-<operation name="modificarInstitucion">
+<operation name="rankingActividades">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal" namespace="http://publicadores/"/>
@@ -612,24 +630,6 @@
 <fault name="UsuarioRepetidoException">
 <soap:fault name="UsuarioRepetidoException" use="literal"/>
 </fault>
-</operation>
-<operation name="obtenerActividad">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</input>
-<output>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</output>
-</operation>
-<operation name="obtenerInstitucion">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</input>
-<output>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</output>
 </operation>
 <operation name="obtenerActividades">
 <soap:operation soapAction=""/>
@@ -661,15 +661,6 @@
 <soap:fault name="ClaseException" use="literal"/>
 </fault>
 </operation>
-<operation name="obtenerInfoClase">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</input>
-<output>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</output>
-</operation>
 <operation name="altaSocioClase">
 <soap:operation soapAction=""/>
 <input>
@@ -681,15 +672,6 @@
 <fault name="SocioYaInscriptoException">
 <soap:fault name="SocioYaInscriptoException" use="literal"/>
 </fault>
-</operation>
-<operation name="obtenerClases">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</input>
-<output>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</output>
 </operation>
 <operation name="obtenerListaSocios">
 <soap:operation soapAction=""/>
@@ -712,7 +694,16 @@
 <soap:fault name="InstitucionRepetidaException" use="literal"/>
 </fault>
 </operation>
-<operation name="obtenerActividadClase">
+<operation name="obtenerClases">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</output>
+</operation>
+<operation name="obtenerInfoClase">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal" namespace="http://publicadores/"/>
@@ -730,15 +721,6 @@
 <soap:body use="literal" namespace="http://publicadores/"/>
 </output>
 </operation>
-<operation name="eliminarSocioRegistro">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</input>
-<output>
-<soap:body use="literal" namespace="http://publicadores/"/>
-</output>
-</operation>
 <operation name="existeActividadDepo">
 <soap:operation soapAction=""/>
 <input>
@@ -748,7 +730,25 @@
 <soap:body use="literal" namespace="http://publicadores/"/>
 </output>
 </operation>
-<operation name="existeSocioClase">
+<operation name="eliminarSocioRegistro">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</output>
+</operation>
+<operation name="obtenerActividadClase">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</input>
+<output>
+<soap:body use="literal" namespace="http://publicadores/"/>
+</output>
+</operation>
+<operation name="loginUsuario">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal" namespace="http://publicadores/"/>
@@ -766,7 +766,7 @@
 <soap:body use="literal" namespace="http://publicadores/"/>
 </output>
 </operation>
-<operation name="loginUsuario">
+<operation name="existeSocioClase">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal" namespace="http://publicadores/"/>

@@ -12,14 +12,21 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.RemoteException;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.rpc.ServiceException;
 import publicadores.ActividadDeportiva;
 import publicadores.Clase;
 import publicadores.ControladorPublish;
 import publicadores.ControladorPublishService;
-import publicadores.SocioYaInscriptoException_Exception;
+import publicadores.ControladorPublishServiceLocator;
+import publicadores.SocioYaInscriptoException;
 
 /**
  *
@@ -45,122 +52,124 @@ public class RegistroClase extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, RemoteException {
         String consulta = request.getParameter("consultar");
                 
         if(consulta.equals("instituciones")){
-            List<String> inst = obtenerDatos(consulta, "", "");
-            String[] list = new String[inst.size()];
-            int i = 0;
-            for(String s: inst){
-                list[i] = s;
-                i++;
+            String[] list;
+            try {
+                list = obtenerDatos(consulta, "", "");
+                response.setStatus(200);
+
+                // Convertir el ArrayList a JSON
+                ObjectMapper objectMapper = new ObjectMapper();
+                String json = objectMapper.writeValueAsString(list);
+
+                // Configurar el tipo de contenido de la respuesta a application/json
+                response.setContentType("application/json");
+
+                // Obtener el flujo de salida de la respuesta
+                PrintWriter out = response.getWriter();
+
+                // Escribir el JSON en la respuesta
+                out.println(json);
+
+                // Cerrar el flujo de salida
+                out.close();
+            } catch (ServiceException ex) {
+                Logger.getLogger(RegistroClase.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            response.setStatus(200);
-
-            // Convertir el ArrayList a JSON
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(list);
-
-            // Configurar el tipo de contenido de la respuesta a application/json
-            response.setContentType("application/json");
-
-            // Obtener el flujo de salida de la respuesta
-            PrintWriter out = response.getWriter();
-
-            // Escribir el JSON en la respuesta
-            out.println(json);
-
-            // Cerrar el flujo de salida
-            out.close();
-            
         }
         else if(consulta.equals("actividades")){
             String institucion = request.getParameter("inst");
-            List<String> inst = obtenerDatos(consulta, institucion, "");
-            String[] list = new String[inst.size()];
-            int i = 0;
-            for(String s: inst){
-                list[i] = s;
-                i++;
+           
+            String[] list;
+            try {
+                list = obtenerDatos(consulta, institucion, "");
+                response.setStatus(200);
+
+                // Convertir el ArrayList a JSON
+                ObjectMapper objectMapper = new ObjectMapper();
+                String json = objectMapper.writeValueAsString(list);
+
+                // Configurar el tipo de contenido de la respuesta a application/json
+                response.setContentType("application/json");
+
+                // Obtener el flujo de salida de la respuesta
+                PrintWriter out = response.getWriter();
+
+                // Escribir el JSON en la respuesta
+                out.println(json);
+
+                // Cerrar el flujo de salida
+                out.close();
+            } catch (ServiceException ex) {
+                Logger.getLogger(RegistroClase.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            response.setStatus(200);
-
-            // Convertir el ArrayList a JSON
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(list);
-
-            // Configurar el tipo de contenido de la respuesta a application/json
-            response.setContentType("application/json");
-
-            // Obtener el flujo de salida de la respuesta
-            PrintWriter out = response.getWriter();
-
-            // Escribir el JSON en la respuesta
-            out.println(json);
-
-            // Cerrar el flujo de salida
-            out.close();
-            
         }
         else{
             String actividad = request.getParameter("act");
-            List<String> inst = obtenerDatos(consulta, "", actividad);
-            String[] list = new String[inst.size()];
-            int i = 0;
-            for(String s: inst){
-                list[i] = s;
-                i++;
+            String[] list;
+            try {
+                list = obtenerDatos(consulta, "", actividad);
+                response.setStatus(200);
+
+                // Convertir el ArrayList a JSON
+                ObjectMapper objectMapper = new ObjectMapper();
+                String json = objectMapper.writeValueAsString(list);
+
+                // Configurar el tipo de contenido de la respuesta a application/json
+                response.setContentType("application/json");
+
+                // Obtener el flujo de salida de la respuesta
+                PrintWriter out = response.getWriter();
+
+                // Escribir el JSON en la respuesta
+                out.println(json);
+
+                // Cerrar el flujo de salida
+                out.close();
+            } catch (ServiceException ex) {
+                Logger.getLogger(RegistroClase.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            response.setStatus(200);
-
-            // Convertir el ArrayList a JSON
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(list);
-
-            // Configurar el tipo de contenido de la respuesta a application/json
-            response.setContentType("application/json");
-
-            // Obtener el flujo de salida de la respuesta
-            PrintWriter out = response.getWriter();
-
-            // Escribir el JSON en la respuesta
-            out.println(json);
-
-            // Cerrar el flujo de salida
-            out.close();
-            
         }
     }
 
-    public List<String> obtenerDatos(String dato, String inst, String act){
-        ControladorPublishService cps = new ControladorPublishService();
-        ControladorPublish cp = cps.getControladorPublishPort();
-        List<String> list;
+    public String[] obtenerDatos(String dato, String inst, String act) throws RemoteException, ServiceException{
+        ControladorPublishService cps = new ControladorPublishServiceLocator();
+        ControladorPublish port = cps.getControladorPublishPort();
+        String[] list;
         
         if(dato.equals("instituciones")){
-            list = cp.obtenerInstituciones().getItem();
+            list = port.obtenerInstituciones();
         }
         else if(dato.equals("actividades")){
-            list = cp.obtenerActividades(inst).getItem();
+            list = port.obtenerActividades(inst);
         }
         else{
-            list = cp.obtenerClases(act).getItem();
+            list = port.obtenerClases(act);
         }
         return list;
     }
    
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, RemoteException {
         String opcion = request.getParameter("opcion");
         String clase = request.getParameter("clase");
         String act = request.getParameter("actividad");
         String socio = request.getParameter("socio");
-        ActividadDeportiva ac = obtenerActividad(act);
-        Clase c = obtenerInfoClase(clase);
+        ActividadDeportiva ac = null;
+        try {
+            ac = obtenerActividad(act);
+        } catch (ServiceException ex) {
+            Logger.getLogger(RegistroClase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Clase c = null;
+        try {
+            c = obtenerInfoClase(clase);
+        } catch (ServiceException ex) {
+            Logger.getLogger(RegistroClase.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.out.println(ac.getNombre());
         //System.out.println(c.getNombre());
         
@@ -173,11 +182,13 @@ public class RegistroClase extends HttpServlet {
                 response.setContentType("text/plain");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write("Socio incripto correctamente");
-            } catch (SocioYaInscriptoException_Exception e) {
+            } catch (SocioYaInscriptoException e) {
                 response.setStatus(400);
                 response.setContentType("text/plain");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write("Socio ya esta inscipto en esa clase");
+            } catch (ServiceException ex) {
+                Logger.getLogger(RegistroClase.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else{
@@ -193,25 +204,24 @@ public class RegistroClase extends HttpServlet {
     }
   
     
-    public Clase obtenerInfoClase(String clase){
-        ControladorPublish cp = new ControladorPublishService().getControladorPublishPort();
-        return cp.obtenerInfoClase(clase);
+    public Clase obtenerInfoClase(String clase) throws RemoteException, ServiceException{
+        ControladorPublishService cps = new ControladorPublishServiceLocator();
+        ControladorPublish port = cps.getControladorPublishPort();
+        return port.obtenerInfoClase(clase);
     }
     
-    public publicadores.ActividadDeportiva obtenerActividad(String arg0){
-        ControladorPublish cp = new ControladorPublishService().getControladorPublishPort();
-        ActividadDeportiva a = cp.obtenerActividad(arg0);
-        return a;
+    public publicadores.ActividadDeportiva obtenerActividad(String arg0) throws ServiceException, RemoteException{
+        ControladorPublishService cps = new ControladorPublishServiceLocator();
+        ControladorPublish port = cps.getControladorPublishPort();
+        return port.obtenerActividad(arg0);
     }
     
-    public void altaSocioClase(String socio,String clase, Date fecha) throws SocioYaInscriptoException_Exception{
-        ControladorPublishService cps = new ControladorPublishService();
-        ControladorPublish cp = cps.getControladorPublishPort();
-        XMLGregorianCalendar f = null;
-        f.setDay(fecha.getDay());
-        f.setMonth(fecha.getMonth());
-        f.setYear(fecha.getYear());
-        cp.altaSocioClase(socio, clase, f);
+    public void altaSocioClase(String socio,String clase, Date fecha) throws SocioYaInscriptoException, RemoteException, ServiceException{
+        ControladorPublishService cps = new ControladorPublishServiceLocator();
+        ControladorPublish port = cps.getControladorPublishPort();
+        Calendar c = new GregorianCalendar();
+        c.set(fecha.getYear(), fecha.getMonth(), fecha.getDay());
+        port.altaSocioClase(socio, socio, c);
     }
     
 }

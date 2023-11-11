@@ -3,6 +3,7 @@
 	<name>entrenamosuyWeb</name>
 	<comment></comment>
 	<projects>
+		<project>entrenamosuy</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
