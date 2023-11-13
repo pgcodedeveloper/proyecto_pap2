@@ -4,7 +4,7 @@
     Author     : PC
 --%>
 <!DOCTYPE html>
-<%@page import="publicadores.Usuario" %>
+<%@page import="publicadores.DtUsuario" %>
 <%@ page language="java"%>
 
 <%  
@@ -14,13 +14,11 @@
     String contextPath = request.getContextPath(); // Obtiene el contexto de la aplicación
     String requestURI = request.getRequestURI();   // Obtiene la URI de la solicitud
     String currentPage = requestURI.substring(contextPath.length());
-    if(((Usuario) session.getAttribute("usuario")) != null){
-        Usuario u = ((Usuario) session.getAttribute("usuario"));
+    if(((DtUsuario) session.getAttribute("usuario")) != null){
+        DtUsuario u = ((DtUsuario) session.getAttribute("usuario"));
         String tipo = ((String) session.getAttribute("tipoUser"));
-
         if(u != null && tipo != null){
             //out.println(u);
-            //out.println(tipo);
             if(tipo.equals("profesor")){
                 tipoUP = true;
             }

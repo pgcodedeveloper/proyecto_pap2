@@ -1,10 +1,10 @@
-<%@page import="publicadores.Usuario" %>
+<%@page import="publicadores.DtUsuario" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%  
     boolean errorI = false;
-    if(((Usuario) session.getAttribute("usuario")) != null){
+    if(((DtUsuario) session.getAttribute("usuario")) != null){
         errorI = false;
     }
     else{
@@ -22,7 +22,7 @@
     
     <% if(!error){ %>
         <main class="main">
-            <h2 class="heading">Bienvenido <span><%= ((Usuario) session.getAttribute("usuario")).getNombre() %></span></h2>
+            <h2 class="heading">Bienvenido <span><%= ((DtUsuario) session.getAttribute("usuario")).getNombre() %></span></h2>
             <p class="heading-texto">Disfrute de un servicio especializado con los mejores profesionales y equipamiento del País</p>
             <div id="carouselExampleAutoplaying" class="carousel slide mx-auto my-5 carusel-index" data-bs-ride="carousel">
                 <div class="carousel-inner">

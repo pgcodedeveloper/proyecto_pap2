@@ -14,13 +14,22 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.rpc.ServiceException;
 import logica.Clase;
 import logica.Registro;
 import logica.Socio;
 import logica.Usuario;
 import org.hibernate.Session;
+import publicadores.ControladorPublish;
+import publicadores.ControladorPublishService;
+import publicadores.ControladorPublishServiceLocator;
+import publicadores.DtSocio;
+import publicadores.DtUsuario;
 
 /**
  *
@@ -64,55 +73,56 @@ public class EliminarRegistro extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        String tipo = request.getParameter("tipo");
-        String act = request.getParameter("act");
-        Usuario socio = ((Usuario) session.getAttribute("usuario"));
-        Fabrica fb = Fabrica.getInstancia();
-        IControlador icon = fb.getIControlador();
-        
-        ArrayList<Registro> list = new ArrayList<>();
-        List<String[]> aRetornar = new ArrayList<>();
-        
-        int cont = 1;
-
-        if(tipo.equals("consultar")){
-            list = icon.obtenerRegistrosSocio(socio.getId());
-            ArrayList<Clase> clases = icon.obtenerClasesDeActividad(act);
-            if(clases != null && !clases.isEmpty()){
-                response.setStatus(200);
-                if(list != null && !list.isEmpty()){
-                    for(Registro r:list){
-                        for(Clase c : clases){
-                            if(r.getClaseId().equals(c)){
-                                String[] datos = new String[3];
-                                datos[0] = r.getClaseId().getNombre();
-                                datos[1] = r.getFechaReg().toString();
-                                datos[2]= r.getSocioId().getNombre() + " " + r.getSocioId().getApellido();
-                                aRetornar.add(datos);
-                            }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, RemoteException {
+        try {
+            HttpSession session = request.getSession(false);
+            String tipo = request.getParameter("tipo");
+            String act = request.getParameter("act");
+            DtUsuario socio = ((DtUsuario) session.getAttribute("usuario"));
+            
+            List<String[]> aRetornar = new ArrayList<>();
+            String[] cl = obtenerClasesAct(act);
+            String[] reg = obtenerRegistros(socio.getNickname());
+            List<String[]> registrosSocio = new ArrayList<>();
+            int cont = 1;
+            
+            if(tipo.equals("consultar")){
+                for(String s: reg){
+                    String[] res = s.split(",");
+                    registrosSocio.add(res);
+                }
+                
+                for(String[] s: registrosSocio){
+                    s[0] = s[0].substring(1);
+                    String nombre = s[0];
+                    int index = s[2].length() - 1;
+                    s[2] = s[2].substring(0,index);
+                    for(String clase: cl){
+                        if(nombre.equals(clase)){
+                            aRetornar.add(s);
                         }
                     }
                 }
+                //aRetornar = obtenerRegistros(socio.getNickname());
+                
+                // Convertir el ArrayList a JSON
+                ObjectMapper objectMapper = new ObjectMapper();
+                String json = objectMapper.writeValueAsString(aRetornar);
+                
+                // Configurar el tipo de contenido de la respuesta a application/json
+                response.setContentType("application/json");
+                
+                // Obtener el flujo de salida de la respuesta
+                PrintWriter out = response.getWriter();
+                
+                // Escribir el JSON en la respuesta
+                out.println(json);
+                
+                // Cerrar el flujo de salida
+                out.close();
             }
-            
-            
-            // Convertir el ArrayList a JSON
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(aRetornar);
-
-            // Configurar el tipo de contenido de la respuesta a application/json
-            response.setContentType("application/json");
-
-            // Obtener el flujo de salida de la respuesta
-            PrintWriter out = response.getWriter();
-
-            // Escribir el JSON en la respuesta
-            out.println(json);
-
-            // Cerrar el flujo de salida
-            out.close();
+        } catch (ServiceException ex) {
+            Logger.getLogger(EliminarRegistro.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
@@ -131,13 +141,10 @@ public class EliminarRegistro extends HttpServlet {
         String clase = request.getParameter("clase");
         
         HttpSession session = request.getSession(false);
-        Usuario u = ((Usuario) session.getAttribute("usuario"));
-        Fabrica fb = Fabrica.getInstancia();
-        IControlador icon = fb.getIControlador();
-        
+        DtUsuario u = ((DtUsuario) session.getAttribute("usuario"));
+
         try {
-            
-            icon.eliminarSocioRegistro(clase, ((Socio)u));
+            eliminarRegistro(clase, u);
             response.setStatus(200);
             response.setContentType("text/plain");
             response.setCharacterEncoding("UTF-8");
@@ -152,14 +159,23 @@ public class EliminarRegistro extends HttpServlet {
         
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+    public String[] obtenerRegistros(String socio) throws ServiceException, RemoteException{
+        ControladorPublishService cps = new ControladorPublishServiceLocator();
+        ControladorPublish port = cps.getControladorPublishPort();
+        String [] s = port.obtenerRegistrosSocio(socio);
+        return s;
+    }
+    
+    public String[] obtenerClasesAct(String act) throws RemoteException, ServiceException{
+        ControladorPublishService cps = new ControladorPublishServiceLocator();
+        ControladorPublish port = cps.getControladorPublishPort();
+        return port.obtenerClasesAct(act);
+    }
+    
+    public void eliminarRegistro(String clase, DtUsuario s) throws ServiceException, RemoteException{
+        ControladorPublishService cps = new ControladorPublishServiceLocator();
+        ControladorPublish port = cps.getControladorPublishPort();
+        port.eliminarSocioRegistro(clase, s);
+    }
+    
 }

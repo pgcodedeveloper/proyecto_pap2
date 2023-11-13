@@ -1,4 +1,4 @@
-<%@page import="publicadores.Usuario" %>
+<%@page import="publicadores.DtUsuario" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -26,10 +26,10 @@
             <tbody class="table-group-divider">
                 <tr>
                     <th scope="row">1</th>
-                    <td><p>${clase.getNombre()}</p></td>
-                    <td><p>${actividad.getNombre()}</p></td>
-                    <td><p>${actividad.getCosto()}</p></td>
-                    <td><p>${actividad.getDuracion()}</p></td>
+                    <td><p>${clase[0]}</p></td>
+                    <td><p>${actividad[0]}</p></td>
+                    <td><p>${actividad[3]}</p></td>
+                    <td><p>${actividad[2]}</p></td>
                 </tr>
             </tbody>
         </table>
@@ -48,9 +48,9 @@
             <tbody class="table-group-divider">
                 <tr>
                     <th scope="row">1</th>
-                    <td><p>${actividad.getNombre()}</p></td>
-                    <td><p>${clase.getHoraInicio()}</p></td>
-                    <td><p>${actividad.getInst().getNombre()}</p></td>
+                    <td><p>${actividad[0]}</p></td>
+                    <td><p>${clase[2]}</p></td>
+                    <td><p>${actividad[6]}</p></td>
                 </tr>
             </tbody>
         </table>
@@ -61,9 +61,9 @@
                 <i class="fa-solid fa-file-circle-xmark"></i>
             </button>
             <form id="formulario">
-                <input type="hidden" id="nick" value="<%= ((Usuario) session.getAttribute("usuario")).getNickname()%>"/>
-                <input type="hidden" id="clase" value="${clase.getNombre().toString()}"/>
-                <input type="hidden" id="actividad" value="${actividad.getNombre().toString()}"/>
+                <input type="hidden" id="nick" value="<%= ((DtUsuario) session.getAttribute("usuario")).getNickname()%>"/>
+                <input type="hidden" id="clase" value="${clase[0].toString()}"/>
+                <input type="hidden" id="actividad" value="${actividad[0].toString()}"/>
 
                 <button type="submit" id="btn" class="btn btn-primary">
                     Confirmar

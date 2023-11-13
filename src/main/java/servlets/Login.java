@@ -22,6 +22,9 @@ import org.mindrot.jbcrypt.BCrypt;
 import publicadores.ControladorPublish;
 import publicadores.ControladorPublishService;
 import publicadores.ControladorPublishServiceLocator;
+import publicadores.DtProfesor;
+import publicadores.DtSocio;
+import publicadores.DtUsuario;
 
 /**
  *
@@ -85,7 +88,7 @@ public class Login extends HttpServlet {
         if(tipo.equals("login")){
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            Usuario u = null;
+            DtUsuario u = null;
             try {
                 u = login(email);
             } catch (ServiceException ex) {
@@ -94,14 +97,19 @@ public class Login extends HttpServlet {
             
             if(u != null){
                 if(u.getPassword() != null){
+                    System.out.println(BCrypt.checkpw(password, u.getPassword()));
+                    System.out.println(password + " " + u.getPassword());
                     if(BCrypt.checkpw(password, u.getPassword())){
                         HttpSession sesion = request.getSession();
                         sesion.setAttribute("usuario", u);
-                        if(u instanceof Socio){
+                        if(u instanceof DtSocio){
                             sesion.setAttribute("tipoUser", "socio");
                         }
-                        else if(u instanceof Profesor){
+                        else if(u instanceof DtProfesor){
                             sesion.setAttribute("tipoUser", "profesor");
+                        }
+                        else{
+                            System.out.println("Ningun tipo, soy Gasparin");
                         }
 
                         response.setStatus(200);
@@ -139,7 +147,7 @@ public class Login extends HttpServlet {
     }
     
     
-    public publicadores.Usuario login(String email) throws ServiceException, RemoteException{
+    public publicadores.DtUsuario login(String email) throws ServiceException, RemoteException{
         ControladorPublishService cps = new ControladorPublishServiceLocator();
         ControladorPublish port = cps.getControladorPublishPort();
         return port.loginUsuario(email);

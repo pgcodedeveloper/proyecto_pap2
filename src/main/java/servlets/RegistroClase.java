@@ -158,22 +158,22 @@ public class RegistroClase extends HttpServlet {
         String clase = request.getParameter("clase");
         String act = request.getParameter("actividad");
         String socio = request.getParameter("socio");
-        ActividadDeportiva ac = null;
-        try {
-            ac = obtenerActividad(act);
-        } catch (ServiceException ex) {
-            Logger.getLogger(RegistroClase.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Clase c = null;
-        try {
-            c = obtenerInfoClase(clase);
-        } catch (ServiceException ex) {
-            Logger.getLogger(RegistroClase.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println(ac.getNombre());
-        //System.out.println(c.getNombre());
         
-        if(opcion.equals("consultar")){
+        String [] acti = null;
+        try {
+            acti = obtenerActividad(act);
+        } catch (ServiceException ex) {
+            Logger.getLogger(RegistroClase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String [] cl = null;
+        try {
+            cl = obtenerInfoClase(clase);
+            //System.out.println(c.getNombre());
+        } catch (ServiceException ex) {
+            Logger.getLogger(RegistroClase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(opcion.equals("registro")){
             
             try {
                 Date f = new Date();
@@ -193,9 +193,9 @@ public class RegistroClase extends HttpServlet {
         }
         else{
            
-            if( c != null && ac != null){
-                request.setAttribute("clase", c);
-                request.setAttribute("actividad", ac);
+            if(cl != null && acti != null){
+                request.setAttribute("clase", cl);
+                request.setAttribute("actividad", acti);
                 RequestDispatcher disp = request.getRequestDispatcher("registroClaseFinal.jsp");
                 disp.forward(request, response);
             }
@@ -204,24 +204,26 @@ public class RegistroClase extends HttpServlet {
     }
   
     
-    public Clase obtenerInfoClase(String clase) throws RemoteException, ServiceException{
+    public String[] obtenerInfoClase(String clase) throws RemoteException, ServiceException{
         ControladorPublishService cps = new ControladorPublishServiceLocator();
         ControladorPublish port = cps.getControladorPublishPort();
-        return port.obtenerInfoClase(clase);
+        String [] cl = port.obtenerInfoClase(clase);
+        return cl;
     }
     
-    public publicadores.ActividadDeportiva obtenerActividad(String arg0) throws ServiceException, RemoteException{
+    public String[] obtenerActividad(String arg0) throws ServiceException, RemoteException{
         ControladorPublishService cps = new ControladorPublishServiceLocator();
         ControladorPublish port = cps.getControladorPublishPort();
-        return port.obtenerActividad(arg0);
+        String a [] = port.obtenerActividad(arg0);
+        return a;
     }
     
     public void altaSocioClase(String socio,String clase, Date fecha) throws SocioYaInscriptoException, RemoteException, ServiceException{
         ControladorPublishService cps = new ControladorPublishServiceLocator();
         ControladorPublish port = cps.getControladorPublishPort();
         Calendar c = new GregorianCalendar();
-        c.set(fecha.getYear(), fecha.getMonth(), fecha.getDay());
-        port.altaSocioClase(socio, socio, c);
+        c.setTime(fecha);
+        port.altaSocioClase(socio, clase, c);
     }
     
 }
