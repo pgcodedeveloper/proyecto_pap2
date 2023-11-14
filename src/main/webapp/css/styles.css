@@ -194,6 +194,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     justify-content: flex-start;
 }
 
+@media(max-width: 448px){
+    .formulario_registro{
+        width: 100%;
+    }
+}
+
 .campo i{
     display: flex;
     align-items: center;

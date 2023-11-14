@@ -8,6 +8,8 @@
 package publicadores;
 
 public class DtSocio  extends publicadores.DtUsuario  implements java.io.Serializable {
+    private java.lang.String[] registros;
+
     public DtSocio() {
     }
 
@@ -19,7 +21,8 @@ public class DtSocio  extends publicadores.DtUsuario  implements java.io.Seriali
            java.lang.String imagen,
            java.lang.String nickname,
            java.lang.String nombre,
-           java.lang.String password) {
+           java.lang.String password,
+           java.lang.String[] registros) {
         super(
             apellido,
             email,
@@ -29,6 +32,35 @@ public class DtSocio  extends publicadores.DtUsuario  implements java.io.Seriali
             nickname,
             nombre,
             password);
+        this.registros = registros;
+    }
+
+
+    /**
+     * Gets the registros value for this DtSocio.
+     * 
+     * @return registros
+     */
+    public java.lang.String[] getRegistros() {
+        return registros;
+    }
+
+
+    /**
+     * Sets the registros value for this DtSocio.
+     * 
+     * @param registros
+     */
+    public void setRegistros(java.lang.String[] registros) {
+        this.registros = registros;
+    }
+
+    public java.lang.String getRegistros(int i) {
+        return this.registros[i];
+    }
+
+    public void setRegistros(int i, java.lang.String _value) {
+        this.registros[i] = _value;
     }
 
     private java.lang.Object __equalsCalc = null;
@@ -42,7 +74,10 @@ public class DtSocio  extends publicadores.DtUsuario  implements java.io.Seriali
         }
         __equalsCalc = obj;
         boolean _equals;
-        _equals = super.equals(obj);
+        _equals = super.equals(obj) && 
+            ((this.registros==null && other.getRegistros()==null) || 
+             (this.registros!=null &&
+              java.util.Arrays.equals(this.registros, other.getRegistros())));
         __equalsCalc = null;
         return _equals;
     }
@@ -54,6 +89,17 @@ public class DtSocio  extends publicadores.DtUsuario  implements java.io.Seriali
         }
         __hashCodeCalc = true;
         int _hashCode = super.hashCode();
+        if (getRegistros() != null) {
+            for (int i=0;
+                 i<java.lang.reflect.Array.getLength(getRegistros());
+                 i++) {
+                java.lang.Object obj = java.lang.reflect.Array.get(getRegistros(), i);
+                if (obj != null &&
+                    !obj.getClass().isArray()) {
+                    _hashCode += obj.hashCode();
+                }
+            }
+        }
         __hashCodeCalc = false;
         return _hashCode;
     }
@@ -64,6 +110,14 @@ public class DtSocio  extends publicadores.DtUsuario  implements java.io.Seriali
 
     static {
         typeDesc.setXmlType(new javax.xml.namespace.QName("http://publicadores/", "dtSocio"));
+        org.apache.axis.description.ElementDesc elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("registros");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "registros"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(true);
+        elemField.setMaxOccursUnbounded(true);
+        typeDesc.addFieldDesc(elemField);
     }
 
     /**

@@ -10,9 +10,11 @@ package publicadores;
 public class DtProfesor  extends publicadores.DtUsuario  implements java.io.Serializable {
     private java.lang.String biografia;
 
-    private publicadores.Clase[] clases;
+    private java.lang.String[] clases;
 
     private java.lang.String descripcion;
+
+    private java.lang.String inst;
 
     private publicadores.InstitucionDeportiva institucionDeportiva;
 
@@ -31,8 +33,9 @@ public class DtProfesor  extends publicadores.DtUsuario  implements java.io.Seri
            java.lang.String nombre,
            java.lang.String password,
            java.lang.String biografia,
-           publicadores.Clase[] clases,
+           java.lang.String[] clases,
            java.lang.String descripcion,
+           java.lang.String inst,
            publicadores.InstitucionDeportiva institucionDeportiva,
            java.lang.String sitioWeb) {
         super(
@@ -47,6 +50,7 @@ public class DtProfesor  extends publicadores.DtUsuario  implements java.io.Seri
         this.biografia = biografia;
         this.clases = clases;
         this.descripcion = descripcion;
+        this.inst = inst;
         this.institucionDeportiva = institucionDeportiva;
         this.sitioWeb = sitioWeb;
     }
@@ -77,7 +81,7 @@ public class DtProfesor  extends publicadores.DtUsuario  implements java.io.Seri
      * 
      * @return clases
      */
-    public publicadores.Clase[] getClases() {
+    public java.lang.String[] getClases() {
         return clases;
     }
 
@@ -87,15 +91,15 @@ public class DtProfesor  extends publicadores.DtUsuario  implements java.io.Seri
      * 
      * @param clases
      */
-    public void setClases(publicadores.Clase[] clases) {
+    public void setClases(java.lang.String[] clases) {
         this.clases = clases;
     }
 
-    public publicadores.Clase getClases(int i) {
+    public java.lang.String getClases(int i) {
         return this.clases[i];
     }
 
-    public void setClases(int i, publicadores.Clase _value) {
+    public void setClases(int i, java.lang.String _value) {
         this.clases[i] = _value;
     }
 
@@ -117,6 +121,26 @@ public class DtProfesor  extends publicadores.DtUsuario  implements java.io.Seri
      */
     public void setDescripcion(java.lang.String descripcion) {
         this.descripcion = descripcion;
+    }
+
+
+    /**
+     * Gets the inst value for this DtProfesor.
+     * 
+     * @return inst
+     */
+    public java.lang.String getInst() {
+        return inst;
+    }
+
+
+    /**
+     * Sets the inst value for this DtProfesor.
+     * 
+     * @param inst
+     */
+    public void setInst(java.lang.String inst) {
+        this.inst = inst;
     }
 
 
@@ -180,6 +204,9 @@ public class DtProfesor  extends publicadores.DtUsuario  implements java.io.Seri
             ((this.descripcion==null && other.getDescripcion()==null) || 
              (this.descripcion!=null &&
               this.descripcion.equals(other.getDescripcion()))) &&
+            ((this.inst==null && other.getInst()==null) || 
+             (this.inst!=null &&
+              this.inst.equals(other.getInst()))) &&
             ((this.institucionDeportiva==null && other.getInstitucionDeportiva()==null) || 
              (this.institucionDeportiva!=null &&
               this.institucionDeportiva.equals(other.getInstitucionDeportiva()))) &&
@@ -214,6 +241,9 @@ public class DtProfesor  extends publicadores.DtUsuario  implements java.io.Seri
         if (getDescripcion() != null) {
             _hashCode += getDescripcion().hashCode();
         }
+        if (getInst() != null) {
+            _hashCode += getInst().hashCode();
+        }
         if (getInstitucionDeportiva() != null) {
             _hashCode += getInstitucionDeportiva().hashCode();
         }
@@ -240,7 +270,7 @@ public class DtProfesor  extends publicadores.DtUsuario  implements java.io.Seri
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("clases");
         elemField.setXmlName(new javax.xml.namespace.QName("", "clases"));
-        elemField.setXmlType(new javax.xml.namespace.QName("http://publicadores/", "clase"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setMinOccurs(0);
         elemField.setNillable(true);
         elemField.setMaxOccursUnbounded(true);
@@ -248,6 +278,13 @@ public class DtProfesor  extends publicadores.DtUsuario  implements java.io.Seri
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("descripcion");
         elemField.setXmlName(new javax.xml.namespace.QName("", "descripcion"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("inst");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "inst"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);

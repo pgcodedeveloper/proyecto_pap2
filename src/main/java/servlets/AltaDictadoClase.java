@@ -18,11 +18,21 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.rpc.ServiceException;
 import logica.Usuario;
+import publicadores.ControladorPublish;
+import publicadores.ControladorPublishService;
+import publicadores.ControladorPublishServiceLocator;
+import publicadores.DtUsuario;
 
 /**
  *
@@ -81,7 +91,7 @@ public class AltaDictadoClase extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, RemoteException{
         System.out.println(request.getParameterNames());
         
         
@@ -114,26 +124,32 @@ public class AltaDictadoClase extends HttpServlet {
         
         Date fechaActual = new Date();
         HttpSession session = request.getSession(false);
-        Usuario u = ((Usuario) session.getAttribute("usuario"));
-        Fabrica fb = Fabrica.getInstancia();
-        IControlador icon = fb.getIControlador();
+        DtUsuario u = ((DtUsuario) session.getAttribute("usuario"));
+        
         try {
-            icon.altaClaseActividad(inst, act, clase, u.getNickName(), url, fecha, fechaActual,rutaCompleta);
+            altaClase(inst, act, clase, u.getNickname(), url, fecha, fechaActual, rutaCompleta);
             response.setStatus(200);
             response.setContentType("text/plain");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write("Clase creada correctamente");
-        } catch (ClaseException e) {
+        } catch (publicadores.ClaseException e) {
             response.setStatus(400);
             response.setContentType("text/plain");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write("Clase ya existente");
+        } catch (ServiceException ex) {
+            Logger.getLogger(AltaDictadoClase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    public void altaClase(String inst,String act, String clas,String prof, String url, Date fechaI, Date fechaA, String img) throws ServiceException, RemoteException{
+        ControladorPublishService cps = new ControladorPublishServiceLocator();
+        ControladorPublish port = cps.getControladorPublishPort();
+        Calendar fI = new GregorianCalendar();
+        fI.setTime(fechaI);
+        Calendar fA = new GregorianCalendar();
+        fA.setTime(fechaA);
+        port.altaClaseActividad(inst,act, clas, prof, url, fI, fA, img);
+    }
 
 }

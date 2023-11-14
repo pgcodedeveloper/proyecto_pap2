@@ -1,8 +1,10 @@
-<%@page import="logica.Usuario" %>
-<%@page import="logica.Socio" %>
-<%@page import="logica.Profesor" %>
-<%@page import="logica.Clase" %>
-<%@page import="logica.Registro" %>
+<%@page import="publicadores.DtSocio"%>
+<%@page import="publicadores.DtProfesor"%>
+<%@page import="publicadores.Usuario" %>
+<%@page import="publicadores.Socio" %>
+<%@page import="publicadores.Profesor" %>
+<%@page import="publicadores.Clase" %>
+<%@page import="publicadores.Registro" %>
 <%@page import="java.util.List"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -17,17 +19,18 @@
     <% 
         String tipoR = request.getParameter("tipo") != null ? request.getParameter("tipo") : "error";
         String tipoUsuario = ((String) session.getAttribute("tipoUser")) != null ? ((String) session.getAttribute("tipoUser")) : null;
-        Usuario user = ((Usuario) session.getAttribute("usuario")) != null ? ((Usuario) session.getAttribute("usuario")) : null;
-        List<Registro> list = null;
-        List<Clase> listC = null;
+        DtUsuario user = ((DtUsuario) session.getAttribute("usuario")) != null ? ((DtUsuario) session.getAttribute("usuario")) : null;
+        String[] list = null;
+        String[] listC = null;
         boolean profe = false;
         boolean socio = false;
-        if (user instanceof Socio){
+        if (user instanceof DtSocio){
             socio = true;
-           list = ((Socio)user).getRegistros() != null ? ((Socio)user).getRegistros() : null;
+            list = ((DtSocio)user).getRegistros();
         }
-        else if(user instanceof Profesor){
-            listC = ((Profesor)user).getClases() != null ? ((Profesor)user).getClases() : null;
+        else if(user instanceof DtProfesor){
+            profe = true;
+            listC = ((DtProfesor)user).getClases();
         }
     %>
     <%@include file="header.jsp" %>
@@ -53,28 +56,29 @@
                                 <i class="fa-solid fa-at"></i>
                             </div>
                             <div class="datos">
-                                <p class="datos-p"><%= user.getNickName() %></p>
+                                <p class="datos-p"><%= user.getNickname()%></p>
                                 <i class="fa-solid fa-user"></i>
                             </div>
                             <div class="datos">
                                 <p class="datos-p" id="fechaN"></p>
                                 <i class="fa-solid fa-calendar-days"></i>
                             </div>
-                            <% if(user instanceof Profesor) {%>
+                            <% if(profe) {%>
                                 <div class="datos">
-                                    <p class="datos-p"><%= ((Profesor)user).getBiografia() %></p>
+                                    <p class="datos-p"><%= ((DtProfesor)user).getBiografia() %></p>
                                     <i class="fa-brands fa-blogger"></i>
                                 </div>
                                 <div class="datos">
-                                    <p class="datos-p"><%= ((Profesor)user).getDescripcion() %></p>
+                                    <p class="datos-p"><%= ((DtProfesor)user).getDescripcion() %></p>
                                     <i class="fa-solid fa-comment"></i>
                                 </div>
                                 <div class="datos">
-                                    <p class="datos-p"><%= ((Profesor)user).getSitioWeb() %></p>
+                                    <p class="datos-p"><%= ((DtProfesor)user).getSitioWeb() %></p>
                                     <i class="fa-solid fa-globe"></i>
                                 </div>
                                 <div class="datos">
-                                    <p class="datos-p"><%= ((Profesor)user).getInstitucionDeportiva().getNombre() %></p>
+                                    <% String nom = ((DtProfesor)user).getInst().split(",,")[0]; %>
+                                    <p class="datos-p"><%= nom %></p>
                                     <i class="fa-solid fa-school"></i>
                                 </div>
                             <% } %>  
@@ -83,17 +87,18 @@
                 </div>
             </div>
             
-            <% if(user instanceof Socio) {%>                
+            <% if(socio) {%>                
                 <h2 class="heading">Registros a <span>Clases</span></h2>
-                <% if(list != null && !list.isEmpty()){ %>
+                <% if(list != null){ %>
                     <section class="contenedor-registros">
                         <div class="registros">
-                            <h5>Total Registros <span><%= list.size() %></span></h5>
+                            <h5>Total Registros <span><%= list.length %></span></h5>
                             <ul class="list-group">
-                                <% for(Registro r: list){ %>
+                                <% for(String r: list){ %>
+                                <% String[] reg = r.split(","); %>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <%= r.getClaseId().getNombre() %>
-                                        <span class="badge bg-primary rounded-pill info-extra" data-clase="<%= r.getClaseId().getNombre() %>">Info <i class="fa-solid fa-circle-info" data-clase="<%= r.getClaseId().getNombre() %>"></i></span>
+                                        <%= reg[1] %>
+                                        <span class="badge bg-primary rounded-pill info-extra" data-clase="<%= reg[1] %>">Info <i class="fa-solid fa-circle-info" data-clase="<%= reg[1] %>"></i></span>
                                     </li>
                                 <% }%>
                             </ul>
@@ -133,15 +138,16 @@
                 <% } 
             } else { %>
                 <h2 class="heading">Clases que <span>Dicta</span></h2>
-                <% if(listC != null && !listC.isEmpty()){ %>
+                <% if(listC != null){ %>
                     <section class="contenedor-registros">
                         <div class="registros">
-                            <h5>Total Clases <span><%= listC.size() %></span></h5>
+                            <h5>Total Clases <span><%= listC.length %></span></h5>
                             <ul class="list-group">
-                                <% for(Clase c: listC){ %>
+                                <% for(String c: listC){ %>
+                                    <% String[] clas = c.split(","); %>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <%= c.getNombre() %>
-                                        <span class="badge bg-primary rounded-pill info-extra" data-clase="<%= c.getNombre() %>">Info <i class="fa-solid fa-circle-info" data-clase="<%= c.getNombre() %>"></i></span>
+                                        <%= clas[0] %>
+                                        <span class="badge bg-primary rounded-pill info-extra" data-clase="<%= clas[0] %>">Info <i class="fa-solid fa-circle-info" data-clase="<%= clas[0] %>"></i></span>
                                     </li>
                                 <% }%>
                             </ul>
@@ -200,7 +206,7 @@
         document.addEventListener('DOMContentLoaded', async ()=>{
             const fecha = document.querySelector("#fechaN");
             if(fecha !== null){
-                fecha.textContent = "<%= user.getFecha() %>".includes("-") ? "<%= user.getFecha() %>" : formatearFechaA("<%= user.getFecha() %>");
+                fecha.textContent = "<%= user.getFechaNac().getTime().toString()%>".includes("-") ? "<%= user.getFechaNac().getTime().toString()%>" : formatearFechaA("<%= user.getFechaNac().getTime().toString()%>");
             }
             const btnInfo = document.querySelectorAll(".info-extra");
             const btnInfoIcono = document.querySelectorAll(".info-extra i");
@@ -244,19 +250,22 @@
                             acti.textContent = data[0][0];
                             costo.textContent = data[0][1];
                             duracion.textContent = data[0][2];
+                            
                             <%if (list != null) {
-                                for(Registro r: list){ %>
-                                    if ("<%=r.getClaseId().getNombre()%>"===clase){
-                                        horaInicio.textContent = "<%=r.getClaseId().getHoraInicio()%>";
-                                        fecha.textContent = "<%=r.getFechaReg()%>".includes("-") ? formatearFecha(Date.parse("<%=r.getFechaReg()%>")) : formatearFechaA("<%=r.getFechaReg()%>");
-                                     }
+                                for(String r: list){ %>
+                                    <% String[] reg = r.split(","); %>        
+                                    if ("<%=reg[1]%>"===clase){
+                                        horaInicio.textContent = "<%=reg[3]%>";
+                                        fecha.textContent = "<%=reg[2]%>".includes("-") ? formatearFecha(Date.parse("<%=reg[2]%>")) : formatearFechaA("<%=reg[2]%>");
+                                    }
                                 <% }
                             } else if(listC !=null) {%>
-                                <% for(Clase c: listC) { %>
-                                    if ("<%=c.getNombre()%>"===clase){
-                                        horaInicio.textContent = "<%=c.getHoraInicio()%>";
-                                        fecha.textContent = "<%=c.getFechaReg()%>".includes("-") ? formatearFecha(Date.parse("<%=c.getFechaReg()%>")) : formatearFechaA("<%=c.getFechaReg()%>");
-                                     }
+                                <% for(String c: listC) { %>
+                                    <% String[] clas = c.split(","); %>
+                                    if ("<%=clas[0]%>"===clase){
+                                        horaInicio.textContent = "<%=clas[2]%>";
+                                        fecha.textContent = "<%=clas[1]%>".includes("-") ? formatearFecha(Date.parse("<%=clas[1]%>")) : formatearFechaA("<%=clas[1]%>");
+                                    }
                                  
                                 <% }
                             } %>

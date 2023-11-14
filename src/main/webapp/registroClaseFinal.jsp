@@ -60,7 +60,7 @@
                 Cancelar
                 <i class="fa-solid fa-file-circle-xmark"></i>
             </button>
-            <form id="formulario">
+            <form id="formulario" class="formulario_registro">
                 <input type="hidden" id="nick" value="<%= ((DtUsuario) session.getAttribute("usuario")).getNickname()%>"/>
                 <input type="hidden" id="clase" value="${clase[0].toString()}"/>
                 <input type="hidden" id="actividad" value="${actividad[0].toString()}"/>

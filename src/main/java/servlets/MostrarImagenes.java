@@ -20,9 +20,17 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.rpc.ServiceException;
 import logica.ActividadDeportiva;
 import logica.Clase;
 import logica.Usuario;
+import publicadores.ControladorPublish;
+import publicadores.ControladorPublishService;
+import publicadores.ControladorPublishServiceLocator;
+import publicadores.DtUsuario;
 
 @WebServlet("/mostrarImagen")
 public class MostrarImagenes extends HttpServlet {
@@ -70,7 +78,7 @@ public class MostrarImagenes extends HttpServlet {
         
         if(tipo.equals("usuarios")){
             HttpSession session = request.getSession(false);
-            Usuario u = ((Usuario ) session.getAttribute("usuario"));
+            DtUsuario u = ((DtUsuario ) session.getAttribute("usuario"));
             String imagePath = u.getImagen();
 
             // Verifica si la ruta de la imagen existe
@@ -93,57 +101,65 @@ public class MostrarImagenes extends HttpServlet {
             }
         }
         else if(tipo.equals("clases")){
-            String clase = request.getParameter("clase");
-            Fabrica f = Fabrica.getInstancia();
-            IControlador icon = f.getIControlador();
-            Clase c = icon.obtenerInfoClase(clase);
-            
-            if(clase != null){
-                // Verifica si la ruta de la imagen existe
-                File archivo = new File(c.getImagen());
-                if (!archivo.exists()) {
-                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    return;
-                }
-
-                // Configura el tipo de contenido de la respuesta como imagen
-                response.setContentType("image/*"); // Cambia el tipo de contenido según el formato de la imagen
-
-                // Lee la imagen y escribe su contenido en la respuesta
-                try (FileInputStream fis = new FileInputStream(archivo)) {
-                    byte[] buffer = new byte[1024];
-                    int bytesRead;
-                    while ((bytesRead = fis.read(buffer)) != -1) {
-                        response.getOutputStream().write(buffer, 0, bytesRead);
+            try {
+                String clase = request.getParameter("clase");
+                String imagen = getImagenClase(clase);
+                
+                if(imagen != null){
+                    // Verifica si la ruta de la imagen existe
+                    File archivo = new File(imagen);
+                    if (!archivo.exists()) {
+                        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                        return;
+                    }
+                    
+                    // Configura el tipo de contenido de la respuesta como imagen
+                    response.setContentType("image/*"); // Cambia el tipo de contenido según el formato de la imagen
+                    
+                    // Lee la imagen y escribe su contenido en la respuesta
+                    try (FileInputStream fis = new FileInputStream(archivo)) {
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;
+                        while ((bytesRead = fis.read(buffer)) != -1) {
+                            response.getOutputStream().write(buffer, 0, bytesRead);
+                        }
                     }
                 }
+            } catch (ServiceException ex) {
+                Logger.getLogger(MostrarImagenes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RemoteException ex) {
+                Logger.getLogger(MostrarImagenes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else if(tipo.equals("actividad")){
-            String act = request.getParameter("act");
-            Fabrica f = Fabrica.getInstancia();
-            IControlador icon = f.getIControlador();
-            ActividadDeportiva a = icon.obtenerActividad(act);
-            
-            if(a != null){
-                // Verifica si la ruta de la imagen existe
-                File archivo = new File(a.getImagen());
-                if (!archivo.exists()) {
-                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    return;
-                }
-
-                // Configura el tipo de contenido de la respuesta como imagen
-                response.setContentType("image/*"); // Cambia el tipo de contenido según el formato de la imagen
-
-                // Lee la imagen y escribe su contenido en la respuesta
-                try (FileInputStream fis = new FileInputStream(archivo)) {
-                    byte[] buffer = new byte[1024];
-                    int bytesRead;
-                    while ((bytesRead = fis.read(buffer)) != -1) {
-                        response.getOutputStream().write(buffer, 0, bytesRead);
+            try {
+                String act = request.getParameter("act");
+                String imagen = getImagenAct(act);
+                
+                if(imagen != null){
+                    // Verifica si la ruta de la imagen existe
+                    File archivo = new File(imagen);
+                    if (!archivo.exists()) {
+                        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                        return;
+                    }
+                    
+                    // Configura el tipo de contenido de la respuesta como imagen
+                    response.setContentType("image/*"); // Cambia el tipo de contenido según el formato de la imagen
+                    
+                    // Lee la imagen y escribe su contenido en la respuesta
+                    try (FileInputStream fis = new FileInputStream(archivo)) {
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;
+                        while ((bytesRead = fis.read(buffer)) != -1) {
+                            response.getOutputStream().write(buffer, 0, bytesRead);
+                        }
                     }
                 }
+            } catch (ServiceException ex) {
+                Logger.getLogger(MostrarImagenes.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (RemoteException ex) {
+                Logger.getLogger(MostrarImagenes.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
@@ -161,14 +177,18 @@ public class MostrarImagenes extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
+    public String getImagenAct(String act) throws ServiceException, RemoteException{
+        ControladorPublishService cps = new ControladorPublishServiceLocator();
+        ControladorPublish port = cps.getControladorPublishPort();
+        return port.obtenerActividad(act)[5];
+        
+    }
+    
+     public String getImagenClase(String clase) throws ServiceException, RemoteException{
+        ControladorPublishService cps = new ControladorPublishServiceLocator();
+        ControladorPublish port = cps.getControladorPublishPort();
+        return port.obtenerInfoClase(clase)[5];
+        
+    }
 
 }
