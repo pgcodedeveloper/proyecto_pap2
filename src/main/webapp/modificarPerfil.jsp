@@ -1,6 +1,6 @@
-<%@page import="logica.Usuario" %>
-<%@page import="logica.Socio" %>
-<%@page import="logica.Profesor" %>
+<%@page import="publicadores.DtUsuario" %>
+<%@page import="publicadores.DtSocio" %>
+<%@page import="publicadores.DtProfesor" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -12,7 +12,7 @@
 <body>
     
     <% 
-        Usuario user = ((Usuario) session.getAttribute("usuario")) != null ? ((Usuario) session.getAttribute("usuario")) : null;
+        DtUsuario user = ((DtUsuario) session.getAttribute("usuario")) != null ? ((DtUsuario) session.getAttribute("usuario")) : null;
     %>
     
     <%@include file="header.jsp" %>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
-                        <input type="text" class="form-control" name="nick" id="nick" value="<%= user.getNickName() %>" placeholder="Ingrese el nickname de usuario" disabled>
+                        <input type="text" class="form-control" name="nick" id="nick" value="<%= user.getNickname()%>" placeholder="Ingrese el nickname de usuario" disabled>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
@@ -53,20 +53,20 @@
                     </div>
                 </fieldset>
                 
-                <% if(user instanceof Profesor) {%>
+                <% if(user instanceof DtProfesor) {%>
                     <fieldset>
                         <legend>Datos del profesor</legend>
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-brands fa-blogger"></i></span>
-                            <textarea class="form-control" name="biografia" id="biografia" placeholder="Ingrese la biografia del profesor"><%= ((Profesor) user).getBiografia() %></textarea>
+                            <textarea class="form-control" name="biografia" id="biografia" placeholder="Ingrese la biografia del profesor"><%= ((DtProfesor) user).getBiografia() %></textarea>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-comment"></i></span>
-                            <input type="text" class="form-control" name="descripcion" id="descripcion" value="<%= ((Profesor) user).getDescripcion() %>" placeholder="Ingrese la descripción">
+                            <input type="text" class="form-control" name="descripcion" id="descripcion" value="<%= ((DtProfesor) user).getDescripcion() %>" placeholder="Ingrese la descripción">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="fa-solid fa-globe"></i></span>
-                            <input type="text" class="form-control" name="web" id="web" value="<%= ((Profesor) user).getSitioWeb() %>" placeholder="Ingrese la url del profesor">
+                            <input type="text" class="form-control" name="web" id="web" value="<%= ((DtProfesor) user).getSitioWeb() %>" placeholder="Ingrese la url del profesor">
                         </div>
                     </fieldset>
                 <% } %>
@@ -83,14 +83,14 @@
             document.addEventListener("DOMContentLoaded",async function(){
                 const fecha = document.querySelector("#fecha");
                 if(fecha !== null){
-                    fecha.value = "<%= user.getFecha() %>".includes("-") ? "<%= user.getFecha() %>" : formatearFecha("<%= user.getFecha() %>");
+                    fecha.textContent = "<%= user.getFechaNac().getTime().toString()%>".includes("-") ? "<%= user.getFechaNac().getTime().toString()%>" : formatearFechaA("<%= user.getFechaNac().getTime().toString()%>");
                 }
                 const form = document.querySelector(".formulario");
 
                 form.addEventListener('submit',async (e) =>{
                     e.preventDefault();
                     
-                    <% if(user instanceof Profesor) {%>
+                    <% if(user instanceof DtProfesor) {%>
                         if(!form.nombre.value || !form.apellido.value || !form.fecha.value || !form.biografia.value || !form.descripcion.value || !form.web.value){
                             mostrarMensaje("Error","Debes ingresar datos en todos los campos","error");
                             return;
@@ -127,6 +127,27 @@
             
             function formatearFecha(fecha){
                         // Obtén la fecha en formato de texto
+                var fechaTexto = fecha;
+
+                // Crea un objeto de fecha a partir del texto
+                var fechaObjeto = new Date(fechaTexto);
+
+                // Obtiene los componentes de la fecha
+                var dia = fechaObjeto.getDate();
+                var mes = fechaObjeto.getMonth() + 1; // Los meses comienzan desde 0, por lo que sumamos 1
+                var anio = fechaObjeto.getFullYear();
+
+                // Formatea el mes, día, hora, minutos y segundos para que tengan dos dígitos
+                mes = (mes < 10) ? '0' + mes : mes;
+                dia = (dia < 10) ? '0' + dia : dia;
+
+                // Construye la cadena de texto formateada
+                var fechaFormateada = dia + '/' + mes + '/' + anio;
+                return fechaFormateada;
+            }
+        
+            function formatearFechaA(fecha){
+                    // Obtén la fecha en formato de texto
                 var fechaOriginal = fecha;
                 var parts = fechaOriginal.split(" "); // Dividir la cadena por espacios
 

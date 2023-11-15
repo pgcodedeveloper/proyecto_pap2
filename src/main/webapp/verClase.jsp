@@ -1,5 +1,4 @@
-<%@page import="logica.Clase" %>
-<%@page import="logica.Registro" %>
+<%@page import="java.util.List"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -8,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>EntrenamosUy - Clase ${clase.getNombre()}</title>
+    <title>EntrenamosUy - Clase ${clase[0]}</title>
 </head>
 <body>
     <%@include file="header.jsp" %>
@@ -16,8 +15,8 @@
     
     
     <% 
-        Clase cl = (Clase) request.getAttribute("clase");
-    
+        String[] cl = (String[]) request.getAttribute("clase");
+        List<String> registros = (List<String>) request.getAttribute("registros");
     %>
     
     <main class="main">
@@ -26,7 +25,7 @@
         <div class="contenedor-datos">
             <div class="contenedor-info">
                 <div class="contenedor-info-texto">
-                    <h5 class="nombre">${clase.getNombre()}</h5>
+                    <h5 class="nombre">${clase[0]}</h5>
 
                     <div class="contenedor-info-textoextra">
                         <div class="datos">
@@ -35,11 +34,11 @@
                             
                         </div>
                         <div class="datos">
-                            <p class="datos-p">${clase.getHoraInicio()}</p>
+                            <p class="datos-p">${clase[2]}</p>
                             <i class="fa-solid fa-clock"></i>
                         </div>
                         <div class="datos">
-                            <p class="datos-p">${clase.getUrl()}</p>
+                            <p class="datos-p">${clase[3]}</p>
                             <i class="fa-solid fa-globe"></i>
                         </div>
                     </div>
@@ -47,19 +46,19 @@
             </div>
                             
             <div class="contenedor-imagen">
-                <img src="mostrarImagen?tipo=clases&clase=<%= cl.getNombre() %>" class="img-fluid rounded-start" alt="Imagen de Clase" />
+                <img src="mostrarImagen?tipo=clases&clase=<%= cl[0] %>" class="img-fluid rounded-start" alt="Imagen de Clase" />
             </div>
         </div>
         
         <h2 class="heading">Socios registrados a la <span>Clase</span></h2>      
         <div class="contenedor-registros-socio">
-            <% if(cl.getRegistros() != null && !cl.getRegistros().isEmpty()){ %>
+            <% if(!registros.toString().equals("[]")){ %>
                 <div class="registros">
-                    <h5>Total Registros <span><%= cl.getRegistros().size() %></span></h5>
+                    <h5>Total Registros <span><%= registros.size() %></span></h5>
                     <ul class="list-group">
-                        <% for(Registro r: cl.getRegistros()){ %>
+                        <% for(String s: registros){ %>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <%= r.getSocioId().getNickName() %>
+                                <%= s %>
                             </li>
                         <% }%>
                     </ul>
@@ -76,7 +75,7 @@
         document.addEventListener("DOMContentLoaded",async function(){
             const fecha = document.querySelector("#fecha");
             if(fecha !== null){
-                fecha.textContent = "<%= cl.getFechaReg() %>".includes("-") ? "<%= cl.getFechaReg() %>" : formatearFecha("<%= cl.getFechaReg() %>");
+                fecha.textContent = "<%= cl[4] %>".includes("-") ? "<%= cl[4] %>" : formatearFecha("<%= cl[4] %>");
             }
         });
         function formatearFecha(fecha){

@@ -4,8 +4,6 @@
  */
 package servlets;
 
-import interfaces.Fabrica;
-import interfaces.IControlador;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -13,10 +11,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
-import logica.Clase;
-import logica.Registro;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.rpc.ServiceException;
+import publicadores.ControladorPublish;
+import publicadores.ControladorPublishService;
+import publicadores.ControladorPublishServiceLocator;
 
 /**
  *
@@ -48,21 +51,36 @@ public class VerClase extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String clase = request.getParameter("clase");
-        Fabrica fb = Fabrica.getInstancia();
-        IControlador icon = fb.getIControlador();
-        Clase c = icon.obtenerInfoClase(clase);
-        List<String> list = new ArrayList<>();
-        for(Registro r: c.getRegistros()){
-            list.add(r.getSocioId().getNickName());
-        }
-        if(c != null){
-            request.setAttribute("clase", c);
-            request.setAttribute("registros", list);
-            RequestDispatcher disp = request.getRequestDispatcher("verClase.jsp");
-            disp.forward(request, response);
+        try {
+            String clase = request.getParameter("clase");
+            String[] c = obtenerInfoClase(clase);
+            List<String> list = new ArrayList<>();
+            String reg = c[6];
+            System.out.println(reg);
+            String registros[] = null;
+            if(reg != "[]"){
+                registros = (reg.substring(reg.indexOf("[") + 1, reg.lastIndexOf("]"))).split(",");
+            }
+            for(String s: registros){
+                list.add(s);
+            }
+            if(c != null){
+                request.setAttribute("clase", c);
+                request.setAttribute("registros", list);
+                RequestDispatcher disp = request.getRequestDispatcher("verClase.jsp");
+                disp.forward(request, response);
+            }
+        } catch (ServiceException ex) {
+            Logger.getLogger(VerClase.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(VerClase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    public String[] obtenerInfoClase(String clase) throws ServiceException, RemoteException{
+        ControladorPublishService cps = new ControladorPublishServiceLocator();
+        ControladorPublish port = cps.getControladorPublishPort();
+        return port.obtenerInfoClase(clase);
+    }
 
 }

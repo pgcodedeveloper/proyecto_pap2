@@ -1,3 +1,6 @@
+<%@page import="publicadores.ControladorPublishServiceLocator"%>
+<%@page import="publicadores.ControladorPublish"%>
+<%@page import="publicadores.ControladorPublishService"%>
 <%@page import="publicadores.DtSocio"%>
 <%@page import="publicadores.DtProfesor"%>
 <%@page import="publicadores.Usuario" %>
@@ -17,6 +20,8 @@
 <body>
     
     <% 
+        ControladorPublishService cps = new ControladorPublishServiceLocator();
+        ControladorPublish port = cps.getControladorPublishPort();
         String tipoR = request.getParameter("tipo") != null ? request.getParameter("tipo") : "error";
         String tipoUsuario = ((String) session.getAttribute("tipoUser")) != null ? ((String) session.getAttribute("tipoUser")) : null;
         DtUsuario user = ((DtUsuario) session.getAttribute("usuario")) != null ? ((DtUsuario) session.getAttribute("usuario")) : null;
@@ -30,7 +35,7 @@
         }
         else if(user instanceof DtProfesor){
             profe = true;
-            listC = ((DtProfesor)user).getClases();
+            listC = port.obtenerClasesProfesor(user.getEmail());
         }
     %>
     <%@include file="header.jsp" %>
@@ -247,9 +252,13 @@
                             const duracion = document.querySelector("#duracion");
                             const horaInicio = document.querySelector("#hora");
                             const fecha = document.querySelector("#fecha");
-                            acti.textContent = data[0][0];
-                            costo.textContent = data[0][1];
-                            duracion.textContent = data[0][2];
+                            let d = data[0];
+                            let indiceInicio = d.indexOf("[");
+                            let indiceFin = d.lastIndexOf("]");
+                            let resultado = (d.substring(indiceInicio + 1, indiceFin)).split(",");
+                            acti.textContent = resultado[0];
+                            costo.textContent = resultado[1];
+                            duracion.textContent = resultado[2];
                             
                             <%if (list != null) {
                                 for(String r: list){ %>

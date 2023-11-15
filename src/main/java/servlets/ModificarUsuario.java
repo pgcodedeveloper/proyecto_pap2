@@ -17,10 +17,20 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.rpc.ServiceException;
 import logica.Usuario;
+import publicadores.ControladorPublish;
+import publicadores.ControladorPublishService;
+import publicadores.ControladorPublishServiceLocator;
+import publicadores.DtUsuario;
 
 /**
  *
@@ -62,14 +72,12 @@ public class ModificarUsuario extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Fabrica fb = Fabrica.getInstancia();
-        IControlador icon = fb.getIControlador();
         
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
         String fechaString = request.getParameter("fecha");
         HttpSession session = request.getSession(false);
-        Usuario user = ((Usuario) session.getAttribute("usuario"));
+        DtUsuario user = ((DtUsuario) session.getAttribute("usuario"));
         System.out.println(fechaString);
         Date fecha = new Date();
         try {
@@ -86,43 +94,75 @@ public class ModificarUsuario extends HttpServlet {
         String arch = img.getSubmittedFileName();
         String rutaCompleta = pathToWebInf + File.separator + arch;
         File uploadedFile = new File(rutaCompleta);
-        if (arch.length() > 0) {
-            img.write(uploadedFile.getPath());
-            if(request.getParameter("biografia") != null){
-                String biografia = request.getParameter("biografia");
-                String descripcion = request.getParameter("descripcion");
-                String url = request.getParameter("web");
-                icon.actualizarProfe(user.getEmail(), user.getNickName(), nombre, apellido, fecha, rutaCompleta, biografia, descripcion, url);
-                response.setStatus(200);
-            response.setContentType("text/plain");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write("Usuario modificado correctamente");
-            }
-            icon.actualizarUsuario(user.getEmail(), user.getNickName(), nombre, apellido, fecha, rutaCompleta);
-            response.setStatus(200);
-            response.setContentType("text/plain");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write("Usuario modificado correctamente");
-        }
-        else{
-            if(request.getParameter("biografia") != null){
-                String biografia = request.getParameter("biografia");
-                String descripcion = request.getParameter("descripcion");
-                String url = request.getParameter("web");
-                icon.actualizarProfe(user.getEmail(), user.getNickName(), nombre, apellido, fecha, user.getImagen(), biografia, descripcion, url);
+        try {
+            if (arch.length() > 0) {
+                img.write(uploadedFile.getPath());
+                if(request.getParameter("biografia") != null){
+
+                    String biografia = request.getParameter("biografia");
+                    String descripcion = request.getParameter("descripcion");
+                    String url = request.getParameter("web");
+                    actualizarProfe(user.getEmail(), user.getNickname(), nombre, apellido, fecha, rutaCompleta, biografia, descripcion, url);
+                    response.setStatus(200);
+                    response.setContentType("text/plain");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write("Usuario modificado correctamente");
+
+                }
+                actualizarUsuario(user.getEmail(), user.getNickname(), nombre, apellido, fecha, rutaCompleta);
                 response.setStatus(200);
                 response.setContentType("text/plain");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write("Usuario modificado correctamente");
             }
-            icon.actualizarUsuario(user.getEmail(), user.getNickName(), nombre, apellido, fecha, user.getImagen());
-            response.setStatus(200);
-            response.setContentType("text/plain");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write("Usuario modificado correctamente");
+            else{
+                if(request.getParameter("biografia") != null){
+                    String biografia = request.getParameter("biografia");
+                    String descripcion = request.getParameter("descripcion");
+                    String url = request.getParameter("web");
+                    actualizarProfe(user.getEmail(), user.getNickname(), nombre, apellido, fecha, user.getImagen(), biografia, descripcion, url);
+                    response.setStatus(200);
+                    response.setContentType("text/plain");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write("Usuario modificado correctamente");
+                }
+                actualizarUsuario(user.getEmail(), user.getNickname(), nombre, apellido, fecha, user.getImagen());
+                response.setStatus(200);
+                response.setContentType("text/plain");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write("Usuario modificado correctamente");
+            }
+            
+            DtUsuario userReload = login(user.getEmail());
+            session.setAttribute("usuario", userReload);
+            
+        } catch (ServiceException ex) {
+            Logger.getLogger(ModificarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ModificarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
+    public void actualizarUsuario(String email, String nick, String nombre, String apellido, Date fNac, String img) throws ServiceException, RemoteException{
+        ControladorPublishService cps = new ControladorPublishServiceLocator();
+        ControladorPublish port = cps.getControladorPublishPort();
+        Calendar c = new GregorianCalendar();
+        c.setTime(fNac);
+        port.actualizarUsuario(email, nick, nombre, apellido, c, img);
+    }
+    
+    public void actualizarProfe(String email, String nick, String nombre, String apellido, Date fNac, String img, String bio,String desc, String web) throws ServiceException, RemoteException{
+        ControladorPublishService cps = new ControladorPublishServiceLocator();
+        ControladorPublish port = cps.getControladorPublishPort();
+        Calendar c = new GregorianCalendar();
+        c.setTime(fNac);
+        port.actualizarProfe(email, nick, nombre, apellido, c, img,bio,desc,web);
+    }
+    
+    public DtUsuario login(String email) throws ServiceException, RemoteException{
+        ControladorPublishService cps = new ControladorPublishServiceLocator();
+        ControladorPublish port = cps.getControladorPublishPort();
+        return port.loginUsuario(email);
+    }
 }
 
