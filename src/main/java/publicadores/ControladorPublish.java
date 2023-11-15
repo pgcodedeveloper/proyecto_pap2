@@ -37,8 +37,8 @@ public interface ControladorPublish extends java.rmi.Remote {
     public publicadores.DtUsuario obtenerUsuario(java.lang.String arg0) throws java.rmi.RemoteException;
     public publicadores.DtProfesor obtenerProfesor(java.lang.String arg0) throws java.rmi.RemoteException;
     public void actualizarProfe(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, java.util.Calendar arg4, java.lang.String arg5, java.lang.String arg6, java.lang.String arg7, java.lang.String arg8) throws java.rmi.RemoteException;
-    public java.lang.Object[] rankingActividades() throws java.rmi.RemoteException;
-    public java.lang.Object[] rankingClases() throws java.rmi.RemoteException;
+    public java.lang.String[] rankingActividades() throws java.rmi.RemoteException;
+    public java.lang.String[] rankingClases() throws java.rmi.RemoteException;
     public boolean existeActividadDepo(java.lang.String arg0, java.lang.String arg1) throws java.rmi.RemoteException;
     public boolean existeClaseActividad(java.lang.String arg0) throws java.rmi.RemoteException;
     public void eliminarSocioRegistro(java.lang.String arg0, publicadores.DtUsuario arg1) throws java.rmi.RemoteException;

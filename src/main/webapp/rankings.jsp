@@ -1,3 +1,6 @@
+<%@page import="publicadores.ControladorPublish"%>
+<%@page import="publicadores.ControladorPublishServiceLocator"%>
+<%@page import="publicadores.ControladorPublishService"%>
 <%@page import="logica.Usuario" %>
 <%@page import="logica.Clase" %>
 <%@page import="logica.ActividadDeportiva" %>
@@ -20,12 +23,11 @@
     <% if(!error) { %>
         <main class="main main-rankings">
             <%
-            Fabrica fb = Fabrica.getInstancia();
-            IControlador icon = fb.getIControlador();
-        
-            ArrayList <Object[]> listaClases = icon.rankingClases();
-            ArrayList <Object[]> listaAct = icon.rankingActividades();
-  
+            ControladorPublishService cps = new ControladorPublishServiceLocator();
+            ControladorPublish port = cps.getControladorPublishPort();
+            
+            String[] rankClases = port.rankingClases();
+            String[] rankAct = port.rankingActividades();
             %>
             <h2 class="heading"> Ranking de <span>Clases</span></h2>
             <section class="seccion-ranking">
@@ -43,15 +45,14 @@
                     <tbody>
                         <% 
                             int i = 1;
-                            for (Object[] cs:listaClases){
-                                Clase c= (Clase)cs[0];
+                            for (String c:rankClases){
                         %>
                         <tr>
                             <th scope="row"><%=i%></th>
-                            <td><%=c.getNombre()%></td>
-                            <td id="fecha"><%=c.getFecha().toString()%></td>
-                            <td><%=c.getUrl()%></td>
-                            <td><%=cs[1]%></td>
+                            <td><%= c.split(",,")[0] %></td>
+                            <td id="fecha"> <%= c.split(",,")[1] %></td>
+                            <td><%= c.split(",,")[2] %></td>
+                            <td><%= c.split(",,")[3] %></td>
                         </tr>
                         <% 
                             i++;
@@ -75,15 +76,15 @@
                     <tbody>
                         <% 
                             i = 1;
-                            for (Object[] lista:listaAct){
-                                ActividadDeportiva a= (ActividadDeportiva)lista[0];
+                            for (String a:rankAct){
+                                
                         %>
                         <tr>
                             <th scope="row"><%=i%></th>
-                            <td><%=a.getNombre()%></td>
-                            <td><%=a.getCosto()%></td>
-                            <td><%=a.getDescripcion()%></td>
-                            <td><%=lista[1]%></td>
+                            <td><%= a.split(",,")[0] %></td>
+                            <td><%= a.split(",,")[1] %></td>
+                            <td><%= a.split(",,")[2] %></td>
+                            <td><%= a.split(",,")[3] %></td>
                         </tr>
                         <% 
                             i++;

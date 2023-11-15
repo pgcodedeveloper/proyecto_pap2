@@ -200,13 +200,13 @@ public class ControladorPublishProxy implements publicadores.ControladorPublish 
     return controladorPublish.obtenerProfesor(arg0);
   }
   
-  public java.lang.Object[] rankingClases() throws java.rmi.RemoteException{
+  public java.lang.String[] rankingClases() throws java.rmi.RemoteException{
     if (controladorPublish == null)
       _initControladorPublishProxy();
     return controladorPublish.rankingClases();
   }
   
-  public java.lang.Object[] rankingActividades() throws java.rmi.RemoteException{
+  public java.lang.String[] rankingActividades() throws java.rmi.RemoteException{
     if (controladorPublish == null)
       _initControladorPublishProxy();
     return controladorPublish.rankingActividades();

@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 2.3.6 git-revision#d201abe. --><xs:schema xmlns:tns="http://publicadores/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://publicadores/">
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by XML-WS Runtime (https://github.com/eclipse-ee4j/metro-jax-ws). Runtime's version is XML-WS Runtime 4.0.0 git-revision#129f787. --><xs:schema xmlns:tns="http://publicadores/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://publicadores/">
 
 <xs:element name="ActividadDException" type="tns:ActividadDException"/>
 
@@ -9,6 +9,8 @@
 <xs:element name="SocioYaInscriptoException" type="tns:SocioYaInscriptoException"/>
 
 <xs:element name="UsuarioRepetidoException" type="tns:UsuarioRepetidoException"/>
+
+<xs:element name="actividadDeportiva" type="tns:actividadDeportiva"/>
 
 <xs:complexType name="InstitucionRepetidaException">
 <xs:sequence>
@@ -66,8 +68,9 @@
 <xs:extension base="tns:dtUsuario">
 <xs:sequence>
 <xs:element name="biografia" type="xs:string" minOccurs="0"/>
-<xs:element name="clases" type="tns:clase" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="clases" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
 <xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="inst" type="xs:string" minOccurs="0"/>
 <xs:element name="institucionDeportiva" type="tns:institucionDeportiva" minOccurs="0"/>
 <xs:element name="sitioWeb" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -139,7 +142,9 @@
 <xs:complexType name="dtSocio">
 <xs:complexContent>
 <xs:extension base="tns:dtUsuario">
-<xs:sequence/>
+<xs:sequence>
+<xs:element name="registros" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
@@ -159,12 +164,6 @@
 <xs:complexType name="dtProfesorArray" final="#all">
 <xs:sequence>
 <xs:element name="item" type="tns:dtProfesor" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="registroArray" final="#all">
-<xs:sequence>
-<xs:element name="item" type="tns:registro" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
 </xs:sequence>
 </xs:complexType>
 

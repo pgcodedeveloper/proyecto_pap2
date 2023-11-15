@@ -1803,7 +1803,7 @@ public class ControladorPublishPortBindingStub extends org.apache.axis.client.St
 }
     }
 
-    public java.lang.Object[] rankingActividades() throws java.rmi.RemoteException {
+    public java.lang.String[] rankingActividades() throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -1827,9 +1827,9 @@ public class ControladorPublishPortBindingStub extends org.apache.axis.client.St
         else {
             extractAttachments(_call);
             try {
-                return (java.lang.Object[]) _resp;
+                return (java.lang.String[]) _resp;
             } catch (java.lang.Exception _exception) {
-                return (java.lang.Object[]) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.Object[].class);
+                return (java.lang.String[]) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.Object[].class);
             }
         }
   } catch (org.apache.axis.AxisFault axisFaultException) {
@@ -1837,7 +1837,7 @@ public class ControladorPublishPortBindingStub extends org.apache.axis.client.St
 }
     }
 
-    public java.lang.Object[] rankingClases() throws java.rmi.RemoteException {
+    public java.lang.String[] rankingClases() throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -1861,9 +1861,9 @@ public class ControladorPublishPortBindingStub extends org.apache.axis.client.St
         else {
             extractAttachments(_call);
             try {
-                return (java.lang.Object[]) _resp;
+                return (java.lang.String[]) _resp;
             } catch (java.lang.Exception _exception) {
-                return (java.lang.Object[]) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.Object[].class);
+                return (java.lang.String[]) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.Object[].class);
             }
         }
   } catch (org.apache.axis.AxisFault axisFaultException) {
