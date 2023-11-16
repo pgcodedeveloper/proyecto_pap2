@@ -388,7 +388,7 @@ public class ControladorPublishPortBindingStub extends org.apache.axis.client.St
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("rankingClases");
         oper.setReturnType(new javax.xml.namespace.QName("http://jaxb.dev.java.net/array", "anyTypeArray"));
-        oper.setReturnClass(java.lang.Object[].class);
+        oper.setReturnClass(java.lang.String[].class);
         oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
         param = oper.getReturnParamDesc();
         param.setItemQName(new javax.xml.namespace.QName("", "item"));
@@ -465,7 +465,7 @@ public class ControladorPublishPortBindingStub extends org.apache.axis.client.St
         oper = new org.apache.axis.description.OperationDesc();
         oper.setName("rankingActividades");
         oper.setReturnType(new javax.xml.namespace.QName("http://jaxb.dev.java.net/array", "anyTypeArray"));
-        oper.setReturnClass(java.lang.Object[].class);
+        oper.setReturnClass(java.lang.String[].class);
         oper.setReturnQName(new javax.xml.namespace.QName("", "return"));
         param = oper.getReturnParamDesc();
         param.setItemQName(new javax.xml.namespace.QName("", "item"));
@@ -1699,7 +1699,7 @@ public class ControladorPublishPortBindingStub extends org.apache.axis.client.St
 }
     }
 
-    public java.lang.Object[] rankingClases() throws java.rmi.RemoteException {
+    public java.lang.String[] rankingClases() throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -1715,7 +1715,7 @@ public class ControladorPublishPortBindingStub extends org.apache.axis.client.St
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.String[] {});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -1723,9 +1723,9 @@ public class ControladorPublishPortBindingStub extends org.apache.axis.client.St
         else {
             extractAttachments(_call);
             try {
-                return (java.lang.Object[]) _resp;
+                return (java.lang.String[]) _resp;
             } catch (java.lang.Exception _exception) {
-                return (java.lang.Object[]) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.Object[].class);
+                return (java.lang.String[]) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.String[].class);
             }
         }
   } catch (org.apache.axis.AxisFault axisFaultException) {
@@ -1855,7 +1855,7 @@ public class ControladorPublishPortBindingStub extends org.apache.axis.client.St
 }
     }
 
-    public java.lang.Object[] rankingActividades() throws java.rmi.RemoteException {
+    public java.lang.String[] rankingActividades() throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -1879,9 +1879,9 @@ public class ControladorPublishPortBindingStub extends org.apache.axis.client.St
         else {
             extractAttachments(_call);
             try {
-                return (java.lang.Object[]) _resp;
+                return (java.lang.String[]) _resp;
             } catch (java.lang.Exception _exception) {
-                return (java.lang.Object[]) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.Object[].class);
+                return (java.lang.String[]) org.apache.axis.utils.JavaUtils.convert(_resp, java.lang.String[].class);
             }
         }
   } catch (org.apache.axis.AxisFault axisFaultException) {

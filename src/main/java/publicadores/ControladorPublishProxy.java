@@ -164,7 +164,7 @@ public class ControladorPublishProxy implements publicadores.ControladorPublish 
     return controladorPublish.obtenerUsuarios();
   }
   
-  public java.lang.Object[] rankingClases() throws java.rmi.RemoteException{
+  public java.lang.String[] rankingClases() throws java.rmi.RemoteException{
     if (controladorPublish == null)
       _initControladorPublishProxy();
     return controladorPublish.rankingClases();
@@ -194,7 +194,7 @@ public class ControladorPublishProxy implements publicadores.ControladorPublish 
     controladorPublish.actualizarUsuario(arg0, arg1, arg2, arg3, arg4, arg5);
   }
   
-  public java.lang.Object[] rankingActividades() throws java.rmi.RemoteException{
+  public java.lang.String[] rankingActividades() throws java.rmi.RemoteException{
     if (controladorPublish == null)
       _initControladorPublishProxy();
     return controladorPublish.rankingActividades();

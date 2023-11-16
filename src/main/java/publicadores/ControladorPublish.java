@@ -32,12 +32,12 @@ public interface ControladorPublish extends java.rmi.Remote {
     public java.lang.String[] obtenerClasesProfe(int arg0) throws java.rmi.RemoteException;
     public java.lang.String[] obtenerClasesAct(java.lang.String arg0) throws java.rmi.RemoteException;
     public java.lang.String[] obtenerUsuarios() throws java.rmi.RemoteException;
-    public java.lang.Object[] rankingClases() throws java.rmi.RemoteException;
+    public java.lang.String[] rankingClases() throws java.rmi.RemoteException;
     public void actualizarUsuario(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, java.util.Calendar arg4, java.lang.String arg5) throws java.rmi.RemoteException;
     public void actualizarProfe(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, java.util.Calendar arg4, java.lang.String arg5, java.lang.String arg6, java.lang.String arg7, java.lang.String arg8) throws java.rmi.RemoteException;
     public publicadores.DtUsuario obtenerUsuario(java.lang.String arg0) throws java.rmi.RemoteException;
     public publicadores.DtProfesor obtenerProfesor(java.lang.String arg0) throws java.rmi.RemoteException;
-    public java.lang.Object[] rankingActividades() throws java.rmi.RemoteException;
+    public java.lang.String[] rankingActividades() throws java.rmi.RemoteException;
     public void modificarInstitucion(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2) throws java.rmi.RemoteException;
     public boolean existeSocioClase(publicadores.Clase arg0, publicadores.Socio arg1) throws java.rmi.RemoteException;
     public publicadores.DtUsuario loginUsuario(java.lang.String arg0) throws java.rmi.RemoteException;

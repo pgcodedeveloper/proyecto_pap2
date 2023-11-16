@@ -31,7 +31,7 @@
         boolean socio = false;
         if (user instanceof DtSocio){
             socio = true;
-            list = ((DtSocio)user).getRegistros();
+            list = port.obtenerRegistrosSocio(user.getNickname());
         }
         else if(user instanceof DtProfesor){
             profe = true;
@@ -102,8 +102,8 @@
                                 <% for(String r: list){ %>
                                 <% String[] reg = r.split(","); %>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <%= reg[1] %>
-                                        <span class="badge bg-primary rounded-pill info-extra" data-clase="<%= reg[1] %>">Info <i class="fa-solid fa-circle-info" data-clase="<%= reg[1] %>"></i></span>
+                                        <%= reg[0] %>
+                                        <span class="badge bg-primary rounded-pill info-extra" data-clase="<%= reg[0] %>">Info <i class="fa-solid fa-circle-info" data-clase="<%= reg[1] %>"></i></span>
                                     </li>
                                 <% }%>
                             </ul>
