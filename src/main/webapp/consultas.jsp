@@ -27,11 +27,18 @@
         DtUsuario user = ((DtUsuario) session.getAttribute("usuario")) != null ? ((DtUsuario) session.getAttribute("usuario")) : null;
         String[] list = null;
         String[] listC = null;
+        String[] clase = null;
         boolean profe = false;
         boolean socio = false;
         if (user instanceof DtSocio){
             socio = true;
+            
             list = port.obtenerRegistrosSocio(user.getNickname());
+            int i = 0;
+            for(String s: list){
+                list[i] = s.substring(s.indexOf("[") + 1, s.lastIndexOf("]"));
+                i++;
+            } 
         }
         else if(user instanceof DtProfesor){
             profe = true;
@@ -103,7 +110,7 @@
                                 <% String[] reg = r.split(","); %>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <%= reg[0] %>
-                                        <span class="badge bg-primary rounded-pill info-extra" data-clase="<%= reg[0] %>">Info <i class="fa-solid fa-circle-info" data-clase="<%= reg[1] %>"></i></span>
+                                        <span class="badge bg-primary rounded-pill info-extra" data-clase="<%= reg[0] %>">Info <i class="fa-solid fa-circle-info" data-clase="<%= reg[0] %>"></i></span>
                                     </li>
                                 <% }%>
                             </ul>
@@ -262,10 +269,13 @@
                             
                             <%if (list != null) {
                                 for(String r: list){ %>
-                                    <% String[] reg = r.split(","); %>        
-                                    if ("<%=reg[1]%>"===clase){
-                                        horaInicio.textContent = "<%=reg[3]%>";
-                                        fecha.textContent = "<%=reg[2]%>".includes("-") ? formatearFecha(Date.parse("<%=reg[2]%>")) : formatearFechaA("<%=reg[2]%>");
+                                    <% 
+                                        String[] reg = r.split(","); 
+                                        clase = port.obtenerInfoClase(reg[0]);
+                                    %>        
+                                    if ("<%=reg[0]%>"===clase){
+                                        horaInicio.textContent = "<%=clase[2]%>";
+                                        fecha.textContent = ("<%=reg[1]%>").trim().includes("-") ? formatearFecha(Date.parse("<%=reg[1]%>".trim())) : formatearFechaA("<%=reg[1]%>".trim());
                                     }
                                 <% }
                             } else if(listC !=null) {%>
