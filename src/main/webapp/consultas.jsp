@@ -254,6 +254,7 @@
              await fetch(url)
                     .then(response => response.json())
                         .then(data =>{
+                            console.log(data);
                             const acti = document.querySelector("#actividad");
                             const costo = document.querySelector("#costo");
                             const duracion = document.querySelector("#duracion");

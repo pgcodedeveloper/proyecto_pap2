@@ -83,7 +83,7 @@
             document.addEventListener("DOMContentLoaded",async function(){
                 const fecha = document.querySelector("#fecha");
                 if(fecha !== null){
-                    fecha.textContent = "<%= user.getFechaNac().getTime().toString()%>".includes("-") ? "<%= user.getFechaNac().getTime().toString()%>" : formatearFechaA("<%= user.getFechaNac().getTime().toString()%>");
+                    fecha.value = "<%= user.getFechaNac().getTime().toString()%>".includes("-") ? "<%= user.getFechaNac().getTime().toString()%>" : formatearFechaA("<%= user.getFechaNac().getTime().toString()%>");
                 }
                 const form = document.querySelector(".formulario");
 
